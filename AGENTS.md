@@ -38,7 +38,7 @@ Common types:
 
 Before committing, inspect recent Git history and match the existing title style.
 
-When asked to create a Git commit, propose the commit title first and get explicit human confirmation before running `git commit`.
+When asked to create a Git commit, choose an appropriate title and proceed without requesting separate confirmation.
 
 Examples:
 
