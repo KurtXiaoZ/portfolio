@@ -17,6 +17,15 @@ The primary audience is recruiters, hiring managers, engineering leaders, fellow
 - Build a fast, accessible, responsive, and professional experience.
 - Keep the implementation maintainable and appropriately simple.
 
+## Documentation
+
+Start with `docs/README.md` when a task needs project context.
+
+- `docs/product/` describes what the portfolio should communicate and how its content and sections should work.
+- `docs/engineering/` describes how the portfolio is designed, implemented, tested, and operated.
+
+Read the relevant documents before making related decisions. If documentation and implementation disagree, flag the inconsistency instead of silently choosing one.
+
 ## Commit Titles
 
 Follow the existing commit title convention whenever creating commits.
