@@ -32,14 +32,15 @@ Visitors should be able to move easily between the landing page, individual case
 The initial portfolio includes:
 
 1. One landing page
-2. Several individual case-study pages
+2. Five selected individual case-study pages
 3. One About page
+
+The selected case studies are listed in the [case-study index](case-studies/README.md).
 
 A blog, writing section, standalone contact page, and separate case-study index are not currently defined.
 
 ## Open Questions
 
-- How many case studies should be featured initially?
 - Which case study should appear first?
 - Should every case study be linked directly from the landing page?
 - Should the portfolio include contact or resume actions within the existing pages?

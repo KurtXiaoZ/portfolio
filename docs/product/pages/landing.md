@@ -28,6 +28,16 @@ After viewing the landing page, a visitor should understand:
 
 The detailed layout, visual direction, interactions, and final copy remain open.
 
+## Selected Case Studies
+
+- [Halving first-page load latency](../case-studies/checkout-performance.md)
+- [Resolving 150+ feature flags in under 200ms](../case-studies/feature-flag-system.md)
+- [Standardizing interaction telemetry at scale](../case-studies/interaction-telemetry-sdk.md)
+- [Building an embedded platform for BNPL products](../case-studies/bnpl-embedded-platform.md)
+- [Building a developer toolbar for 200+ engineers](../case-studies/developer-toolbar.md)
+
+The presentation order and prominence of each case study remain open.
+
 ## Open Questions
 
 - What should the introduction emphasize most?
