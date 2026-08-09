@@ -1,0 +1,22 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 328 205" role="img" aria-labelledby="title description">
+  <title id="title">Accelerated page loading</title>
+  <desc id="description">Four diagonal speed lines, with one highlighted in green.</desc>
+  <style>
+    .background { fill: #faf9f5; }
+    .line { fill: #171814; opacity: 0.08; }
+    .highlight { fill: #c9ef3e; }
+
+    @media (prefers-color-scheme: dark) {
+      .background { fill: #20211e; }
+      .line { fill: #f0f0e9; }
+      .highlight { fill: #c6ec39; }
+    }
+  </style>
+  <rect class="background" width="328" height="205" />
+  <g transform="rotate(-18 164 102.5)">
+    <rect class="line" x="-56" y="21" width="407" height="18" rx="9" />
+    <rect class="line" x="59" y="68" width="407" height="18" rx="9" />
+    <rect class="highlight" x="-92" y="117" width="407" height="18" rx="9" />
+    <rect class="line" x="111" y="158" width="407" height="18" rx="9" />
+  </g>
+</svg>
