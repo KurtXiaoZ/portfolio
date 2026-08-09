@@ -13,6 +13,7 @@
 
 - ESLint provides static analysis.
 - Prettier provides consistent code formatting.
+- Tailwind CSS provides utility-first styling through PostCSS.
 
 ## Delivery
 
