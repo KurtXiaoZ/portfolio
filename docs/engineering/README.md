@@ -2,6 +2,10 @@
 
 Engineering documentation defines how the portfolio is built and maintained.
 
+## Current Documents
+
+- [Technical architecture](technical-architecture.md)
+
 Use this directory for topics such as:
 
 - application architecture and technology choices
