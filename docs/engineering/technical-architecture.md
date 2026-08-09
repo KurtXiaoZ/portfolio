@@ -9,6 +9,11 @@
 
 - TypeScript
 
+## Tooling
+
+- ESLint provides static analysis.
+- Prettier provides consistent code formatting.
+
 ## Delivery
 
 - Vercel hosts the application and creates preview and production deployments.
