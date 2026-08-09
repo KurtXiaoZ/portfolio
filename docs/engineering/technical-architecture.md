@@ -13,6 +13,7 @@
 
 - ESLint provides static analysis.
 - Prettier provides consistent code formatting.
+- Storybook supports isolated UI component development and review.
 - Tailwind CSS provides utility-first styling through PostCSS.
 
 ## Delivery
