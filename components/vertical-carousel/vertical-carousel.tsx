@@ -211,7 +211,7 @@ export function VerticalCarousel({
       <div
         ref={viewportRef}
         aria-describedby={instructionsId}
-        className="absolute inset-[0_3.875rem_0_0] overflow-hidden outline-none [perspective:1100px] [perspective-origin:50%_50%] [touch-action:pan-x] focus-visible:outline-2 focus-visible:-outline-offset-2 focus-visible:outline-[#657800] max-[560px]:inset-[0_2.75rem_0_0] dark:focus-visible:outline-[#c6ec39]"
+        className="absolute inset-[0_3.875rem_0_0] overflow-hidden perspective-[1100px] perspective-origin-[50%_50%] outline-none [touch-action:pan-x] focus-visible:outline-2 focus-visible:-outline-offset-2 focus-visible:outline-[#657800] max-[560px]:inset-[0_2.75rem_0_0] dark:focus-visible:outline-[#c6ec39]"
         onClickCapture={(event) => {
           if (!suppressClickRef.current) return;
           event.preventDefault();
