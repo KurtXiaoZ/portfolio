@@ -30,7 +30,7 @@ export function CaseStudyCard({
       {...props}
     >
       <div
-        className="relative h-51.25 overflow-hidden rounded-[11px] bg-[#faf9f5] max-[560px]:h-47.5 dark:bg-[#20211e] *:h-full *:w-full"
+        className="relative h-51.25 cursor-pointer overflow-hidden rounded-[11px] bg-[#faf9f5] max-[560px]:h-47.5 dark:bg-[#20211e] *:h-full *:w-full"
         role="img"
         aria-label={imageAlt}
       >

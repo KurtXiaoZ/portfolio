@@ -248,8 +248,8 @@ export function VerticalCarousel({
             <div
               aria-hidden={!isActive}
               className={clsx(
-                'pointer-events-none absolute top-1/2 left-1/2 w-[min(20.5rem,82%)] [-webkit-backface-visibility:hidden]',
-                isActive && 'pointer-events-auto',
+                'absolute top-1/2 left-1/2 w-[min(20.5rem,82%)] [-webkit-backface-visibility:hidden]',
+                isActive ? 'pointer-events-auto' : 'pointer-events-none',
               )}
               inert={isActive ? undefined : true}
               key={item.id}
