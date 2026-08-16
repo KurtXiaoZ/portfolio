@@ -42,8 +42,22 @@ const WHEEL_GESTURE_GAP = 200;
 const FAST_WHEEL_SPEED = 1;
 const SWIPE_THRESHOLD = 35;
 
-function clampIndex(index: number, itemCount: number) {
-  return Math.max(0, Math.min(itemCount - 1, index));
+function wrapIndex(index: number, itemCount: number) {
+  return ((index % itemCount) + itemCount) % itemCount;
+}
+
+function getCircularDelta(
+  index: number,
+  activeIndex: number,
+  itemCount: number,
+) {
+  const delta = index - activeIndex;
+  const halfwayPoint = itemCount / 2;
+
+  if (delta > halfwayPoint) return delta - itemCount;
+  if (delta < -halfwayPoint) return delta + itemCount;
+
+  return delta;
 }
 
 function getWheelDeltaInPixels(event: WheelEvent) {
@@ -64,8 +78,7 @@ function getVisualState(delta: number): VisualState {
     scale:
       delta === 0 ? 1 : Math.max(0.61, 0.84 - Math.max(0, distance - 1) * 0.1),
     rotateX: delta === 0 ? 0 : direction * -68,
-    opacity:
-      distance === 0 ? 1 : distance === 1 ? 0.44 : distance === 2 ? 0.13 : 0,
+    opacity: distance === 0 ? 1 : distance === 1 ? 0.44 : 0,
     blur: distance > 1 ? 1.5 : 0,
     zIndex: 20 - distance,
   };
@@ -81,7 +94,7 @@ export function VerticalCarousel({
 }: VerticalCarouselProps) {
   const itemCount = items.length;
   const [activeIndex, setActiveIndex] = useState(() =>
-    itemCount === 0 ? 0 : clampIndex(initialIndex, itemCount),
+    itemCount === 0 ? 0 : wrapIndex(initialIndex, itemCount),
   );
   const activeIndexRef = useRef(activeIndex);
   const viewportRef = useRef<HTMLDivElement>(null);
@@ -94,12 +107,12 @@ export function VerticalCarousel({
     (nextIndex: number) => {
       if (itemCount === 0) return;
 
-      const clampedIndex = clampIndex(nextIndex, itemCount);
-      if (clampedIndex === activeIndexRef.current) return;
+      const wrappedIndex = wrapIndex(nextIndex, itemCount);
+      if (wrappedIndex === activeIndexRef.current) return;
 
-      activeIndexRef.current = clampedIndex;
-      setActiveIndex(clampedIndex);
-      onActiveIndexChange?.(clampedIndex);
+      activeIndexRef.current = wrappedIndex;
+      setActiveIndex(wrappedIndex);
+      onActiveIndexChange?.(wrappedIndex);
     },
     [itemCount, onActiveIndexChange],
   );
@@ -141,15 +154,6 @@ export function VerticalCarousel({
       gestureIsFast = gestureIsFast || speed >= FAST_WHEEL_SPEED;
 
       const currentIndex = activeIndexRef.current;
-      const canMove =
-        (direction > 0 && currentIndex < itemCount - 1) ||
-        (direction < 0 && currentIndex > 0);
-
-      if (!canMove) {
-        wheelEventCount = 0;
-        return;
-      }
-
       event.preventDefault();
 
       if (!gestureHasMoved) {
@@ -240,7 +244,7 @@ export function VerticalCarousel({
         tabIndex={0}
       >
         {items.map((item, index) => {
-          const delta = index - activeIndex;
+          const delta = getCircularDelta(index, activeIndex, itemCount);
           const state = getVisualState(delta);
           const isActive = delta === 0;
 
