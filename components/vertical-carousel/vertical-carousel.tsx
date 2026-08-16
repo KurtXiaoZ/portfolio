@@ -310,8 +310,8 @@ export function VerticalCarousel({
               aria-label={`Show case study ${index + 1}: ${item.label}`}
               aria-pressed={isActive}
               className={clsx(
-                'size-2 cursor-pointer rounded-full border-0 bg-current p-0 opacity-35 transition-[transform,opacity] duration-300 motion-reduce:transition-none',
-                isActive && 'scale-150 opacity-100',
+                'size-1.5 cursor-pointer rounded-full border-0 bg-current p-0 opacity-35 transition-opacity duration-300 motion-reduce:transition-none',
+                isActive && 'opacity-100',
               )}
               key={item.id}
               onClick={() => setActive(index)}
