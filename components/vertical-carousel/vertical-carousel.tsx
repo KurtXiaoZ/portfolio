@@ -6,7 +6,7 @@ import type {
   ComponentPropsWithoutRef,
   PointerEvent as ReactPointerEvent,
 } from 'react';
-import { useCallback, useEffect, useId, useRef, useState } from 'react';
+import { useCallback, useEffect, useRef, useState } from 'react';
 
 import {
   CaseStudyCard,
@@ -20,7 +20,7 @@ export interface VerticalCarouselItem {
 }
 
 export interface VerticalCarouselProps extends Omit<
-  ComponentPropsWithoutRef<'section'>,
+  ComponentPropsWithoutRef<'div'>,
   'children'
 > {
   initialIndex?: number;
@@ -76,7 +76,9 @@ function getVisualState(delta: number): VisualState {
   return {
     y: delta === 0 ? 0 : direction * (255 + Math.max(0, distance - 1) * 118),
     scale:
-      delta === 0 ? 1 : Math.max(0.61, 0.84 - Math.max(0, distance - 1) * 0.1),
+      delta === 0
+        ? 1.24
+        : Math.max(0.61, 0.84 - Math.max(0, distance - 1) * 0.1),
     rotateX: delta === 0 ? 0 : direction * -68,
     opacity: distance === 0 ? 1 : distance === 1 ? 0.44 : 0,
     blur: distance > 1 ? 1.5 : 0,
@@ -99,8 +101,6 @@ export function VerticalCarousel({
   const activeIndexRef = useRef(activeIndex);
   const viewportRef = useRef<HTMLDivElement>(null);
   const pointerStartRef = useRef<{ id: number; y: number } | null>(null);
-  const suppressClickRef = useRef(false);
-  const instructionsId = useId();
   const prefersReducedMotion = useReducedMotion();
 
   const setActive = useCallback(
@@ -181,9 +181,24 @@ export function VerticalCarousel({
   const handlePointerDown = (event: ReactPointerEvent<HTMLDivElement>) => {
     if (!event.isPrimary) return;
 
-    suppressClickRef.current = false;
     pointerStartRef.current = { id: event.pointerId, y: event.clientY };
     event.currentTarget.setPointerCapture(event.pointerId);
+  };
+
+  const handleKeyDown = (event: React.KeyboardEvent<HTMLDivElement>) => {
+    if (event.key === 'ArrowDown') {
+      event.preventDefault();
+      setActive(activeIndexRef.current + 1);
+    } else if (event.key === 'ArrowUp') {
+      event.preventDefault();
+      setActive(activeIndexRef.current - 1);
+    } else if (event.key === 'Home') {
+      event.preventDefault();
+      setActive(0);
+    } else if (event.key === 'End') {
+      event.preventDefault();
+      setActive(itemCount - 1);
+    }
   };
 
   const finishPointerGesture = (event: ReactPointerEvent<HTMLDivElement>) => {
@@ -195,54 +210,26 @@ export function VerticalCarousel({
 
     if (Math.abs(distance) <= SWIPE_THRESHOLD) return;
 
-    suppressClickRef.current = true;
     setActive(activeIndexRef.current + Math.sign(distance));
-    window.setTimeout(() => {
-      suppressClickRef.current = false;
-    }, 500);
   };
 
   return (
-    <section
+    <div
+      {...props}
       aria-label={ariaLabel}
       aria-roledescription="carousel"
       className={clsx(
-        'relative min-h-166 overflow-hidden text-[#171814] dark:text-[#f0f0e9]',
+        'relative min-h-0 flex-1 overflow-hidden text-[#171814] outline-none focus-visible:outline-2 focus-visible:-outline-offset-2 focus-visible:outline-[#657800] dark:text-[#f0f0e9] dark:focus-visible:outline-[#c6ec39]',
         className,
       )}
-      {...props}
+      onKeyDown={handleKeyDown}
+      onPointerDown={handlePointerDown}
+      onPointerUp={finishPointerGesture}
+      ref={viewportRef}
+      role="region"
+      tabIndex={0}
     >
-      <div
-        ref={viewportRef}
-        aria-describedby={instructionsId}
-        className="absolute inset-[0_3.875rem_0_0] overflow-hidden perspective-[1100px] perspective-origin-[50%_50%] outline-none [touch-action:pan-x] focus-visible:outline-2 focus-visible:-outline-offset-2 focus-visible:outline-[#657800] max-[560px]:inset-[0_2.75rem_0_0] dark:focus-visible:outline-[#c6ec39]"
-        onClickCapture={(event) => {
-          if (!suppressClickRef.current) return;
-          event.preventDefault();
-          event.stopPropagation();
-        }}
-        onKeyDown={(event) => {
-          if (event.key === 'ArrowDown' || event.key === 'PageDown') {
-            event.preventDefault();
-            setActive(activeIndexRef.current + 1);
-          } else if (event.key === 'ArrowUp' || event.key === 'PageUp') {
-            event.preventDefault();
-            setActive(activeIndexRef.current - 1);
-          } else if (event.key === 'Home') {
-            event.preventDefault();
-            setActive(0);
-          } else if (event.key === 'End') {
-            event.preventDefault();
-            setActive(itemCount - 1);
-          }
-        }}
-        onPointerCancel={() => {
-          pointerStartRef.current = null;
-        }}
-        onPointerDown={handlePointerDown}
-        onPointerUp={finishPointerGesture}
-        tabIndex={0}
-      >
+      <div className="absolute inset-[0_3.875rem_0_0] overflow-hidden perspective-[1100px] perspective-origin-[50%_50%]">
         {items.map((item, index) => {
           const delta = getCircularDelta(index, activeIndex, itemCount);
           const state = getVisualState(delta);
@@ -302,9 +289,8 @@ export function VerticalCarousel({
           );
         })}
       </div>
-
       <div
-        className="absolute top-1/2 right-5.75 flex -translate-y-1/2 flex-col gap-2.75 max-[560px]:right-3.5"
+        className="absolute top-1/2 right-5.75 flex -translate-y-1/2 flex-col gap-2.75"
         role="group"
       >
         {items.map((item, index) => {
@@ -324,6 +310,6 @@ export function VerticalCarousel({
           );
         })}
       </div>
-    </section>
+    </div>
   );
 }

@@ -126,8 +126,8 @@ const meta = {
   },
   decorators: [
     (Story) => (
-      <div className="min-h-screen bg-[#f1f1ee] px-6 text-[#171814] dark:bg-[#131412] dark:text-[#f0f0e9]">
-        <div className="mx-auto max-w-3xl">
+      <div className="flex min-h-screen bg-[#f1f1ee] px-6 text-[#171814] dark:bg-[#131412] dark:text-[#f0f0e9]">
+        <div className="mx-auto flex w-full max-w-3xl flex-1">
           <Story />
         </div>
       </div>
