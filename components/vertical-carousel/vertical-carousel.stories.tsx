@@ -63,7 +63,7 @@ const items: readonly VerticalCarouselItem[] = [
     label: 'Halving first-page load latency',
     card: {
       href: '#checkout-performance',
-      image: artwork.speed,
+      cover: artwork.speed,
       imageAlt: 'Abstract visualization of accelerated page loading',
       tags: ['PayPal', 'Performance'],
       title: 'Halving first-page load latency',
@@ -74,7 +74,7 @@ const items: readonly VerticalCarouselItem[] = [
     label: 'Resolving 150+ feature flags in under 200ms',
     card: {
       href: '#feature-flags',
-      image: artwork.flags,
+      cover: artwork.flags,
       imageAlt: 'Abstract grid representing a feature flag platform',
       tags: ['PayPal', 'Platform'],
       title: 'Resolving 150+ feature flags in under 200ms',
@@ -85,7 +85,7 @@ const items: readonly VerticalCarouselItem[] = [
     label: 'Standardizing interaction telemetry at scale',
     card: {
       href: '#telemetry',
-      image: artwork.signal,
+      cover: artwork.signal,
       imageAlt: 'Abstract visualization of converging telemetry signals',
       tags: ['PayPal', 'Observability'],
       title: 'Standardizing interaction telemetry at scale',
@@ -96,7 +96,7 @@ const items: readonly VerticalCarouselItem[] = [
     label: 'Building an embedded platform for BNPL products',
     card: {
       href: '#bnpl',
-      image: artwork.platform,
+      cover: artwork.platform,
       imageAlt: 'Abstract composition of embedded product surfaces',
       tags: ['PayPal', 'Experiences'],
       title: 'Building an embedded platform for BNPL products',
@@ -107,7 +107,7 @@ const items: readonly VerticalCarouselItem[] = [
     label: 'Building a developer toolbar for 200+ engineers',
     card: {
       href: '#developer-toolbar',
-      image: artwork.toolbar,
+      cover: artwork.toolbar,
       imageAlt: 'Abstract developer toolbar interface',
       tags: ['Passion project', 'Developer experience'],
       title: 'Building a developer toolbar for 200+ engineers',

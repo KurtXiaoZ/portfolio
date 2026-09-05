@@ -20,7 +20,7 @@ const meta = {
   },
   args: {
     href: '#checkout-performance',
-    image: artwork,
+    cover: artwork,
     imageAlt: 'Abstract visualization of accelerated page loading',
     tags: ['PayPal', 'Performance'],
     title: 'Halving first-page load latency',

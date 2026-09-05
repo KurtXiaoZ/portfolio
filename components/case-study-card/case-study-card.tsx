@@ -7,7 +7,7 @@ export interface CaseStudyCardProps extends Omit<
   ComponentPropsWithoutRef<'a'>,
   'children' | 'title'
 > {
-  image: ReactNode;
+  cover: ReactNode;
   imageAlt: string;
   tags: readonly string[];
   title: ReactNode;
@@ -15,7 +15,7 @@ export interface CaseStudyCardProps extends Omit<
 
 export function CaseStudyCard({
   className,
-  image,
+  cover,
   imageAlt,
   tags,
   title,
@@ -34,7 +34,7 @@ export function CaseStudyCard({
         role="img"
         aria-label={imageAlt}
       >
-        {image}
+        {cover}
       </div>
       <h3 className="mx-0.5 mt-3.75 mb-2.75 text-base leading-[1.3] font-medium tracking-tight text-[#171814] dark:text-[#f0f0e9]">
         {title}
