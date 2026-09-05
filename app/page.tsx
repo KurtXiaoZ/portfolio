@@ -1,12 +1,16 @@
+import { VerticalCarousel } from '@/components/vertical-carousel/vertical-carousel';
+
+import { carouselItems } from './carousel-items.mock';
+
 export default function Home() {
   return (
-    <main className="grid min-h-screen place-content-center gap-4 p-8 text-center">
-      <h1 className="text-[clamp(3rem,10vw,7rem)] leading-[0.9] tracking-[-0.06em]">
+    <main className="flex h-dvh overflow-hidden">
+      <div className="flex min-h-0 flex-1 items-center justify-center overflow-y-auto">
         Kurt Xiao
-      </h1>
-      <p className="max-w-xl text-[clamp(1rem,2vw,1.25rem)] leading-[1.6]">
-        Senior full-stack engineer building thoughtful, dependable products.
-      </p>
+      </div>
+      <div className="flex min-w-0 flex-1">
+        <VerticalCarousel items={carouselItems} />
+      </div>
     </main>
   );
 }
