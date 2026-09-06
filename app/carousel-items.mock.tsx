@@ -45,4 +45,26 @@ export const carouselItems = [
       title: 'Making local development feel instant',
     },
   },
+  {
+    id: 'interaction-telemetry',
+    label: 'Standardizing interaction telemetry at scale',
+    card: {
+      href: '#interaction-telemetry',
+      cover: <div className="bg-[#70d6c7]" />,
+      imageAlt: 'Placeholder artwork for interaction telemetry',
+      tags: ['Observability', 'Platform'],
+      title: 'Standardizing interaction telemetry at scale',
+    },
+  },
+  {
+    id: 'bnpl-platform',
+    label: 'Building an embedded platform for BNPL products',
+    card: {
+      href: '#bnpl-platform',
+      cover: <div className="bg-[#ffc857]" />,
+      imageAlt: 'Placeholder artwork for an embedded BNPL platform',
+      tags: ['Platform', 'Fintech'],
+      title: 'Building an embedded platform for BNPL products',
+    },
+  },
 ] satisfies readonly VerticalCarouselItem[];
