@@ -17,7 +17,7 @@ The primary entry point to the portfolio. It should:
 
 ### Case-Study Pages
 
-Each case study should have its own page. These pages should explain the work in enough depth to demonstrate Kurt's contribution, decision-making, execution, and impact.
+Each case study should have its own page and canonical route at `/work/[slug]`. These pages should explain the work in enough depth to demonstrate Kurt's contribution, decision-making, execution, and impact.
 
 ### About Page
 
@@ -26,6 +26,14 @@ The About page should provide a fuller picture of Kurt beyond the concise introd
 ## Primary Navigation
 
 Visitors should be able to move easily between the landing page, individual case studies, and the About page. Every detail page should provide a clear path back to the main portfolio experience.
+
+The landing page and case-study pages share one portfolio shell. On desktop, navigating to a case study changes the primary content pane while preserving the featured-work carousel in a smaller secondary pane. Each case-study route must support direct visits, refreshes, sharing, and browser Back and Forward navigation.
+
+## URL Structure
+
+- `/` is the landing page.
+- `/work/[slug]` is the canonical route pattern for individual case studies.
+- `/about` is the About page.
 
 ## Initial Scope
 

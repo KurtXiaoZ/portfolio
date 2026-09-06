@@ -6,6 +6,8 @@ The vertical carousel presents one active case study between folded cards above 
 
 This document describes the scrolling choreography implemented by `VerticalCarousel`. The landing-page product document remains the source for the intended experience; this document records the interaction rules, animation states, timings, and interruption behavior that produce it.
 
+This choreography covers movement between cards within the carousel. The proposed transition that resizes the carousel pane while navigating between the landing page and case-study routes is documented separately in [Case-Study Route Transition](case-study-route-transition.md).
+
 ## Spatial Model
 
 Each card receives a circular delta relative to the active index:

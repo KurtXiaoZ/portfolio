@@ -58,6 +58,10 @@ As an initial timing target, the full opening transition should take approximate
 
 For reduced motion, skip the spatial movement and stagger. Use a short crossfade or an immediate state change while preserving the same content and focus behavior.
 
+Selecting a case-study card should navigate to that case study's canonical URL while beginning the opening transition immediately. Client-side navigation from Home to a case study should play the opening transition, and navigation back to Home should reverse it. Moving directly from one case study to another should keep the reading layout in place while the left-pane content and active carousel card change.
+
+Browser Back and Forward navigation should produce the same transition associated with their source and destination. A direct visit, refresh, or other initial load of a case-study URL should render the settled reading layout without replaying the entrance animation.
+
 This direction is desktop-first. Mobile layout and transition behavior remain open.
 
 ## Initial Content Order

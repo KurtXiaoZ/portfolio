@@ -17,6 +17,17 @@ Demonstrate the quality of Kurt's work through a clear account of the problem, h
 
 The structure may be adapted when a project is better explained in a different sequence.
 
+## Layout
+
+On desktop, a case study is presented within the shared two-pane portfolio experience:
+
+- the case-study content occupies the primary left pane and scrolls as one continuous reading experience
+- the featured-work carousel remains visible in a smaller right pane for the full case study
+- the current case study remains active in the carousel
+- the outer page shell remains fixed to the viewport while the content pane manages its own overflow
+
+As an initial target, the content pane should occupy roughly 65–70% of the viewport and the carousel pane roughly 30–35%. These proportions may be tuned without changing the intended hierarchy. Mobile layout remains open.
+
 ## Content Requirements
 
 - Make Kurt's personal contribution distinct from the team's work.
@@ -27,7 +38,9 @@ The structure may be adapted when a project is better explained in a different s
 
 ## Navigation
 
-Each case study should provide a clear way to return to the landing page. Navigation to another relevant case study may be added once the set and ordering are defined.
+Each case study has its own canonical URL and must support direct visits, refreshes, sharing, and browser history navigation.
+
+The persistent carousel provides direct navigation to the other featured case studies. Returning to the landing page reverses the opening transition, restores the carousel to its primary size, and preserves the previously selected card.
 
 ## Open Questions
 
