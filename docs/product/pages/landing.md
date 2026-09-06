@@ -31,6 +31,10 @@ The desktop landing page uses a full-viewport, two-pane layout:
 
 The carousel uses a vertical perspective-fold transition. Each item presents an image, followed by the case-study title and quiet metadata tags. Color and visual emphasis should come primarily from the image rather than the card background or tags.
 
+Cards moving into the upper position fold around their bottom edge; cards moving into the lower position fold around their top edge. Adjacent cards retain most of their size and remain visible so the movement feels like placing a card into a stack. A card leaving either adjacent position holds its current pose and fades out without further movement. Incoming cards unfold from the same edge, and looping repositions recycled cards without sending them through the center.
+
+See [Vertical Carousel Scroll Animation](../../engineering/vertical-carousel-scroll-animation.md) for the implemented interaction choreography, timing, and interruption behavior.
+
 ### Case-Study Presentation Animation
 
 Opening a case study is one coordinated transition with four visual states:

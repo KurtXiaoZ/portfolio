@@ -1,7 +1,12 @@
 'use client';
 
 import clsx from 'clsx';
-import { motion, useReducedMotion } from 'motion/react';
+import {
+  motion,
+  useAnimate,
+  useMotionValue,
+  useReducedMotion,
+} from 'motion/react';
 import type {
   ComponentPropsWithoutRef,
   PointerEvent as ReactPointerEvent,
@@ -29,11 +34,15 @@ export interface VerticalCarouselProps extends Omit<
 }
 
 interface VisualState {
-  blur: number;
+  /** Controls whether the card is active, adjacent, or hidden. */
   opacity: number;
+  /** Tilts the card around its horizontal axis to create the folded pose. */
   rotateX: number;
+  /** Sizes the active card and slightly reduces adjacent folded cards. */
   scale: number;
+  /** Positions the card in the active, upper, or lower carousel slot. */
   y: number;
+  /** Keeps cards closer to the active slot above more distant cards. */
   zIndex: number;
 }
 
@@ -41,6 +50,11 @@ const WHEEL_EVENT_THRESHOLD = 12;
 const WHEEL_GESTURE_GAP = 200;
 const FAST_WHEEL_SPEED = 1;
 const SWIPE_THRESHOLD = 35;
+const CARD_SCALE = 1.24;
+const FOLD_TRANSITION = {
+  duration: 0.72,
+  ease: [0.2, 0.78, 0.2, 1],
+} as const;
 
 function wrapIndex(index: number, itemCount: number) {
   return ((index % itemCount) + itemCount) % itemCount;
@@ -72,18 +86,169 @@ function getWheelDeltaInPixels(event: WheelEvent) {
 function getVisualState(delta: number): VisualState {
   const direction = Math.sign(delta);
   const distance = Math.abs(delta);
+  let opacity = 0;
+
+  if (distance === 0) {
+    opacity = 1;
+  } else if (distance === 1) {
+    opacity = 0.7;
+  }
 
   return {
-    y: delta === 0 ? 0 : direction * (255 + Math.max(0, distance - 1) * 118),
-    scale:
-      delta === 0
-        ? 1.24
-        : Math.max(0.61, 0.84 - Math.max(0, distance - 1) * 0.1),
-    rotateX: delta === 0 ? 0 : direction * -68,
-    opacity: distance === 0 ? 1 : distance === 1 ? 0.44 : 0,
-    blur: distance > 1 ? 1.5 : 0,
+    // Edge hinges leave the folded card's center closer to the active slot.
+    // Give the hinge enough travel to park the card above or below it.
+    y: delta === 0 ? 0 : direction * 380,
+    scale: delta === 0 ? CARD_SCALE : CARD_SCALE * 0.94,
+    rotateX: delta === 0 ? 0 : direction * -58,
+    opacity,
     zIndex: 20 - distance,
   };
+}
+
+function getHingeOrigin(delta: number) {
+  if (delta < 0) return 1;
+  if (delta > 0) return 0;
+  return 0.5;
+}
+
+function CarouselCard({
+  delta,
+  item,
+  prefersReducedMotion,
+}: {
+  delta: number;
+  item: VerticalCarouselItem;
+  prefersReducedMotion: boolean | null;
+}) {
+  const [scope, animate] = useAnimate<HTMLDivElement>();
+  const previousDeltaRef = useRef(delta);
+  const [initialState] = useState(() => ({
+    ...getVisualState(delta),
+    originY: getHingeOrigin(delta),
+  }));
+  // Bind values from mount, including for initially hidden cards. Recycling
+  // must update existing values so .set() schedules a render before revealing
+  // the card, even when the following animation has the same target.
+  const cardY = useMotionValue(initialState.y);
+  const cardScale = useMotionValue(initialState.scale);
+  const cardOpacity = useMotionValue(initialState.opacity);
+  const cardOriginY = useMotionValue(initialState.originY);
+  const cardRotateX = useMotionValue(initialState.rotateX);
+  const isActive = delta === 0;
+
+  useEffect(() => {
+    const previousDelta = previousDeltaRef.current;
+    previousDeltaRef.current = delta;
+    const state = getVisualState(delta);
+
+    if (Math.abs(delta) > 1) {
+      // Freeze the actual rendered pose, including an interrupted fold.
+      // A departing neighbor only fades; it has no further spatial target.
+      cardY.stop();
+      cardScale.stop();
+      cardOriginY.stop();
+      cardRotateX.stop();
+      cardOpacity.stop();
+      animate(cardOpacity, 0, {
+        duration: prefersReducedMotion ? 0 : 0.24,
+      });
+      return;
+    }
+
+    const isChangingSides =
+      previousDelta !== 0 &&
+      delta !== 0 &&
+      Math.sign(previousDelta) !== Math.sign(delta);
+    const hingeDelta = isActive ? previousDelta : delta;
+    const originY = getHingeOrigin(hingeDelta);
+
+    if (Math.abs(previousDelta) > 1 || isChangingSides) {
+      // Reintroduce recycled cards from their new edge while invisible,
+      // never by rotating or translating across the back of the carousel.
+      const entryState = getVisualState(Math.sign(hingeDelta));
+      cardY.stop();
+      cardScale.stop();
+      cardOpacity.stop();
+      cardOriginY.stop();
+      cardRotateX.stop();
+      cardY.set(entryState.y);
+      cardScale.set(entryState.scale);
+      cardOpacity.set(0);
+      cardOriginY.set(originY);
+      cardRotateX.set(entryState.rotateX);
+    }
+
+    const transition = prefersReducedMotion ? { duration: 0 } : FOLD_TRANSITION;
+    const isEnteringAdjacentSlot =
+      Math.abs(delta) === 1 && (Math.abs(previousDelta) > 1 || isChangingSides);
+
+    if (isEnteringAdjacentSlot && !prefersReducedMotion) {
+      // Let the previous adjacent card clear this slot before revealing its
+      // replacement. Keep the fold timing and reduced-motion behavior intact.
+      animate(cardOpacity, state.opacity, {
+        delay: 0.32,
+        duration: 0.4,
+        ease: 'easeInOut',
+      });
+    } else {
+      animate(cardOpacity, state.opacity, transition);
+    }
+
+    animate(cardY, state.y, transition);
+    animate(cardScale, state.scale, transition);
+    animate(cardOriginY, originY, transition);
+    animate(cardRotateX, state.rotateX, transition);
+  }, [
+    animate,
+    cardOpacity,
+    cardOriginY,
+    cardRotateX,
+    cardScale,
+    cardY,
+    delta,
+    isActive,
+    prefersReducedMotion,
+  ]);
+
+  return (
+    <div
+      ref={scope}
+      aria-hidden={!isActive}
+      className={clsx(
+        'absolute top-1/2 left-1/2 w-[min(20.5rem,82%)]',
+        isActive ? 'pointer-events-auto' : 'pointer-events-none',
+      )}
+      inert={isActive ? undefined : true}
+      style={{
+        translate: '-50% -50%',
+        zIndex: getVisualState(delta).zIndex,
+      }}
+    >
+      <motion.div
+        style={{
+          scale: cardScale,
+          y: cardY,
+          perspective: 1100,
+          perspectiveOrigin: '50% 50%',
+        }}
+      >
+        <motion.div
+          style={{
+            opacity: cardOpacity,
+            originY: cardOriginY,
+            rotateX: cardRotateX,
+            backfaceVisibility: 'hidden',
+            WebkitBackfaceVisibility: 'hidden',
+          }}
+        >
+          <CaseStudyCard
+            {...item.card}
+            className={clsx('max-w-none', item.card.className)}
+          />
+        </motion.div>
+      </motion.div>
+    </div>
+  );
 }
 
 export function VerticalCarousel({
@@ -101,6 +266,7 @@ export function VerticalCarousel({
   const activeIndexRef = useRef(activeIndex);
   const viewportRef = useRef<HTMLDivElement>(null);
   const pointerStartRef = useRef<{ id: number; y: number } | null>(null);
+  // Accessibility: disables spatial animation when reduced motion is requested.
   const prefersReducedMotion = useReducedMotion();
 
   const setActive = useCallback(
@@ -180,6 +346,11 @@ export function VerticalCarousel({
 
   const handlePointerDown = (event: ReactPointerEvent<HTMLDivElement>) => {
     if (!event.isPrimary) return;
+    // Capturing a dot's pointer would retarget its click to this container.
+    // Leave button presses alone so their native click handlers can run.
+    if (event.target instanceof Element && event.target.closest('button')) {
+      return;
+    }
 
     pointerStartRef.current = { id: event.pointerId, y: event.clientY };
     event.currentTarget.setPointerCapture(event.pointerId);
@@ -229,65 +400,15 @@ export function VerticalCarousel({
       role="region"
       tabIndex={0}
     >
-      <div className="absolute inset-[0_3.875rem_0_0] overflow-hidden perspective-[1100px] perspective-origin-[50%_50%]">
-        {items.map((item, index) => {
-          const delta = getCircularDelta(index, activeIndex, itemCount);
-          const state = getVisualState(delta);
-          const isActive = delta === 0;
-
-          return (
-            <div
-              aria-hidden={!isActive}
-              className={clsx(
-                'absolute top-1/2 left-1/2 w-[min(20.5rem,82%)] [-webkit-backface-visibility:hidden]',
-                isActive ? 'pointer-events-auto' : 'pointer-events-none',
-              )}
-              inert={isActive ? undefined : true}
-              key={item.id}
-              style={{ translate: '-50% -50%', zIndex: state.zIndex }}
-            >
-              <motion.div
-                animate={{
-                  filter: `blur(${state.blur}px)`,
-                  opacity: state.opacity,
-                  rotateX: state.rotateX,
-                  scale: state.scale,
-                  y: state.y,
-                }}
-                initial={false}
-                style={{
-                  transformOrigin: 'center',
-                  transformStyle: 'preserve-3d',
-                }}
-                transition={
-                  prefersReducedMotion
-                    ? { duration: 0 }
-                    : {
-                        filter: { duration: 0.48 },
-                        opacity: { duration: 0.48 },
-                        rotateX: {
-                          duration: 0.72,
-                          ease: [0.2, 0.78, 0.2, 1],
-                        },
-                        scale: {
-                          duration: 0.72,
-                          ease: [0.2, 0.78, 0.2, 1],
-                        },
-                        y: {
-                          duration: 0.72,
-                          ease: [0.2, 0.78, 0.2, 1],
-                        },
-                      }
-                }
-              >
-                <CaseStudyCard
-                  {...item.card}
-                  className={clsx('max-w-none', item.card.className)}
-                />
-              </motion.div>
-            </div>
-          );
-        })}
+      <div className="absolute inset-[0_3.875rem_0_0] overflow-hidden">
+        {items.map((item, index) => (
+          <CarouselCard
+            delta={getCircularDelta(index, activeIndex, itemCount)}
+            item={item}
+            key={item.id}
+            prefersReducedMotion={prefersReducedMotion}
+          />
+        ))}
       </div>
       <div
         className="absolute top-1/2 right-5.75 flex -translate-y-1/2 flex-col gap-2.75"

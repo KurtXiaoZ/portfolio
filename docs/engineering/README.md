@@ -5,6 +5,7 @@ Engineering documentation defines how the portfolio is built and maintained.
 ## Current Documents
 
 - [Technical architecture](technical-architecture.md)
+- [Vertical carousel scroll animation](vertical-carousel-scroll-animation.md)
 
 Use this directory for topics such as:
 
