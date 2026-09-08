@@ -1,10 +1,11 @@
 import clsx from 'clsx';
+import Link from 'next/link';
 import type { ComponentPropsWithoutRef, ReactNode } from 'react';
 
 import { Tag } from '@/components/tag/tag';
 
 export interface CaseStudyCardProps extends Omit<
-  ComponentPropsWithoutRef<'a'>,
+  ComponentPropsWithoutRef<typeof Link>,
   'children' | 'title'
 > {
   cover: ReactNode;
@@ -22,7 +23,7 @@ export function CaseStudyCard({
   ...props
 }: CaseStudyCardProps) {
   return (
-    <a
+    <Link
       className={clsx(
         'block w-full max-w-82 rounded-[18px] p-4 text-[#171814] no-underline focus-visible:-outline-offset-2 focus-visible:outline-2 focus-visible:outline-[#657800] dark:text-[#f0f0e9] dark:focus-visible:outline-[#c6ec39]',
         className,
@@ -44,6 +45,6 @@ export function CaseStudyCard({
           <Tag key={tag}>{tag}</Tag>
         ))}
       </div>
-    </a>
+    </Link>
   );
 }

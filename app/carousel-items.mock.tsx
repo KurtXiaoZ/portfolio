@@ -1,15 +1,28 @@
+import Image from 'next/image';
+
 import type { VerticalCarouselItem } from '@/components/vertical-carousel/vertical-carousel';
+
+export const implementedCaseStudySlugs = ['checkout-performance'] as const;
 
 export const carouselItems = [
   {
-    id: 'checkout-redesign',
-    label: 'Reimagining checkout for global shoppers',
+    id: 'checkout-performance',
+    label: 'Halving first-page load latency',
     card: {
-      href: '#checkout-redesign',
-      cover: <div className="bg-[#d8ff64]" />,
-      imageAlt: 'Placeholder artwork for a checkout redesign',
-      tags: ['Product engineering', 'Web'],
-      title: 'Reimagining checkout for global shoppers',
+      href: '/work/checkout-performance',
+      cover: (
+        <Image
+          alt=""
+          className="object-cover"
+          fill
+          priority
+          sizes="(max-width: 760px) 82vw, (max-width: 1200px) 41vw, 328px"
+          src="/images/case-studies/checkout-performance.svg"
+        />
+      ),
+      imageAlt: 'Abstract visualization of accelerated page loading',
+      tags: ['PayPal', 'Performance'],
+      title: 'Halving first-page load latency',
     },
   },
   {

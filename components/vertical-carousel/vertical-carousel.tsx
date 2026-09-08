@@ -346,9 +346,10 @@ export function VerticalCarousel({
 
   const handlePointerDown = (event: ReactPointerEvent<HTMLDivElement>) => {
     if (!event.isPrimary) return;
-    // Capturing a dot's pointer would retarget its click to this container.
-    // Leave button presses alone so their native click handlers can run.
-    if (event.target instanceof Element && event.target.closest('button')) {
+    // Capturing an interactive element's pointer would retarget its click to
+    // this container. Leave links and buttons alone so their native click
+    // handlers can run.
+    if (event.target instanceof Element && event.target.closest('a, button')) {
       return;
     }
 

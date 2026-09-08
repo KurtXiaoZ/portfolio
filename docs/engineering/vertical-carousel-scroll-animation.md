@@ -6,7 +6,7 @@ The vertical carousel presents one active case study between folded cards above 
 
 This document describes the scrolling choreography implemented by `VerticalCarousel`. The landing-page product document remains the source for the intended experience; this document records the interaction rules, animation states, timings, and interruption behavior that produce it.
 
-This choreography covers movement between cards within the carousel. The proposed transition that resizes the carousel pane while navigating between the landing page and case-study routes is documented separately in [Case-Study Route Transition](case-study-route-transition.md).
+This choreography covers movement between cards within the carousel. The route-level transition that resizes the carousel pane while navigating between the landing page and case-study routes is documented separately in [Case-Study Route Transition](case-study-route-transition.md).
 
 ## Spatial Model
 
@@ -65,7 +65,7 @@ Horizontal-dominant wheel events are ignored. A vertical wheel gesture behaves a
 - A gesture is considered fast at `1px/ms` or faster. During a fast gesture, every twelve subsequent wheel events can advance another item.
 - A slower continuous gesture does not advance beyond its initial item until a new gesture begins.
 
-A pointer swipe must travel more than `35px` vertically. Presses originating on pagination buttons are excluded from pointer capture so their native click events reach the buttons.
+A pointer swipe must travel more than `35px` vertically. Presses originating on links or buttons are excluded from pointer capture so their native click events reach those controls.
 
 ## Looping and Recycling
 

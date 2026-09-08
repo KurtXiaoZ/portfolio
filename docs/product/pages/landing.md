@@ -56,13 +56,15 @@ The opening transition should be orchestrated as follows:
 
 As an initial timing target, the full opening transition should take approximately 700–900ms. The case-study content can begin entering around 100–200ms after the pane movement starts. Exact values should be tuned visually while preserving this order and overlap.
 
-For reduced motion, skip the spatial movement and stagger. Use a short crossfade or an immediate state change while preserving the same content and focus behavior.
+For reduced motion, skip the spatial movement and stagger. Use a short crossfade or an immediate state change while preserving the same content and routing behavior. Route-transition focus transfer is deferred, and the mobile pane-height transition still needs reduced-motion handling.
 
-Selecting a case-study card should navigate to that case study's canonical URL while beginning the opening transition immediately. Client-side navigation from Home to a case study should play the opening transition, and navigation back to Home should reverse it. Moving directly from one case study to another should keep the reading layout in place while the left-pane content and active carousel card change.
+Selecting a case-study card should navigate to that case study's canonical URL. The client-side route change triggers the opening transition, and navigation back to Home reverses it. Moving directly from one case study to another should keep the reading layout in place while the left-pane content and active carousel card change.
+
+The current persistent carousel reads the route-selected index only when it first mounts. Synchronizing it with later case-study-to-case-study route changes, including browser history navigation, remains to be implemented.
 
 Browser Back and Forward navigation should produce the same transition associated with their source and destination. A direct visit, refresh, or other initial load of a case-study URL should render the settled reading layout without replaying the entrance animation.
 
-This direction is desktop-first. Mobile layout and transition behavior remain open.
+This direction is desktop-first. An initial stacked mobile layout is implemented, with provisional Home and reading-state pane heights. Its final proportions, choreography, and reduced-motion behavior remain open.
 
 ## Initial Content Order
 
