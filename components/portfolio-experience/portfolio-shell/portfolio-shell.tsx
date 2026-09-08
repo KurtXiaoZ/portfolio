@@ -41,10 +41,7 @@ function LeftPane({
       : animate(
           scope.current,
           {
-            clipPath: [
-              'inset(0% 0% 0% 5%)',
-              'inset(0% 0% 0% 0%)',
-            ],
+            clipPath: ['inset(0% 0% 0% 5%)', 'inset(0% 0% 0% 0%)'],
             opacity: [0, 1],
             x: [contentOffset, 0],
           },
