@@ -1,14 +1,9 @@
 'use client';
 
 import clsx from 'clsx';
-import {
-  AnimatePresence,
-  motion,
-  useIsPresent,
-  useReducedMotion,
-} from 'motion/react';
+import { motion, useAnimate, useReducedMotion } from 'motion/react';
 import { useParams, usePathname } from 'next/navigation';
-import type { ReactNode } from 'react';
+import { useLayoutEffect, useRef, type ReactNode } from 'react';
 
 const PANE_TRANSITION = {
   duration: 0.8,
@@ -18,53 +13,61 @@ const PANE_TRANSITION = {
 function LeftPane({
   children,
   contentOffset,
-  prefersReducedMotion,
+  shouldReduceMotion,
 }: {
   children: ReactNode;
   contentOffset: number;
-  prefersReducedMotion: boolean | null;
+  shouldReduceMotion: boolean;
 }) {
-  const isPresent = useIsPresent();
+  const pathname = usePathname();
+  const [scope, animate] = useAnimate();
+  const previousPathname = useRef(pathname);
+
+  useLayoutEffect(() => {
+    if (previousPathname.current === pathname) return;
+
+    previousPathname.current = pathname;
+
+    const controls = shouldReduceMotion
+      ? animate(
+          scope.current,
+          {
+            clipPath: 'inset(0% 0% 0% 0%)',
+            opacity: 1,
+            x: 0,
+          },
+          { duration: 0 },
+        )
+      : animate(
+          scope.current,
+          {
+            clipPath: [
+              'inset(0% 0% 0% 5%)',
+              'inset(0% 0% 0% 0%)',
+            ],
+            opacity: [0, 1],
+            x: [contentOffset, 0],
+          },
+          { ...PANE_TRANSITION, delay: 0.14, duration: 0.66 },
+        );
+
+    return () => controls.stop();
+  }, [animate, contentOffset, pathname, scope, shouldReduceMotion]);
 
   return (
-    <motion.div
-      animate={{
-        clipPath: 'inset(0% 0% 0% 0%)',
-        opacity: 1,
-        x: 0,
-      }}
-      aria-hidden={!isPresent}
-      className="absolute inset-0 overflow-y-auto"
-      exit={{
-        opacity: 0,
-        x: prefersReducedMotion ? 0 : contentOffset,
-      }}
-      inert={isPresent ? undefined : true}
-      initial={{
-        clipPath: prefersReducedMotion
-          ? 'inset(0% 0% 0% 0%)'
-          : 'inset(0% 0% 0% 5%)',
-        opacity: 0,
-        x: prefersReducedMotion ? 0 : contentOffset,
-      }}
-      transition={
-        prefersReducedMotion
-          ? { duration: 0 }
-          : { ...PANE_TRANSITION, delay: 0.14 }
-      }
-    >
+    <div className="absolute inset-0 overflow-y-auto" ref={scope}>
       {children}
-    </motion.div>
+    </div>
   );
 }
 
 export function PortfolioShell({ left, right }: PortfolioShellProps) {
   const params = useParams<{ slug?: string }>();
-  const pathname = usePathname();
   const prefersReducedMotion = useReducedMotion();
+  const shouldReduceMotion = prefersReducedMotion === true;
   const selectedSlug = params.slug ?? null;
   const isCaseStudyOpen = selectedSlug !== null;
-  const transition = prefersReducedMotion ? { duration: 0 } : PANE_TRANSITION;
+  const transition = shouldReduceMotion ? { duration: 0 } : PANE_TRANSITION;
   const contentOffset = selectedSlug === null ? -24 : 24;
 
   return (
@@ -78,15 +81,12 @@ export function PortfolioShell({ left, right }: PortfolioShellProps) {
         initial={false}
         transition={transition}
       >
-        <AnimatePresence initial={false} mode="sync">
-          <LeftPane
-            contentOffset={contentOffset}
-            key={pathname}
-            prefersReducedMotion={prefersReducedMotion}
-          >
-            {left}
-          </LeftPane>
-        </AnimatePresence>
+        <LeftPane
+          contentOffset={contentOffset}
+          shouldReduceMotion={shouldReduceMotion}
+        >
+          {left}
+        </LeftPane>
       </motion.div>
 
       <motion.div
