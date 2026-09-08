@@ -86,13 +86,11 @@ This rule prevents the most common interruption artifacts:
 - an initially hidden card appearing on the wrong side of the carousel
 - adjacent card text appearing underneath a card that has not cleared the center
 
-## Reduced Motion
-
-When the visitor prefers reduced motion, spatial transitions, folds, and fades complete immediately, and delayed adjacent-card reveals are disabled. Content, focus behavior, index changes, and looping remain available.
-
 ## Accessibility
 
 Only the active card is interactive and exposed to assistive technology. Other cards are `inert`, have pointer events disabled, and use `aria-hidden`. The carousel is a focusable region with keyboard navigation, and each pagination dot exposes its target label and selected state.
+
+The fold choreography currently runs with the same timing regardless of the visitor's reduced-motion preference. Adding a non-spatial alternative remains an accessibility gap.
 
 ## Implementation
 

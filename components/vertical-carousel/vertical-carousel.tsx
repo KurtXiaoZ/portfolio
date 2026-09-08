@@ -1,12 +1,7 @@
 'use client';
 
 import clsx from 'clsx';
-import {
-  motion,
-  useAnimate,
-  useMotionValue,
-  useReducedMotion,
-} from 'motion/react';
+import { motion, useAnimate, useMotionValue } from 'motion/react';
 import type {
   ComponentPropsWithoutRef,
   PointerEvent as ReactPointerEvent,
@@ -114,11 +109,9 @@ function getHingeOrigin(delta: number) {
 function CarouselCard({
   delta,
   item,
-  prefersReducedMotion,
 }: {
   delta: number;
   item: VerticalCarouselItem;
-  prefersReducedMotion: boolean | null;
 }) {
   const [scope, animate] = useAnimate<HTMLDivElement>();
   const previousDeltaRef = useRef(delta);
@@ -150,7 +143,7 @@ function CarouselCard({
       cardRotateX.stop();
       cardOpacity.stop();
       animate(cardOpacity, 0, {
-        duration: prefersReducedMotion ? 0 : 0.24,
+        duration: 0.24,
       });
       return;
     }
@@ -178,26 +171,25 @@ function CarouselCard({
       cardRotateX.set(entryState.rotateX);
     }
 
-    const transition = prefersReducedMotion ? { duration: 0 } : FOLD_TRANSITION;
     const isEnteringAdjacentSlot =
       Math.abs(delta) === 1 && (Math.abs(previousDelta) > 1 || isChangingSides);
 
-    if (isEnteringAdjacentSlot && !prefersReducedMotion) {
+    if (isEnteringAdjacentSlot) {
       // Let the previous adjacent card clear this slot before revealing its
-      // replacement. Keep the fold timing and reduced-motion behavior intact.
+      // replacement.
       animate(cardOpacity, state.opacity, {
         delay: 0.32,
         duration: 0.4,
         ease: 'easeInOut',
       });
     } else {
-      animate(cardOpacity, state.opacity, transition);
+      animate(cardOpacity, state.opacity, FOLD_TRANSITION);
     }
 
-    animate(cardY, state.y, transition);
-    animate(cardScale, state.scale, transition);
-    animate(cardOriginY, originY, transition);
-    animate(cardRotateX, state.rotateX, transition);
+    animate(cardY, state.y, FOLD_TRANSITION);
+    animate(cardScale, state.scale, FOLD_TRANSITION);
+    animate(cardOriginY, originY, FOLD_TRANSITION);
+    animate(cardRotateX, state.rotateX, FOLD_TRANSITION);
   }, [
     animate,
     cardOpacity,
@@ -207,7 +199,6 @@ function CarouselCard({
     cardY,
     delta,
     isActive,
-    prefersReducedMotion,
   ]);
 
   return (
@@ -266,8 +257,6 @@ export function VerticalCarousel({
   const activeIndexRef = useRef(activeIndex);
   const viewportRef = useRef<HTMLDivElement>(null);
   const pointerStartRef = useRef<{ id: number; y: number } | null>(null);
-  // Accessibility: disables spatial animation when reduced motion is requested.
-  const prefersReducedMotion = useReducedMotion();
 
   const setActive = useCallback(
     (nextIndex: number) => {
@@ -407,7 +396,6 @@ export function VerticalCarousel({
             delta={getCircularDelta(index, activeIndex, itemCount)}
             item={item}
             key={item.id}
-            prefersReducedMotion={prefersReducedMotion}
           />
         ))}
       </div>

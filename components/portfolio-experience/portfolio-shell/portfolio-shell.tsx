@@ -1,7 +1,7 @@
 'use client';
 
 import clsx from 'clsx';
-import { motion, useAnimate, useReducedMotion } from 'motion/react';
+import { motion, useAnimate } from 'motion/react';
 import { useParams, usePathname } from 'next/navigation';
 import { useLayoutEffect, useRef, type ReactNode } from 'react';
 
@@ -13,11 +13,9 @@ const PANE_TRANSITION = {
 function LeftPane({
   children,
   contentOffset,
-  shouldReduceMotion,
 }: {
   children: ReactNode;
   contentOffset: number;
-  shouldReduceMotion: boolean;
 }) {
   const pathname = usePathname();
   const [scope, animate] = useAnimate();
@@ -28,28 +26,18 @@ function LeftPane({
 
     previousPathname.current = pathname;
 
-    const controls = shouldReduceMotion
-      ? animate(
-          scope.current,
-          {
-            clipPath: 'inset(0% 0% 0% 0%)',
-            opacity: 1,
-            x: 0,
-          },
-          { duration: 0 },
-        )
-      : animate(
-          scope.current,
-          {
-            clipPath: ['inset(0% 0% 0% 5%)', 'inset(0% 0% 0% 0%)'],
-            opacity: [0, 1],
-            x: [contentOffset, 0],
-          },
-          { ...PANE_TRANSITION, delay: 0.14, duration: 0.66 },
-        );
+    const controls = animate(
+      scope.current,
+      {
+        clipPath: ['inset(0% 0% 0% 5%)', 'inset(0% 0% 0% 0%)'],
+        opacity: [0, 1],
+        x: [contentOffset, 0],
+      },
+      { ...PANE_TRANSITION, delay: 0.14, duration: 0.66 },
+    );
 
     return () => controls.stop();
-  }, [animate, contentOffset, pathname, scope, shouldReduceMotion]);
+  }, [animate, contentOffset, pathname, scope]);
 
   return (
     <div className="absolute inset-0 overflow-y-auto" ref={scope}>
@@ -60,11 +48,8 @@ function LeftPane({
 
 export function PortfolioShell({ left, right }: PortfolioShellProps) {
   const params = useParams<{ slug?: string }>();
-  const prefersReducedMotion = useReducedMotion();
-  const shouldReduceMotion = prefersReducedMotion === true;
   const selectedSlug = params.slug ?? null;
   const isCaseStudyOpen = selectedSlug !== null;
-  const transition = shouldReduceMotion ? { duration: 0 } : PANE_TRANSITION;
   const contentOffset = selectedSlug === null ? -24 : 24;
 
   return (
@@ -76,14 +61,9 @@ export function PortfolioShell({ left, right }: PortfolioShellProps) {
           isCaseStudyOpen ? 'max-[760px]:h-[68dvh]' : 'max-[760px]:h-[46dvh]',
         )}
         initial={false}
-        transition={transition}
+        transition={PANE_TRANSITION}
       >
-        <LeftPane
-          contentOffset={contentOffset}
-          shouldReduceMotion={shouldReduceMotion}
-        >
-          {left}
-        </LeftPane>
+        <LeftPane contentOffset={contentOffset}>{left}</LeftPane>
       </motion.div>
 
       <motion.div
@@ -93,7 +73,7 @@ export function PortfolioShell({ left, right }: PortfolioShellProps) {
           isCaseStudyOpen ? 'max-[760px]:h-[32dvh]' : 'max-[760px]:h-[54dvh]',
         )}
         initial={false}
-        transition={transition}
+        transition={PANE_TRANSITION}
       >
         {right}
       </motion.div>

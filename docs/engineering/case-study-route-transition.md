@@ -2,7 +2,7 @@
 
 ## Status
 
-Partially implemented. The shared shell, route-driven transition, and one mocked case-study route are in place. The remaining case-study content, persistent-carousel synchronization between case-study routes, route focus transfer, and reduced-motion handling for mobile pane heights are not yet implemented. Motion details remain subject to visual tuning.
+Partially implemented. The shared shell, route-driven transition, and one mocked case-study route are in place. The remaining case-study content, persistent-carousel synchronization between case-study routes, route focus transfer, and reduced-motion handling are not yet implemented. Motion details remain subject to visual tuning.
 
 ## Purpose
 
@@ -103,7 +103,7 @@ Modified link interactions, including opening a case study in a new tab, should 
 - Prevent temporarily overlapping outgoing content from creating duplicate focus targets or duplicate assistive-technology output.
 - Preserve keyboard carousel navigation and native browser history behavior.
 - When reduced motion is requested, remove pane movement, spatial translation, clip animation, and stagger. Use a short crossfade or an immediate state change while preserving content, focus, and routing behavior.
-- The current Motion transitions honor reduced motion, but the mobile pane-height CSS transition still needs equivalent handling.
+- The current Motion and mobile pane-height CSS transitions do not vary based on the visitor's reduced-motion preference.
 
 ## Loading Performance
 
