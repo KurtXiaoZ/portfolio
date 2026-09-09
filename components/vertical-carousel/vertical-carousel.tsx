@@ -256,6 +256,7 @@ export function VerticalCarousel({
   );
   const activeIndexRef = useRef(activeIndex);
   const viewportRef = useRef<HTMLDivElement>(null);
+  const isPointerOverRef = useRef(false);
   const pointerStartRef = useRef<{ id: number; y: number } | null>(null);
 
   const setActive = useCallback(
@@ -333,6 +334,27 @@ export function VerticalCarousel({
     };
   }, [itemCount, setActive]);
 
+  useEffect(() => {
+    const handleWindowKeyDown = (event: KeyboardEvent) => {
+      if (!isPointerOverRef.current || event.defaultPrevented) {
+        return;
+      }
+
+      if (event.key !== 'ArrowDown' && event.key !== 'ArrowUp') return;
+
+      const direction = event.key === 'ArrowDown' ? 1 : -1;
+
+      event.preventDefault();
+      setActive(activeIndexRef.current + direction);
+    };
+
+    window.addEventListener('keydown', handleWindowKeyDown);
+
+    return () => {
+      window.removeEventListener('keydown', handleWindowKeyDown);
+    };
+  }, [setActive]);
+
   const handlePointerDown = (event: ReactPointerEvent<HTMLDivElement>) => {
     if (!event.isPrimary) return;
     // Capturing an interactive element's pointer would retarget its click to
@@ -347,6 +369,10 @@ export function VerticalCarousel({
   };
 
   const handleKeyDown = (event: React.KeyboardEvent<HTMLDivElement>) => {
+    if (!isPointerOverRef.current && event.target !== event.currentTarget) {
+      return;
+    }
+
     if (event.key === 'ArrowDown') {
       event.preventDefault();
       setActive(activeIndexRef.current + 1);
@@ -360,6 +386,14 @@ export function VerticalCarousel({
       event.preventDefault();
       setActive(itemCount - 1);
     }
+  };
+
+  const handleCardsPointerEnter = () => {
+    isPointerOverRef.current = true;
+  };
+
+  const handleCardsPointerLeave = () => {
+    isPointerOverRef.current = false;
   };
 
   const finishPointerGesture = (event: ReactPointerEvent<HTMLDivElement>) => {
@@ -391,13 +425,19 @@ export function VerticalCarousel({
       tabIndex={0}
     >
       <div className="absolute inset-[0_3.875rem_0_0] overflow-hidden">
-        {items.map((item, index) => (
-          <CarouselCard
-            delta={getCircularDelta(index, activeIndex, itemCount)}
-            item={item}
-            key={item.id}
-          />
-        ))}
+        <div
+          className="absolute inset-y-0 left-1/2 w-[min(25.42rem,100%)] -translate-x-1/2"
+          onPointerEnter={handleCardsPointerEnter}
+          onPointerLeave={handleCardsPointerLeave}
+        >
+          {items.map((item, index) => (
+            <CarouselCard
+              delta={getCircularDelta(index, activeIndex, itemCount)}
+              item={item}
+              key={item.id}
+            />
+          ))}
+        </div>
       </div>
       <div
         className="absolute top-1/2 right-5.75 flex -translate-y-1/2 flex-col gap-2.75"

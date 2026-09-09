@@ -56,6 +56,8 @@ Directions below describe the cards' movement on screen.
 
 Dot navigation selects its target immediately, without making intermediate cards active. The cards animate directly to their new states with the standard `720ms` fold easing and use the shortest circular path.
 
+`ArrowUp` and `ArrowDown` navigate while the pointer is over the cards column, even when focus is elsewhere on the page. The surrounding horizontal space, pagination dots, and the space reserved for them do not activate this behavior. The same keys continue to work when focus is within the carousel so keyboard-only visitors do not need to hover it.
+
 ## Wheel and Pointer Gestures
 
 Horizontal-dominant wheel events are ignored. A vertical wheel gesture behaves as follows:
