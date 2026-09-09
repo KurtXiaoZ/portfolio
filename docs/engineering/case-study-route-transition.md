@@ -2,7 +2,7 @@
 
 ## Status
 
-Partially implemented. The shared shell, route-driven transition, and one mocked case-study route are in place. The remaining case-study content, persistent-carousel synchronization between case-study routes, route focus transfer, and reduced-motion handling are not yet implemented. Motion details remain subject to visual tuning.
+Partially implemented. The shared shell, route-driven transition, and two mocked case-study routes are in place. The remaining case-study content, route focus transfer, and reduced-motion handling are not yet implemented. Motion details remain subject to visual tuning.
 
 ## Purpose
 
@@ -114,7 +114,7 @@ The homepage does not render case-study bodies. The current carousel explicitly 
 Content is currently divided by loading need:
 
 - Load card titles, tags, and the initially required carousel imagery with the landing page.
-- Prefetch implemented case-study route payloads after hydration.
+- Prefetch the two implemented case-study route payloads after hydration.
 - Render the full body and long-form media only within the selected `/work/[slug]` route.
 
 Image loading is expected to have a larger effect on initial loading performance than the client shell. Only immediately visible imagery should load eagerly. Distant carousel covers and long-form case-study images should load lazily, image `sizes` should reflect their rendered pane, and hero assets may be prefetched based on active-card, hover, or navigation intent when measurement supports it.

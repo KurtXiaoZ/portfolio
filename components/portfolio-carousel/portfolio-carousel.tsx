@@ -23,8 +23,8 @@ export function PortfolioCarousel({
 
   useEffect(() => {
     for (const slug of implementedSlugs) {
-      // Warm the only currently implemented article while the visitor explores
-      // the carousel, without adding its full content to the homepage payload.
+      // Warm implemented articles while the visitor explores the carousel,
+      // without adding their full content to the homepage payload.
       router.prefetch(`/work/${slug}`);
     }
   }, [implementedSlugs, router]);

@@ -2,7 +2,10 @@ import Image from 'next/image';
 
 import type { VerticalCarouselItem } from '@/components/vertical-carousel/vertical-carousel';
 
-export const implementedCaseStudySlugs = ['checkout-performance'] as const;
+export const implementedCaseStudySlugs = [
+  'checkout-performance',
+  'feature-flag-system',
+] as const;
 
 export const carouselItems = [
   {
@@ -26,14 +29,14 @@ export const carouselItems = [
     },
   },
   {
-    id: 'feature-platform',
-    label: 'Building a faster experimentation platform',
+    id: 'feature-flag-system',
+    label: 'Resolving 150+ feature flags in under 200ms',
     card: {
-      href: '#feature-platform',
+      href: '/work/feature-flag-system',
       cover: <div className="bg-[#ff8b66]" />,
-      imageAlt: 'Placeholder artwork for an experimentation platform',
-      tags: ['Platform', 'Performance'],
-      title: 'Building a faster experimentation platform',
+      imageAlt: 'Abstract artwork for a feature flag platform',
+      tags: ['Platform', 'Node.js'],
+      title: 'Resolving 150+ feature flags in under 200ms',
     },
   },
   {
