@@ -42,6 +42,11 @@ function LeftPane({ children }: { children: ReactNode }) {
   );
 }
 
+interface PortfolioShellProps {
+  left: ReactNode;
+  right: ReactNode;
+}
+
 export function PortfolioShell({ left, right }: PortfolioShellProps) {
   const params = useParams<{ slug?: string }>();
   const selectedSlug = params.slug ?? null;
@@ -74,9 +79,4 @@ export function PortfolioShell({ left, right }: PortfolioShellProps) {
       </motion.div>
     </main>
   );
-}
-
-interface PortfolioShellProps {
-  left: ReactNode;
-  right: ReactNode;
 }
