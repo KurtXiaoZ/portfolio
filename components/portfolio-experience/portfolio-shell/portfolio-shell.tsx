@@ -10,16 +10,12 @@ const PANE_TRANSITION = {
   ease: [0.2, 0.78, 0.2, 1],
 } as const;
 
-function LeftPane({
-  children,
-  contentOffset,
-}: {
-  children: ReactNode;
-  contentOffset: number;
-}) {
+function LeftPane({ children }: { children: ReactNode }) {
+  const params = useParams<{ slug?: string }>();
   const pathname = usePathname();
   const [scope, animate] = useAnimate();
   const previousPathname = useRef(pathname);
+  const contentOffset = params.slug === undefined ? -24 : 24;
 
   useLayoutEffect(() => {
     if (previousPathname.current === pathname) return;
@@ -50,7 +46,6 @@ export function PortfolioShell({ left, right }: PortfolioShellProps) {
   const params = useParams<{ slug?: string }>();
   const selectedSlug = params.slug ?? null;
   const isCaseStudyOpen = selectedSlug !== null;
-  const contentOffset = selectedSlug === null ? -24 : 24;
 
   return (
     <main className="flex h-dvh overflow-hidden bg-[#f1f1ee] text-[#171814] max-[760px]:flex-col dark:bg-[#131412] dark:text-[#f0f0e9]">
@@ -63,7 +58,7 @@ export function PortfolioShell({ left, right }: PortfolioShellProps) {
         initial={false}
         transition={PANE_TRANSITION}
       >
-        <LeftPane contentOffset={contentOffset}>{left}</LeftPane>
+        <LeftPane>{left}</LeftPane>
       </motion.div>
 
       <motion.div
