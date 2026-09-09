@@ -1,7 +1,7 @@
 import Image from 'next/image';
 import type { ReactNode } from 'react';
 
-import { BackToWorkLink } from '@/components/portfolio-experience/back-to-work-link/back-to-work-link';
+import { BackToWorkLink } from '@/components/back-to-work-link/back-to-work-link';
 
 const facts = [
   ['Focus', 'Rendering and data loading'],

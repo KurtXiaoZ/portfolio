@@ -4,8 +4,8 @@ import {
   carouselItems,
   implementedCaseStudySlugs,
 } from '@/app/carousel-items.mock';
-import { PortfolioCarousel } from '@/components/portfolio-experience/portfolio-carousel/portfolio-carousel';
-import { PortfolioShell } from '@/components/portfolio-experience/portfolio-shell/portfolio-shell';
+import { PortfolioCarousel } from '@/components/portfolio-carousel/portfolio-carousel';
+import { PortfolioShell } from '@/components/portfolio-shell/portfolio-shell';
 
 export default function PortfolioLayout({ children }: { children: ReactNode }) {
   return (
