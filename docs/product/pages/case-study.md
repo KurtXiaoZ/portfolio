@@ -40,7 +40,7 @@ As an initial target, the content pane should occupy roughly 65–70% of the vie
 
 Each case study has its own canonical URL and must support direct visits, refreshes, sharing, and browser history navigation.
 
-The persistent carousel provides direct navigation to the other featured case studies. Returning to the landing page reverses the opening transition, restores the carousel to its primary size, and preserves the previously selected card.
+The persistent carousel provides direct navigation to the other featured case studies. Returning to the landing page reverses the opening transition, restores the Case Studies tab and carousel to their primary state, and preserves the previously selected card.
 
 ## Open Questions
 

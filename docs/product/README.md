@@ -7,7 +7,8 @@ Product documentation defines what the portfolio should communicate and the expe
 - [Site structure](site-structure.md)
 - [Landing page](pages/landing.md)
 - [Case-study page](pages/case-study.md)
-- [About page](pages/about.md)
+- [Gallery content](pages/gallery.md)
+- [About content](pages/about.md)
 - [Individual case studies](case-studies/README.md)
 
 ## Scope

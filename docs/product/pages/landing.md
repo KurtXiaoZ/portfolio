@@ -2,14 +2,16 @@
 
 ## Purpose
 
-Introduce Kurt quickly and give visitors clear paths to his work and background.
+Introduce Kurt quickly and let visitors explore his work and background through three focused content modes.
 
 ## Required Content
 
 - Kurt's name and current professional identity
 - a concise introduction that communicates his strengths and perspective
+- Case Studies, Gallery, and About tab controls
 - entry points to several featured case studies
-- an entry point to the About page
+- a visual gallery of work
+- additional text and images about Kurt
 
 ## Desired Visitor Outcomes
 
@@ -18,16 +20,31 @@ After viewing the landing page, a visitor should understand:
 - who Kurt is
 - what kind of work he does
 - why his experience is worth exploring
-- where to go to learn about his work or about him personally
+- how to explore his detailed case studies, broader body of work, and personal background
 
 ## Current Layout Direction
 
 The desktop landing page uses a full-viewport, two-pane layout:
 
-- the left content pane introduces Kurt and currently shows only his name
-- the right carousel pane is the primary focus and shows one featured case study at a time
+- the left content pane introduces Kurt and presents three primary tabs: Case Studies, Gallery, and About
+- the introduction and tab controls remain stable while tab selection changes the right pane
+- the right pane is the primary exploration area and displays the content associated with the active tab
 - both panes fill the viewport height, and their widths can change with the current page state
 - the outer page shell does not scroll; each pane manages its own overflow when its content requires scrolling
+
+Case Studies is active by default. The active tab must be visually distinct, and each tab should have a clear associated panel. The controls should behave as an accessible tab interface, including keyboard navigation and programmatic relationships between tabs and panels.
+
+## Right-Pane Modes
+
+| Active tab   | Right-pane content                                                                                                        | Primary purpose                                                |
+| ------------ | ------------------------------------------------------------------------------------------------------------------------- | -------------------------------------------------------------- |
+| Case Studies | The featured-work carousel, with each card providing an entry point to an individual case study                           | Demonstrate depth, decision-making, execution, and impact      |
+| Gallery      | A curated collection of work images arranged in a polished, responsive visual layout                                      | Give a fast, broad impression of the range and quality of work |
+| About        | A composed mix of text and supporting images that expands on Kurt's background, perspective, interests, and working style | Help visitors understand the person behind the work            |
+
+Changing tabs should update only the right pane so the left-side introduction remains a stable orientation point. The transition should make the content change feel intentional without delaying exploration. Exact transition choreography remains open.
+
+### Case Studies Tab
 
 The carousel uses a vertical perspective-fold transition. Each item presents an image, followed by the case-study title and quiet metadata tags. Color and visual emphasis should come primarily from the image rather than the card background or tags.
 
@@ -39,21 +56,21 @@ See [Vertical Carousel Scroll Animation](../../engineering/vertical-carousel-scr
 
 Opening a case study is one coordinated transition with three visual states:
 
-1. **Home:** Kurt's name occupies the left pane, and the carousel is the dominant right pane.
-2. **Opening:** The selected card remains visible as a spatial anchor while the carousel pane shifts right and shrinks. At the same time, the content pane expands and Kurt's name begins to leave.
-3. **Reading:** The case-study content replaces Kurt's name in the expanded left pane. The carousel remains visible in the smaller right pane throughout the reading experience, with the selected card active.
+1. **Home:** Kurt's introduction and tabs occupy the left pane, and the Case Studies carousel is the dominant right pane.
+2. **Opening:** The selected card remains visible as a spatial anchor while the carousel pane shifts right and shrinks. At the same time, the content pane expands and the landing introduction and tabs begin to leave.
+3. **Reading:** The case-study content replaces the landing introduction and tabs in the expanded left pane. The carousel remains visible in the smaller right pane throughout the reading experience, with the selected card active.
 
 The opening transition should be orchestrated as follows:
 
-- Keep Kurt's name and the incoming case-study content mounted in the same left-pane region during the transition. They should overlap temporarily rather than swap through an abrupt unmount.
-- Start the carousel movement, carousel scaling, content-pane expansion, and name exit together. These changes should share a consistent duration and easing so the two panes feel like one layout transformation.
-- Fade and translate Kurt's name slightly left as it exits.
+- Keep the landing introduction and the incoming case-study content mounted in the same left-pane region during the transition. They should overlap temporarily rather than swap through an abrupt unmount.
+- Start the carousel movement, carousel scaling, content-pane expansion, and landing-content exit together. These changes should share a consistent duration and easing so the two panes feel like one layout transformation.
+- Fade and translate the landing introduction and tabs slightly left as they exit.
 - Begin revealing the case-study content shortly after the pane movement starts. Use opacity, a small horizontal translation, and a clip reveal so the reading experience appears to emerge into the space created by the moving carousel.
 - Treat the case study as one continuous reading experience rather than a separate introduction followed by a different layout state. Long-form images and other content should render in normal document flow.
 - Settle with the content pane occupying roughly 65–70% of the viewport and the carousel occupying roughly 30–35%. These proportions can be tuned, but the case-study content must be the primary focus.
 - Keep the carousel visible in this secondary right-pane position for the entire case study. It should not collapse into a rail or disappear as the visitor scrolls.
 - Fade each card's title and tags before the shrinking pane can make them reflow. In the settled reading state, center the image-only card, tighten the distance between adjacent cards to account for the removed metadata, and reveal its title over the image on hover or keyboard focus; keep tags exclusive to the landing state.
-- When returning to all work, reverse the sequence: remove the case-study content, expand the carousel, and restore Kurt's name while preserving the previously selected card.
+- When returning to all work, reverse the sequence: remove the case-study content, expand the carousel, and restore the landing introduction and tabs with Case Studies active while preserving the previously selected card.
 
 As an initial timing target, the full opening transition should take approximately 700–900ms. The case-study content can begin entering around 100–200ms after the pane movement starts. Exact values should be tuned visually while preserving this order and overlap.
 
@@ -66,14 +83,6 @@ The current persistent carousel reads the route-selected index only when it firs
 Browser Back and Forward navigation should produce the same transition associated with their source and destination. A direct visit, refresh, or other initial load of a case-study URL should render the settled reading layout without replaying the entrance animation.
 
 This direction is desktop-first. An initial stacked mobile layout is implemented, with provisional Home and reading-state pane heights. Its final proportions, choreography, and reduced-motion behavior remain open.
-
-## Initial Content Order
-
-1. Introduction
-2. Featured case studies
-3. About-page entry point
-
-Final copy and the About-page presentation remain open.
 
 ## Selected Case Studies
 
@@ -88,6 +97,8 @@ The presentation order and prominence of each case study remain open.
 ## Open Questions
 
 - What should the introduction emphasize most?
-- Where should the professional identity, concise introduction, and About entry point live within the name-only left-pane direction?
+- How should the introduction and three tab controls be composed within the left pane?
 - How much information should each case-study entry show?
-- Should the About entry point be a short preview or a simple call to action?
+- Should tab selection be reflected in the URL and browser history?
+- What transition should connect the three right-pane modes?
+- How should the tabbed layout adapt on mobile?
