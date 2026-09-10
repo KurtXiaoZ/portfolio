@@ -80,11 +80,12 @@ The panel animation components respond to the same route change and animate thei
 For the landing-page-to-case-study transition:
 
 1. The selected carousel card remains active as the spatial anchor.
-2. The right pane shifts and shrinks while the left pane expands.
-3. Kurt's introduction fades and translates slightly left.
-4. The case-study content begins entering shortly after the pane movement starts, using opacity, a small horizontal translation, and a clip reveal.
-5. The layout settles with the reading content at roughly 65–70% width and the carousel at roughly 30–35% width.
-6. The carousel stays in this secondary position for the complete reading experience.
+2. The card title and tags fade before the narrowing pane can reflow them.
+3. The right pane shifts and shrinks while the left pane expands, and the remaining image recenters as the card metadata collapses.
+4. Kurt's introduction fades and translates slightly left.
+5. The case-study content begins entering shortly after the pane movement starts, using opacity, a small horizontal translation, and a clip reveal.
+6. The layout settles with the reading content at roughly 65–70% width and the carousel at roughly 30–35% width.
+7. The carousel stays in this secondary position for the complete reading experience. Cards remain image-only by default and reveal their titles over the image on hover or keyboard focus.
 
 The initial timing target is 700–900ms for the full opening transition, with case-study content beginning approximately 100–200ms after pane movement starts. Exact values should be tuned visually while preserving the order and overlap defined by the product intent.
 

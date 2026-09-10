@@ -12,15 +12,15 @@ This choreography covers movement between cards within the carousel. The route-l
 
 Each card receives a circular delta relative to the active index:
 
-| Delta  | Position               | Transform                                     | Opacity |
-| ------ | ---------------------- | --------------------------------------------- | ------- |
-| `≤ -2` | Hidden above the stack | Holds or resets near the upper folded pose    | `0`     |
-| `-1`   | Upper card             | `y: -380px`, `rotateX: 58deg`, scale `1.1656` | `0.7`   |
-| `0`    | Active card            | `y: 0`, `rotateX: 0deg`, scale `1.24`         | `1`     |
-| `1`    | Lower card             | `y: 380px`, `rotateX: -58deg`, scale `1.1656` | `0.7`   |
-| `≥ 2`  | Hidden below the stack | Holds or resets near the lower folded pose    | `0`     |
+| Delta  | Position               | Transform                                                        | Opacity |
+| ------ | ---------------------- | ---------------------------------------------------------------- | ------- |
+| `≤ -2` | Hidden above the stack | Holds or resets near the upper folded pose                       | `0`     |
+| `-1`   | Upper card             | `y: -380px` (`-300px` compact), `rotateX: 58deg`, scale `1.1656` | `0.7`   |
+| `0`    | Active card            | `y: 0`, `rotateX: 0deg`, scale `1.24`                            | `1`     |
+| `1`    | Lower card             | `y: 380px` (`300px` compact), `rotateX: -58deg`, scale `1.1656`  | `0.7`   |
+| `≥ 2`  | Hidden below the stack | Holds or resets near the lower folded pose                       | `0`     |
 
-Distant cards do not accumulate another `380px` of translation for every delta. For example, a card at `-2` is not placed at `y: -760px`, and a card at `2` is not placed at `y: 760px`. Cards beyond the adjacent positions are invisible. Under normal, uninterrupted movement they remain at or reset to the corresponding `-380px` or `380px` folded pose. If a card leaves the visible stack during an interrupted fold, it freezes at its current rendered transform instead.
+Distant cards do not accumulate another offset for every delta. For example, a landing-state card at `-2` is not placed at `y: -760px`, and a card at `2` is not placed at `y: 760px`. Cards beyond the adjacent positions are invisible. Under normal, uninterrupted movement they remain at or reset to the corresponding folded pose: `±380px` on the landing page and `±300px` in the compact reading state. The tighter compact offset preserves the visual spacing after card titles and tags collapse. If a card leaves the visible stack during an interrupted fold, it freezes at its current rendered transform instead.
 
 The upper card hinges around its bottom edge. The lower card hinges around its top edge. This makes the edge nearest the active card act as the physical connection between positions. The rotating card uses a perspective of `1100px` and hides its back face.
 

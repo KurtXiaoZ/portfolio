@@ -23,6 +23,7 @@ export interface VerticalCarouselProps extends Omit<
   ComponentPropsWithoutRef<'div'>,
   'children'
 > {
+  compact?: boolean;
   initialIndex?: number;
   items: readonly VerticalCarouselItem[];
   onActiveIndexChange?: (index: number) => void;
@@ -46,6 +47,8 @@ const WHEEL_GESTURE_GAP = 200;
 const FAST_WHEEL_SPEED = 1;
 const SWIPE_THRESHOLD = 35;
 const CARD_SCALE = 1.24;
+const CARD_OFFSET = 380;
+const COMPACT_CARD_OFFSET = 300;
 const FOLD_TRANSITION = {
   duration: 0.72,
   ease: [0.2, 0.78, 0.2, 1],
@@ -78,9 +81,10 @@ function getWheelDeltaInPixels(event: WheelEvent) {
   return event.deltaY;
 }
 
-function getVisualState(delta: number): VisualState {
+function getVisualState(delta: number, compact = false): VisualState {
   const direction = Math.sign(delta);
   const distance = Math.abs(delta);
+  const cardOffset = compact ? COMPACT_CARD_OFFSET : CARD_OFFSET;
   let opacity = 0;
 
   if (distance === 0) {
@@ -92,7 +96,7 @@ function getVisualState(delta: number): VisualState {
   return {
     // Edge hinges leave the folded card's center closer to the active slot.
     // Give the hinge enough travel to park the card above or below it.
-    y: delta === 0 ? 0 : direction * 380,
+    y: delta === 0 ? 0 : direction * cardOffset,
     scale: delta === 0 ? CARD_SCALE : CARD_SCALE * 0.94,
     rotateX: delta === 0 ? 0 : direction * -58,
     opacity,
@@ -107,16 +111,18 @@ function getHingeOrigin(delta: number) {
 }
 
 function CarouselCard({
+  compact,
   delta,
   item,
 }: {
+  compact: boolean;
   delta: number;
   item: VerticalCarouselItem;
 }) {
   const [scope, animate] = useAnimate<HTMLDivElement>();
   const previousDeltaRef = useRef(delta);
   const [initialState] = useState(() => ({
-    ...getVisualState(delta),
+    ...getVisualState(delta, compact),
     originY: getHingeOrigin(delta),
   }));
   // Bind values from mount, including for initially hidden cards. Recycling
@@ -132,7 +138,7 @@ function CarouselCard({
   useEffect(() => {
     const previousDelta = previousDeltaRef.current;
     previousDeltaRef.current = delta;
-    const state = getVisualState(delta);
+    const state = getVisualState(delta, compact);
 
     if (Math.abs(delta) > 1) {
       // Freeze the actual rendered pose, including an interrupted fold.
@@ -158,7 +164,7 @@ function CarouselCard({
     if (Math.abs(previousDelta) > 1 || isChangingSides) {
       // Reintroduce recycled cards from their new edge while invisible,
       // never by rotating or translating across the back of the carousel.
-      const entryState = getVisualState(Math.sign(hingeDelta));
+      const entryState = getVisualState(Math.sign(hingeDelta), compact);
       cardY.stop();
       cardScale.stop();
       cardOpacity.stop();
@@ -197,6 +203,7 @@ function CarouselCard({
     cardRotateX,
     cardScale,
     cardY,
+    compact,
     delta,
     isActive,
   ]);
@@ -212,7 +219,7 @@ function CarouselCard({
       inert={isActive ? undefined : true}
       style={{
         translate: '-50% -50%',
-        zIndex: getVisualState(delta).zIndex,
+        zIndex: getVisualState(delta, compact).zIndex,
       }}
     >
       <motion.div
@@ -235,6 +242,7 @@ function CarouselCard({
           <CaseStudyCard
             {...item.card}
             className={clsx('max-w-none', item.card.className)}
+            compact={compact}
           />
         </motion.div>
       </motion.div>
@@ -245,6 +253,7 @@ function CarouselCard({
 export function VerticalCarousel({
   'aria-label': ariaLabel = 'Featured case studies',
   className,
+  compact = false,
   initialIndex = 0,
   items,
   onActiveIndexChange,
@@ -432,6 +441,7 @@ export function VerticalCarousel({
         >
           {items.map((item, index) => (
             <CarouselCard
+              compact={compact}
               delta={getCircularDelta(index, activeIndex, itemCount)}
               item={item}
               key={item.id}

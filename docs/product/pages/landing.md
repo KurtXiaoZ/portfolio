@@ -52,6 +52,7 @@ The opening transition should be orchestrated as follows:
 - Treat the case study as one continuous reading experience rather than a separate introduction followed by a different layout state. Long-form images and other content should render in normal document flow.
 - Settle with the content pane occupying roughly 65–70% of the viewport and the carousel occupying roughly 30–35%. These proportions can be tuned, but the case-study content must be the primary focus.
 - Keep the carousel visible in this secondary right-pane position for the entire case study. It should not collapse into a rail or disappear as the visitor scrolls.
+- Fade each card's title and tags before the shrinking pane can make them reflow. In the settled reading state, center the image-only card, tighten the distance between adjacent cards to account for the removed metadata, and reveal its title over the image on hover or keyboard focus; keep tags exclusive to the landing state.
 - When returning to all work, reverse the sequence: remove the case-study content, expand the carousel, and restore Kurt's name while preserving the previously selected card.
 
 As an initial timing target, the full opening transition should take approximately 700–900ms. The case-study content can begin entering around 100–200ms after the pane movement starts. Exact values should be tuned visually while preserving this order and overlap.

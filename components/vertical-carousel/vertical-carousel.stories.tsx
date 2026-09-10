@@ -141,6 +141,12 @@ type Story = StoryObj<typeof meta>;
 
 export const Default: Story = {};
 
+export const Compact: Story = {
+  args: {
+    compact: true,
+  },
+};
+
 export const StartsInTheMiddle: Story = {
   args: {
     initialIndex: 2,

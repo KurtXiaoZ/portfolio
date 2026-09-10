@@ -33,6 +33,7 @@ export function PortfolioCarousel({
 
   return (
     <VerticalCarousel
+      compact={selectedSlug !== null}
       initialIndex={selectedIndex >= 0 ? selectedIndex : 0}
       items={items}
     />
