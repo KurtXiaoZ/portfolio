@@ -38,14 +38,6 @@ export function CaseStudyCard({
         aria-label={imageAlt}
       >
         {cover}
-        {compact && (
-          <span
-            aria-hidden="true"
-            className="pointer-events-none absolute inset-x-0 bottom-0 bg-linear-to-t from-[#171814]/85 to-transparent px-4 pt-12 pb-3 text-sm leading-[1.3] font-medium tracking-tight text-white opacity-0 transition-opacity duration-200 group-hover/card:opacity-100 group-focus-visible/card:opacity-100 motion-reduce:transition-none"
-          >
-            {title}
-          </span>
-        )}
       </div>
       <div
         className={clsx(
