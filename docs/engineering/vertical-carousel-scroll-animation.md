@@ -22,7 +22,7 @@ Each card receives a circular delta relative to the active index:
 
 Distant cards do not accumulate another offset for every delta. For example, a landing-state card at `-2` is not placed at `y: -760px`, and a card at `2` is not placed at `y: 760px`. Cards beyond the adjacent positions are invisible. Under normal, uninterrupted movement they remain at or reset to the corresponding folded pose: `±380px` on the landing page and `±300px` in the compact reading state. The tighter compact offset preserves the visual spacing after card titles and tags collapse. If a card leaves the visible stack during an interrupted fold, it freezes at its current rendered transform instead.
 
-Each card is positioned and transformed within a fixed-height frame sized for the expanded cover, title, and tags. The frame remains stable while the metadata collapses in compact mode, so the percentage-based centering and transform origins do not move the remaining artwork downward at the end of the transition.
+Each card is centered and scaled within a fixed-height frame sized for the expanded cover, title, and tags. The frame remains stable while the metadata collapses in compact mode, so percentage-based centering and scale do not move the remaining artwork downward at the end of the transition. The nested perspective-fold layer remains content-sized so its top or bottom hinge stays attached to the visible card instead of the empty portion of the positioning frame.
 
 The upper card hinges around its bottom edge. The lower card hinges around its top edge. This makes the edge nearest the active card act as the physical connection between positions. The rotating card uses a perspective of `1100px` and hides its back face.
 

@@ -49,8 +49,8 @@ const SWIPE_THRESHOLD = 35;
 const CARD_SCALE = 1.24;
 const CARD_OFFSET = 380;
 const COMPACT_CARD_OFFSET = 300;
-// Keep every transform layer on stable geometry while card metadata collapses.
-// The heights accommodate the cover, card padding, a two-line title, and tags.
+// Keep centering and scale on stable geometry while card metadata collapses.
+// The fold layer remains content-sized so its hinge follows the visible card.
 const CARD_FRAME_HEIGHT = 'h-[20.8125rem] max-[560px]:h-[19.875rem]';
 const FOLD_TRANSITION = {
   duration: 0.72,
@@ -236,7 +236,6 @@ function CarouselCard({
         }}
       >
         <motion.div
-          className="h-full"
           style={{
             opacity: cardOpacity,
             originY: cardOriginY,
