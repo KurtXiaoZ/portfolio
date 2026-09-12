@@ -49,9 +49,10 @@ const SWIPE_THRESHOLD = 35;
 const CARD_SCALE = 1.24;
 const CARD_OFFSET = 380;
 const COMPACT_CARD_OFFSET = 300;
-// Keep centering and scale on stable geometry while card metadata collapses.
-// The fold layer remains content-sized so its hinge follows the visible card.
+// Keep every transform layer on stable geometry while card metadata collapses.
+// In compact mode, move the upper hinge to the bottom of the visible card.
 const CARD_FRAME_HEIGHT = 'h-[20.8125rem] max-[560px]:h-[19.875rem]';
+const COMPACT_UPPER_HINGE_ORIGIN = 237 / 333;
 const FOLD_TRANSITION = {
   duration: 0.72,
   ease: [0.2, 0.78, 0.2, 1],
@@ -107,8 +108,8 @@ function getVisualState(delta: number, compact = false): VisualState {
   };
 }
 
-function getHingeOrigin(delta: number) {
-  if (delta < 0) return 1;
+function getHingeOrigin(delta: number, compact = false) {
+  if (delta < 0) return compact ? COMPACT_UPPER_HINGE_ORIGIN : 1;
   if (delta > 0) return 0;
   return 0.5;
 }
@@ -126,7 +127,7 @@ function CarouselCard({
   const previousDeltaRef = useRef(delta);
   const [initialState] = useState(() => ({
     ...getVisualState(delta, compact),
-    originY: getHingeOrigin(delta),
+    originY: getHingeOrigin(delta, compact),
   }));
   // Bind values from mount, including for initially hidden cards. Recycling
   // must update existing values so .set() schedules a render before revealing
@@ -162,7 +163,7 @@ function CarouselCard({
       delta !== 0 &&
       Math.sign(previousDelta) !== Math.sign(delta);
     const hingeDelta = isActive ? previousDelta : delta;
-    const originY = getHingeOrigin(hingeDelta);
+    const originY = getHingeOrigin(hingeDelta, compact);
 
     if (Math.abs(previousDelta) > 1 || isChangingSides) {
       // Reintroduce recycled cards from their new edge while invisible,
@@ -236,6 +237,7 @@ function CarouselCard({
         }}
       >
         <motion.div
+          className="h-full"
           style={{
             opacity: cardOpacity,
             originY: cardOriginY,
