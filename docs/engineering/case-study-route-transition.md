@@ -81,7 +81,7 @@ For the landing-page-to-case-study transition:
 
 1. The selected carousel card remains active as the spatial anchor.
 2. The card title and tags fade before the narrowing pane can reflow them.
-3. The right pane shifts and shrinks while the left pane expands, and the remaining image recenters as the card metadata collapses.
+3. The right pane shifts and shrinks while the left pane expands. Card metadata collapses inside a stable positioning frame so tightening the carousel spacing does not introduce a second vertical shift.
 4. Kurt's introduction fades and translates slightly left.
 5. The case-study content begins entering shortly after the pane movement starts, using opacity, a small horizontal translation, and a clip reveal.
 6. The layout settles with the reading content at roughly 65–70% width and the carousel at roughly 30–35% width.

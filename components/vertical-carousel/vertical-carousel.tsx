@@ -49,6 +49,9 @@ const SWIPE_THRESHOLD = 35;
 const CARD_SCALE = 1.24;
 const CARD_OFFSET = 380;
 const COMPACT_CARD_OFFSET = 300;
+// Keep every transform layer on stable geometry while card metadata collapses.
+// The heights accommodate the cover, card padding, a two-line title, and tags.
+const CARD_FRAME_HEIGHT = 'h-[20.8125rem] max-[560px]:h-[19.875rem]';
 const FOLD_TRANSITION = {
   duration: 0.72,
   ease: [0.2, 0.78, 0.2, 1],
@@ -214,6 +217,7 @@ function CarouselCard({
       aria-hidden={!isActive}
       className={clsx(
         'absolute top-1/2 left-1/2 w-[min(20.5rem,82%)]',
+        CARD_FRAME_HEIGHT,
         isActive ? 'pointer-events-auto' : 'pointer-events-none',
       )}
       inert={isActive ? undefined : true}
@@ -223,6 +227,7 @@ function CarouselCard({
       }}
     >
       <motion.div
+        className="h-full"
         style={{
           scale: cardScale,
           y: cardY,
@@ -231,6 +236,7 @@ function CarouselCard({
         }}
       >
         <motion.div
+          className="h-full"
           style={{
             opacity: cardOpacity,
             originY: cardOriginY,
