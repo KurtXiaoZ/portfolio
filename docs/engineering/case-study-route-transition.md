@@ -35,20 +35,22 @@ The exact file organization may change as the implementation develops, but it mu
 
 ## Rendering Boundaries
 
-The shared Server Component layout composes the left route-content slot and the right carousel slot, then passes both to a small client shell. The left route content remains server-rendered, while the interactive carousel is a focused Client Component.
+The shared Server Component layout passes the left route-content slot to a small client shell. The left route content remains server-rendered, while the shell owns landing-tab selection and conditionally renders the active right-pane implementation. The carousel remains a focused Client Component.
 
 ```text
 Shared portfolio layout (server)
 └── Portfolio shell (client)
     ├── Left-pane sizing and content transition
     │   └── Route-content slot (server-rendered)
-    └── Right-pane sizing
-        └── Portfolio carousel (client)
+    └── Right-pane sizing and landing-tab selection
+        ├── Portfolio carousel (client)
+        ├── Gallery panel
+        └── About panel
 ```
 
-Passing server-composed slots to the client shell preserves the Server Component boundary of the route content. The shell must not import Server Components directly. Focused Client Components read route information from Next.js only when they need it.
+Passing the route-content slot to the client shell preserves its Server Component boundary. The right-pane implementations are imported by the client shell and only the selected panel is mounted. Focused Client Components read route information from Next.js only when they need it.
 
-There is no shared cross-panel client state beyond the current route, so a Context provider is unnecessary. Route-aware Client Components derive the selected case-study slug with Next.js navigation hooks. The carousel keeps its own interaction state, while Motion values, element references, opacity, transforms, clip paths, and other frame-by-frame animation state remain local to the client component that owns the corresponding visual element.
+The shell owns the active landing tab and exposes it to the left-pane tab controls through a small Context provider. When the persistent shell enters a case-study route, it synchronizes that state to Case Studies before the browser paints so the active tab remains the single value controlling the right pane. The current route remains the sole source of the open case study, and route-aware Client Components derive its slug with Next.js navigation hooks. The carousel keeps its own interaction state, so switching to Gallery or About and back starts the carousel from its default card. Motion values, element references, opacity, transforms, clip paths, and other frame-by-frame animation state remain local to the client component that owns the corresponding visual element.
 
 ## Route and Client Responsibilities
 
@@ -108,9 +110,9 @@ Modified link interactions, including opening a case study in a new tab, should 
 
 ## Loading Performance
 
-The client shell should remain small. Passing server-rendered panels through its slots does not by itself add their component implementations to the browser bundle. Only the shell and focused client interaction components require hydration.
+The client shell statically imports the three right-pane implementations, so their modules are currently available in the initial client bundle even though only the selected panel mounts. This is acceptable while Gallery and About are small placeholders. Revisit dynamic imports when those panels become substantial enough for deferred loading to improve the initial experience.
 
-The homepage does not render case-study bodies. The current carousel explicitly prefetches the route payload for every implemented case study after hydration; with only one implemented route this keeps its opening responsive. Revisit that policy as the number and size of case studies grow so the homepage does not eagerly transfer every complete case study.
+The homepage does not render case-study bodies. The current carousel explicitly prefetches the route payload for every implemented case study after hydration; with only two implemented routes this keeps opening them responsive. Revisit that policy as the number and size of case studies grow so the homepage does not eagerly transfer every complete case study.
 
 Content is currently divided by loading need:
 

@@ -1,22 +1,7 @@
 import type { ReactNode } from 'react';
 
-import {
-  carouselItems,
-  implementedCaseStudySlugs,
-} from '@/app/carousel-items.mock';
-import { PortfolioCarousel } from '@/components/portfolio-carousel/portfolio-carousel';
 import { PortfolioShell } from '@/components/portfolio-shell/portfolio-shell';
 
 export default function PortfolioLayout({ children }: { children: ReactNode }) {
-  return (
-    <PortfolioShell
-      left={<div className="h-full">{children}</div>}
-      right={
-        <PortfolioCarousel
-          implementedSlugs={implementedCaseStudySlugs}
-          items={carouselItems}
-        />
-      }
-    />
-  );
+  return <PortfolioShell left={children} />;
 }

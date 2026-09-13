@@ -1,6 +1,11 @@
+'use client';
+
+import { useTabs } from '@/components/portfolio-shell/portfolio-shell';
 import { Tab } from '@/components/tab/tab';
 
 export function HomeIntroduction() {
+  const { activeTab, setActiveTab } = useTabs();
+
   return (
     <div className="w-full max-w-md px-8 max-[560px]:px-6">
       <h1 className="mb-4 text-5xl leading-none font-medium tracking-[-0.045em] text-[#171814] dark:text-[#f0f0e9]">
@@ -11,9 +16,24 @@ export function HomeIntroduction() {
         systems.
       </p>
       <div className="mt-8 flex flex-wrap gap-x-6 gap-y-2" role="tablist">
-        <Tab active>Case Studies</Tab>
-        <Tab disabled>Gallery</Tab>
-        <Tab disabled>About</Tab>
+        <Tab
+          active={activeTab === 'case-studies'}
+          onClick={() => setActiveTab('case-studies')}
+        >
+          Case Studies
+        </Tab>
+        <Tab
+          active={activeTab === 'gallery'}
+          onClick={() => setActiveTab('gallery')}
+        >
+          Gallery
+        </Tab>
+        <Tab
+          active={activeTab === 'about'}
+          onClick={() => setActiveTab('about')}
+        >
+          About
+        </Tab>
       </div>
     </div>
   );

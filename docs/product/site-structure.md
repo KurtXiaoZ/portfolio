@@ -36,6 +36,8 @@ The Case Studies, Gallery, and About tabs form the landing page's primary naviga
 
 Visitors should be able to move easily between the landing experience and individual case studies. Every case-study page should provide a clear path back to the Case Studies tab.
 
+Opening a case study makes Case Studies the active landing tab. Returning to the landing page therefore restores the Case Studies panel rather than a previously selected Gallery or About panel.
+
 The landing page and case-study pages share one portfolio shell. On desktop, navigating to a case study changes the primary content pane while preserving the featured-work carousel in a smaller secondary pane. Each case-study route must support direct visits, refreshes, sharing, and browser Back and Forward navigation.
 
 ## URL Structure
@@ -61,5 +63,4 @@ A standalone About page, blog, writing section, standalone contact page, and sep
 - Which case study should appear first?
 - Should every case study be linked directly from the landing page?
 - Should tab selection be reflected in the URL and browser history?
-- Should the selected tab persist when a visitor returns to the landing page?
 - Should the portfolio include contact or resume actions within the existing pages?

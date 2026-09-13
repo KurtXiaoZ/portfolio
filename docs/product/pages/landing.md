@@ -42,7 +42,7 @@ Case Studies is active by default. The active tab must be visually distinct, and
 | Gallery      | A curated collection of work images arranged in a polished, responsive visual layout                                      | Give a fast, broad impression of the range and quality of work |
 | About        | A composed mix of text and supporting images that expands on Kurt's background, perspective, interests, and working style | Help visitors understand the person behind the work            |
 
-Changing tabs should update only the right pane so the left-side introduction remains a stable orientation point. The transition should make the content change feel intentional without delaying exploration. Exact transition choreography remains open.
+Changing tabs updates only the right pane so the left-side introduction remains a stable orientation point. The outgoing panel fades and moves slightly left while the incoming panel fades in from the right. The transition is intentionally brief so it clarifies the content change without delaying exploration.
 
 ### Case Studies Tab
 
@@ -100,5 +100,4 @@ The presentation order and prominence of each case study remain open.
 - How should the introduction and three tab controls be composed within the left pane?
 - How much information should each case-study entry show?
 - Should tab selection be reflected in the URL and browser history?
-- What transition should connect the three right-pane modes?
 - How should the tabbed layout adapt on mobile?
