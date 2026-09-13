@@ -8,7 +8,7 @@ Introduce Kurt quickly and let visitors explore his work and background through 
 
 - Kurt's name and current professional identity
 - a concise introduction that communicates his strengths and perspective
-- Case Studies, Gallery, and About tab controls
+- Case Studies, Gallery, and About navigation links
 - entry points to several featured case studies
 - a visual gallery of work
 - additional text and images about Kurt
@@ -27,12 +27,12 @@ After viewing the landing page, a visitor should understand:
 The desktop landing page uses a full-viewport, two-pane layout:
 
 - the left content pane introduces Kurt and presents three primary tabs: Case Studies, Gallery, and About
-- the introduction and tab controls remain stable while tab selection changes the right pane
+- the introduction and navigation controls remain stable while route selection changes the right pane
 - the right pane is the primary exploration area and displays the content associated with the active tab
 - both panes fill the viewport height, and their widths can change with the current page state
 - the outer page shell does not scroll; each pane manages its own overflow when its content requires scrolling
 
-Case Studies is active by default. The active tab must be visually distinct, and each tab should have a clear associated panel. The controls should behave as an accessible tab interface, including keyboard navigation and programmatic relationships between tabs and panels.
+Case Studies is active by default. The active view must be visually distinct. The controls are navigation links so each view has a shareable URL and works with browser history.
 
 ## Right-Pane Modes
 
@@ -97,7 +97,6 @@ The presentation order and prominence of each case study remain open.
 ## Open Questions
 
 - What should the introduction emphasize most?
-- How should the introduction and three tab controls be composed within the left pane?
+- How should the introduction and three navigation controls be composed within the left pane?
 - How much information should each case-study entry show?
-- Should tab selection be reflected in the URL and browser history?
 - How should the tabbed layout adapt on mobile?

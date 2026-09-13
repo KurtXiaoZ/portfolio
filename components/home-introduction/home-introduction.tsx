@@ -1,10 +1,12 @@
 'use client';
 
-import { useTabs } from '@/components/portfolio-shell/portfolio-shell';
+import { usePathname } from 'next/navigation';
+
+import { getLandingView } from '@/components/portfolio-shell/portfolio-routes';
 import { Tab } from '@/components/tab/tab';
 
 export function HomeIntroduction() {
-  const { activeTab, setActiveTab } = useTabs();
+  const activeView = getLandingView(usePathname());
 
   return (
     <div className="w-full max-w-md px-8 max-[560px]:px-6">
@@ -15,26 +17,20 @@ export function HomeIntroduction() {
         Senior full-stack engineer building thoughtful products and dependable
         systems.
       </p>
-      <div className="mt-8 flex flex-wrap gap-x-6 gap-y-2" role="tablist">
-        <Tab
-          active={activeTab === 'case-studies'}
-          onClick={() => setActiveTab('case-studies')}
-        >
+      <nav
+        aria-label="Portfolio sections"
+        className="mt-8 flex flex-wrap gap-x-6 gap-y-2"
+      >
+        <Tab active={activeView === 'case-studies'} href="/">
           Case Studies
         </Tab>
-        <Tab
-          active={activeTab === 'gallery'}
-          onClick={() => setActiveTab('gallery')}
-        >
+        <Tab active={activeView === 'gallery'} href="/gallery">
           Gallery
         </Tab>
-        <Tab
-          active={activeTab === 'about'}
-          onClick={() => setActiveTab('about')}
-        >
+        <Tab active={activeView === 'about'} href="/about">
           About
         </Tab>
-      </div>
+      </nav>
     </div>
   );
 }

@@ -4,7 +4,7 @@
 
 Give visitors a quick, visual understanding of the range, craft, and character of Kurt's work without requiring them to enter a long-form case study.
 
-The Gallery appears in the landing page's right pane when the Gallery tab is active. Kurt's concise introduction and the three primary tab controls remain visible in the left pane.
+The Gallery appears in the landing page's right pane at its canonical `/gallery` route. Kurt's concise introduction and the three primary navigation controls remain visible in the left pane.
 
 ## Content Direction
 

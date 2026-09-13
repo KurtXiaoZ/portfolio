@@ -21,6 +21,10 @@ app/
 └── (portfolio)/
     ├── layout.tsx
     ├── page.tsx
+    ├── gallery/
+    │   └── page.tsx
+    ├── about/
+    │   └── page.tsx
     └── work/
         └── [slug]/
             └── page.tsx
@@ -29,20 +33,21 @@ app/
 The exact file organization may change as the implementation develops, but it must preserve the following properties:
 
 - `/` renders the landing state.
+- `/gallery` and `/about` render shareable landing views while preserving the shared shell.
 - `/work/[slug]` renders the selected case study.
 - Case-study URLs support direct visits, refreshes, sharing, and browser history.
 - Client-side navigation preserves the shared portfolio frame instead of remounting the entire experience.
 
 ## Rendering Boundaries
 
-The shared Server Component layout passes the left route-content slot to a small client shell. The left route content remains server-rendered, while the shell owns landing-tab selection and conditionally renders the active right-pane implementation. The carousel remains a focused Client Component.
+The shared Server Component layout passes the left route-content slot to a small client shell. The left route content remains server-rendered, while the shell derives the landing view from the pathname and conditionally renders the active right-pane implementation. The carousel remains a focused Client Component.
 
 ```text
 Shared portfolio layout (server)
 └── Portfolio shell (client)
     ├── Left-pane sizing and content transition
     │   └── Route-content slot (server-rendered)
-    └── Right-pane sizing and landing-tab selection
+    └── Right-pane sizing and route-derived landing selection
         ├── Portfolio carousel (client)
         ├── Gallery panel
         └── About panel
@@ -50,11 +55,11 @@ Shared portfolio layout (server)
 
 Passing the route-content slot to the client shell preserves its Server Component boundary. The right-pane implementations are imported by the client shell and only the selected panel is mounted. Focused Client Components read route information from Next.js only when they need it.
 
-The shell owns the active landing tab and exposes it to the left-pane tab controls through a small Context provider. When the persistent shell enters a case-study route, it synchronizes that state to Case Studies before the browser paints so the active tab remains the single value controlling the right pane. The current route remains the sole source of the open case study, and route-aware Client Components derive its slug with Next.js navigation hooks. The carousel keeps its own interaction state, so switching to Gallery or About and back starts the carousel from its default card. Motion values, element references, opacity, transforms, clip paths, and other frame-by-frame animation state remain local to the client component that owns the corresponding visual element.
+The pathname is the sole source of the active landing view and the open case study. The navigation controls and shell derive their selected state from that pathname, while route-aware Client Components derive a case-study slug with Next.js navigation hooks. The carousel keeps its own interaction state, so switching to Gallery or About and back starts the carousel from its default card. Motion values, element references, opacity, transforms, clip paths, and other frame-by-frame animation state remain local to the client component that owns the corresponding visual element.
 
 ## Route and Client Responsibilities
 
-The URL is the durable source of truth for which case study is open. It must remain sufficient to reconstruct the correct settled interface after a refresh or direct visit.
+The URL is the durable source of truth for the selected landing view and for which case study is open. It must remain sufficient to reconstruct the correct settled interface after a refresh or direct visit.
 
 Route-aware client components derive the selected case study directly from the current route. Links and client navigation request route changes without creating a second copy of selection state.
 
@@ -66,6 +71,7 @@ Animation is based on the source and destination states, not on the particular n
 
 | Navigation                   | Intended behavior                                                                                                 |
 | ---------------------------- | ----------------------------------------------------------------------------------------------------------------- |
+| Landing view to landing view | Keep Kurt's introduction fixed and transition only the right-pane content.                                        |
 | Landing page to case study   | Shrink the carousel pane, expand the content pane, remove Kurt's introduction, and reveal the case-study content. |
 | Case study to landing page   | Reverse the opening transition and preserve the previously selected carousel card.                                |
 | Case study A to case study B | Keep the pane proportions fixed while changing the article content and moving the active carousel card.           |

@@ -4,7 +4,7 @@
 
 Give visitors a fuller understanding of Kurt's background, perspective, and personality than the concise landing-page introduction can provide.
 
-The About experience appears in the landing page's right pane when the About tab is active. Kurt's concise introduction and the three primary tab controls remain visible in the left pane.
+The About experience appears in the landing page's right pane at its canonical `/about` route. Kurt's concise introduction and the three primary navigation controls remain visible in the left pane.
 
 ## Potential Content
 

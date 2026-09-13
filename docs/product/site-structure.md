@@ -32,7 +32,7 @@ The About tab should combine text and images in the landing page's right pane to
 
 ## Primary Navigation
 
-The Case Studies, Gallery, and About tabs form the landing page's primary navigation. The introduction and tab controls remain in the left pane while the selected tab changes the right pane. Case Studies is the default active tab.
+The Case Studies, Gallery, and About links form the landing page's primary navigation. The introduction and navigation controls remain in the left pane while the selected route changes the right pane. Case Studies is the default view.
 
 Visitors should be able to move easily between the landing experience and individual case studies. Every case-study page should provide a clear path back to the Case Studies tab.
 
@@ -43,9 +43,9 @@ The landing page and case-study pages share one portfolio shell. On desktop, nav
 ## URL Structure
 
 - `/` is the landing page.
+- `/gallery` selects the Gallery view in the landing-page shell.
+- `/about` selects the About view in the landing-page shell.
 - `/work/[slug]` is the canonical route pattern for individual case studies.
-
-Whether the landing-page tabs should have distinct, shareable URLs remains open.
 
 ## Initial Scope
 
@@ -62,5 +62,4 @@ A standalone About page, blog, writing section, standalone contact page, and sep
 
 - Which case study should appear first?
 - Should every case study be linked directly from the landing page?
-- Should tab selection be reflected in the URL and browser history?
 - Should the portfolio include contact or resume actions within the existing pages?

@@ -10,13 +10,14 @@ const meta = {
   },
   decorators: [
     (Story) => (
-      <div role="tablist" aria-label="Portfolio sections">
+      <nav aria-label="Portfolio sections">
         <Story />
-      </div>
+      </nav>
     ),
   ],
   args: {
     children: 'Case Studies',
+    href: '/',
   },
 } satisfies Meta<typeof Tab>;
 

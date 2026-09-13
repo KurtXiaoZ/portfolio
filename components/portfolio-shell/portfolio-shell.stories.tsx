@@ -31,14 +31,22 @@ type Story = StoryObj<typeof meta>;
 export const CaseStudiesSelected: Story = {};
 
 export const GallerySelected: Story = {
-  args: {
-    initialTab: 'gallery',
+  parameters: {
+    nextjs: {
+      navigation: {
+        pathname: '/gallery',
+      },
+    },
   },
 };
 
 export const AboutSelected: Story = {
-  args: {
-    initialTab: 'about',
+  parameters: {
+    nextjs: {
+      navigation: {
+        pathname: '/about',
+      },
+    },
   },
 };
 
