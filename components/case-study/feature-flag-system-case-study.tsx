@@ -1,6 +1,7 @@
 import type { ReactNode } from 'react';
 
 import { BackToWorkLink } from '@/components/back-to-work-link/back-to-work-link';
+import { TableOfContents } from '@/components/table-of-contents/table-of-contents';
 
 const facts = [
   ['Scale', '150+ flags per request'],
@@ -14,10 +15,22 @@ const flagFlow = [
   ['03', 'Scoped cache', 'Reuse results for the lifetime of the request.'],
 ] as const;
 
+const tableOfContentsLinks = [
+  { href: '#challenge', text: 'The challenge' },
+  { href: '#system-design', text: 'System design' },
+  { href: '#developer-api', text: 'Developer API' },
+  { href: '#outcome', text: 'Outcome' },
+] as const;
+
 export function FeatureFlagSystemCaseStudy() {
   return (
-    <article className="mx-auto w-full max-w-3xl px-10 pt-9 pb-28 max-[960px]:px-7 max-[560px]:px-5">
+    <article className="mx-auto w-full max-w-3xl px-10 pt-9 pb-28 min-[1200px]:mr-auto min-[1200px]:ml-36 min-[1200px]:w-[calc(100%-9rem)] max-[960px]:px-7 max-[560px]:px-5">
       <BackToWorkLink />
+
+      <TableOfContents
+        className="left-4 z-10 hidden w-28 min-[1200px]:block"
+        links={tableOfContentsLinks}
+      />
 
       <header className="pt-20 pb-14 max-[760px]:pt-12">
         <p className="mb-5 text-sm font-medium tracking-[0.14em] text-[#6a6c62] uppercase dark:text-[#a8aaa2]">
@@ -77,6 +90,7 @@ export function FeatureFlagSystemCaseStudy() {
       <div className="space-y-18">
         <CaseStudySection
           eyebrow="01 · The challenge"
+          id="challenge"
           title="Feature flags had become part of the request path"
         >
           <p>
@@ -104,6 +118,7 @@ export function FeatureFlagSystemCaseStudy() {
 
         <CaseStudySection
           eyebrow="02 · System design"
+          id="system-design"
           title="Put context and caching at the request boundary"
         >
           <p>
@@ -121,6 +136,7 @@ export function FeatureFlagSystemCaseStudy() {
 
         <CaseStudySection
           eyebrow="03 · Developer API"
+          id="developer-api"
           title="Support sync and async rules without two mental models"
         >
           <p>
@@ -139,6 +155,7 @@ export function FeatureFlagSystemCaseStudy() {
 
         <CaseStudySection
           eyebrow="04 · Outcome"
+          id="outcome"
           title="Fast evaluation with a more legible operating model"
         >
           <p>
@@ -160,18 +177,24 @@ export function FeatureFlagSystemCaseStudy() {
 function CaseStudySection({
   children,
   eyebrow,
+  id,
   title,
 }: {
   children: ReactNode;
   eyebrow: string;
+  id: string;
   title: string;
 }) {
   return (
-    <section>
+    <section aria-labelledby={id}>
       <p className="text-sm font-medium tracking-[0.12em] text-[#777970] uppercase dark:text-[#989b91]">
         {eyebrow}
       </p>
-      <h2 className="mt-4 max-w-2xl text-3xl leading-tight font-medium tracking-[-0.035em] text-balance max-[560px]:text-2xl dark:text-[#f0f0e9]">
+      <h2
+        className="mt-4 max-w-2xl scroll-mt-9 text-3xl leading-tight font-medium tracking-[-0.035em] text-balance focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[#657800] max-[560px]:text-2xl dark:text-[#f0f0e9] dark:focus-visible:outline-[#c6ec39]"
+        id={id}
+        tabIndex={-1}
+      >
         {title}
       </h2>
       <div className="mt-6 max-w-2xl space-y-5 text-lg leading-8 text-[#55574f] max-[560px]:text-base max-[560px]:leading-7 dark:text-[#b7b9af]">

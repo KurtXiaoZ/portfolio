@@ -1,5 +1,12 @@
+'use client';
+
 import clsx from 'clsx';
-import type { ComponentPropsWithoutRef } from 'react';
+import { useSyncExternalStore, type ComponentPropsWithoutRef } from 'react';
+import { createPortal } from 'react-dom';
+
+const subscribeToHydration = () => () => {};
+const getClientSnapshot = () => true;
+const getServerSnapshot = () => false;
 
 export interface TableOfContentsLink {
   href: string;
@@ -19,10 +26,18 @@ export function TableOfContents({
   links,
   ...props
 }: TableOfContentsProps) {
-  return (
+  const isHydrated = useSyncExternalStore(
+    subscribeToHydration,
+    getClientSnapshot,
+    getServerSnapshot,
+  );
+
+  if (!isHydrated) return null;
+
+  return createPortal(
     <nav
       aria-label={ariaLabel}
-      className={clsx('text-sm', className)}
+      className={clsx('fixed top-1/2 -translate-y-1/2 text-sm', className)}
       {...props}
     >
       <ul className="flex flex-col gap-3">
@@ -37,6 +52,7 @@ export function TableOfContents({
           </li>
         ))}
       </ul>
-    </nav>
+    </nav>,
+    document.body,
   );
 }
