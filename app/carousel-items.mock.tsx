@@ -68,8 +68,7 @@ export const carouselItems = [
     card: {
       href: '/work/atomic-events',
       cover: <AtomicEventsCover />,
-      imageAlt:
-        'Abstract interaction lifecycle flowing from intent through waiting to ready',
+      imageAlt: 'PayPal checkout applying rewards across two payment methods',
       tags: ['TypeScript', 'Observability'],
       title: 'Standardizing interaction telemetry at scale',
     },
@@ -89,27 +88,29 @@ export const carouselItems = [
 
 function AtomicEventsCover() {
   return (
-    <div className="relative overflow-hidden bg-[#c9f4e4] p-5 text-[#12251f]">
-      <div className="absolute -top-10 -right-8 size-28 rounded-full bg-[#7c5cff]/20 blur-2xl" />
-      <div className="relative flex h-full flex-col justify-between rounded-[10px] border border-[#12251f]/10 bg-white/25 p-4">
-        <div className="flex items-center justify-between text-[0.55rem] font-medium tracking-[0.12em] uppercase opacity-55">
-          <span>Interaction lifecycle</span>
-          <span>AE</span>
-        </div>
-        <div className="grid grid-cols-[auto_1fr_auto_1fr_auto] items-center gap-2">
-          <span className="size-3 rounded-full bg-[#12251f]" />
-          <span className="h-px bg-[#12251f]/30" />
-          <span className="flex size-11 items-center justify-center rounded-full bg-[#7c5cff] text-[0.55rem] font-medium tracking-wide text-white uppercase shadow-lg shadow-[#7c5cff]/25">
-            Wait
-          </span>
-          <span className="h-px bg-[#12251f]/30" />
-          <span className="size-3 rounded-full border-[3px] border-[#168465] bg-white" />
-        </div>
-        <div className="flex justify-between text-[0.55rem] font-medium tracking-[0.1em] uppercase opacity-50">
-          <span>Intent</span>
-          <span>Ready</span>
-        </div>
-      </div>
+    <div className="relative overflow-hidden bg-[#eff5fb]">
+      <Image
+        alt=""
+        className="object-cover"
+        fill
+        sizes="(max-width: 760px) 82vw, (max-width: 1200px) 41vw, 328px"
+        src="/images/case-studies/atomic-events-apply-rewards-thumbnail.jpg"
+      />
+      <video
+        aria-hidden="true"
+        autoPlay
+        className="absolute inset-0 h-full w-full object-cover motion-reduce:hidden"
+        loop
+        muted
+        playsInline
+        poster="/images/case-studies/atomic-events-apply-rewards-thumbnail.jpg"
+        preload="metadata"
+      >
+        <source
+          src="/videos/case-studies/atomic-events-apply-rewards-thumbnail.mp4"
+          type="video/mp4"
+        />
+      </video>
     </div>
   );
 }
