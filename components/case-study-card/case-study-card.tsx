@@ -51,10 +51,10 @@ export function CaseStudyCard({
             compact ? 'opacity-0 delay-0' : 'opacity-100 delay-[600ms]',
           )}
         >
-          <h3 className="mx-2 mt-4 mb-1.5 text-base leading-[1.35] font-normal tracking-tight text-[#52534f] dark:text-[#d2d3cc]">
+          <h3 className="mx-2 mt-4 mb-1.5 font-[family-name:var(--font-ibm-plex-mono)] text-base leading-[1.44] font-normal not-italic tracking-normal text-[#52534f] dark:text-[#d2d3cc]">
             {title}
           </h3>
-          <div className="flex flex-wrap gap-x-1.5 px-2 pb-1 text-xs leading-5 text-[#969791] dark:text-[#8e9088]">
+          <div className="flex flex-wrap gap-x-1.5 px-2 pb-1 font-[family-name:var(--font-ibm-plex-sans)] text-[0.6875rem] leading-[1.44] font-normal not-italic tracking-[0.05em] text-[#969791] dark:text-[#8e9088]">
             {tags.map((tag, index) => (
               <span key={tag}>
                 {index > 0 && <span aria-hidden="true">/ </span>}

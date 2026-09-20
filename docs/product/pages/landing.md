@@ -32,6 +32,8 @@ The desktop landing page uses a full-viewport, two-pane layout:
 - both panes fill the viewport height, and their widths can change with the current page state
 - the outer page shell does not scroll; each pane manages its own overflow when its content requires scrolling
 
+The introduction uses IBM Plex Sans Condensed for Kurt's name and IBM Plex Mono for the supporting copy. Case-study card titles use IBM Plex Mono, while their compact metadata uses IBM Plex Sans with slightly expanded tracking.
+
 Work is active by default. The active view must be visually distinct. The controls are navigation links so each view has a shareable URL and works with browser history.
 
 ## Right-Pane Modes

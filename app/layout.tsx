@@ -1,10 +1,31 @@
 import type { Metadata } from 'next';
-import { Geist, Geist_Mono } from 'next/font/google';
+import {
+  Geist_Mono,
+  IBM_Plex_Mono,
+  IBM_Plex_Sans,
+  IBM_Plex_Sans_Condensed,
+} from 'next/font/google';
 import './globals.css';
 
-const geist = Geist({
+const ibmPlexSansCondensed = IBM_Plex_Sans_Condensed({
+  weight: '400',
+  style: 'normal',
   subsets: ['latin'],
-  variable: '--font-geist',
+  variable: '--font-ibm-plex-sans-condensed',
+});
+
+const ibmPlexMono = IBM_Plex_Mono({
+  weight: '400',
+  style: 'normal',
+  subsets: ['latin'],
+  variable: '--font-ibm-plex-mono',
+});
+
+const ibmPlexSans = IBM_Plex_Sans({
+  weight: '400',
+  style: 'normal',
+  subsets: ['latin'],
+  variable: '--font-ibm-plex-sans',
 });
 
 const geistMono = Geist_Mono({
@@ -24,7 +45,10 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" className={`${geist.variable} ${geistMono.variable}`}>
+    <html
+      lang="en"
+      className={`${geistMono.variable} ${ibmPlexMono.variable} ${ibmPlexSans.variable} ${ibmPlexSansCondensed.variable}`}
+    >
       <body>{children}</body>
     </html>
   );
