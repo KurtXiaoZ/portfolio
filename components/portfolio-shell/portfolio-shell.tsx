@@ -95,7 +95,7 @@ export function PortfolioShell({ left }: PortfolioShellProps) {
   const isCaseStudyOpen = pathname.startsWith('/work/');
 
   return (
-    <main className="flex h-dvh overflow-hidden bg-[#f1f1ee] text-[#171814] max-[760px]:flex-col dark:bg-[#131412] dark:text-[#f0f0e9]">
+    <main className="flex h-dvh overflow-hidden bg-white text-[#171814] max-[760px]:flex-col dark:bg-[#131412] dark:text-[#f0f0e9]">
       <motion.div
         animate={{ width: isCaseStudyOpen ? '67%' : '50%' }}
         className={clsx(

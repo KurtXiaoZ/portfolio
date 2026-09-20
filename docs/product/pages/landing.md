@@ -8,7 +8,7 @@ Introduce Kurt quickly and let visitors explore his work and background through 
 
 - Kurt's name and current professional identity
 - a concise introduction that communicates his strengths and perspective
-- Case Studies, Gallery, and About navigation links
+- Work, Gallery, and About navigation links
 - entry points to several featured case studies
 - a visual gallery of work
 - additional text and images about Kurt
@@ -26,25 +26,25 @@ After viewing the landing page, a visitor should understand:
 
 The desktop landing page uses a full-viewport, two-pane layout:
 
-- the left content pane introduces Kurt and presents three primary tabs: Case Studies, Gallery, and About
+- the left content pane introduces Kurt and presents three primary tabs: Work, Gallery, and About
 - the introduction and navigation controls remain stable while route selection changes the right pane
 - the right pane is the primary exploration area and displays the content associated with the active tab
 - both panes fill the viewport height, and their widths can change with the current page state
 - the outer page shell does not scroll; each pane manages its own overflow when its content requires scrolling
 
-Case Studies is active by default. The active view must be visually distinct. The controls are navigation links so each view has a shareable URL and works with browser history.
+Work is active by default. The active view must be visually distinct. The controls are navigation links so each view has a shareable URL and works with browser history.
 
 ## Right-Pane Modes
 
-| Active tab   | Right-pane content                                                                                                        | Primary purpose                                                |
-| ------------ | ------------------------------------------------------------------------------------------------------------------------- | -------------------------------------------------------------- |
-| Case Studies | The featured-work carousel, with each card providing an entry point to an individual case study                           | Demonstrate depth, decision-making, execution, and impact      |
-| Gallery      | A curated collection of work images arranged in a polished, responsive visual layout                                      | Give a fast, broad impression of the range and quality of work |
-| About        | A composed mix of text and supporting images that expands on Kurt's background, perspective, interests, and working style | Help visitors understand the person behind the work            |
+| Active tab | Right-pane content                                                                                                        | Primary purpose                                                |
+| ---------- | ------------------------------------------------------------------------------------------------------------------------- | -------------------------------------------------------------- |
+| Work       | The featured-work carousel, with each card providing an entry point to an individual case study                           | Demonstrate depth, decision-making, execution, and impact      |
+| Gallery    | A curated collection of work images arranged in a polished, responsive visual layout                                      | Give a fast, broad impression of the range and quality of work |
+| About      | A composed mix of text and supporting images that expands on Kurt's background, perspective, interests, and working style | Help visitors understand the person behind the work            |
 
 Changing tabs updates only the right pane so the left-side introduction remains a stable orientation point. The outgoing panel fades and moves slightly left while the incoming panel fades in from the right. The transition is intentionally brief so it clarifies the content change without delaying exploration.
 
-### Case Studies Tab
+### Work Tab
 
 The carousel uses a vertical perspective-fold transition. The active item presents a wide landscape image followed by the case-study title and quiet, slash-separated metadata; inactive items remain image-only. Cards do not add a separate panel background or padding around the image. Color and visual emphasis should come primarily from the image rather than the metadata.
 
@@ -56,7 +56,7 @@ See [Vertical Carousel Scroll Animation](../../engineering/vertical-carousel-scr
 
 Opening a case study is one coordinated transition with three visual states:
 
-1. **Home:** Kurt's introduction and tabs occupy the left pane, and the Case Studies carousel is the dominant right pane.
+1. **Home:** Kurt's introduction and tabs occupy the left pane, and the Work carousel is the dominant right pane.
 2. **Opening:** The selected card remains visible as a spatial anchor while the carousel pane shifts right and shrinks. At the same time, the content pane expands and the landing introduction and tabs begin to leave.
 3. **Reading:** The case-study content replaces the landing introduction and tabs in the expanded left pane. The carousel remains visible in the smaller right pane throughout the reading experience, with the selected card active.
 
@@ -70,7 +70,7 @@ The opening transition should be orchestrated as follows:
 - Settle with the content pane occupying roughly 65–70% of the viewport and the carousel occupying roughly 30–35%. These proportions can be tuned, but the case-study content must be the primary focus.
 - Keep the carousel visible in this secondary right-pane position for the entire case study. It should not collapse into a rail or disappear as the visitor scrolls.
 - Fade each card's title and tags before the shrinking pane can make them reflow. Scale the image and its positioning frame proportionally to fit the narrower pane, tighten the distance between adjacent cards for the image-only reading state, and reveal the title over the image on hover or keyboard focus; keep tags exclusive to the landing state.
-- When returning to all work, reverse the sequence: remove the case-study content, expand the carousel, and restore the landing introduction and tabs with Case Studies active while preserving the previously selected card.
+- When returning to all work, reverse the sequence: remove the case-study content, expand the carousel, and restore the landing introduction and tabs with Work active while preserving the previously selected card.
 
 As an initial timing target, the full opening transition should take approximately 700–900ms. The case-study content can begin entering around 100–200ms after the pane movement starts. Exact values should be tuned visually while preserving this order and overlap.
 
