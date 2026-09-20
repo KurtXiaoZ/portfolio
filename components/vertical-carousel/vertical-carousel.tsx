@@ -48,7 +48,7 @@ const FAST_WHEEL_SPEED = 1;
 const SWIPE_THRESHOLD = 35;
 const CARD_SCALE = 1;
 const CARD_OFFSET = 400;
-const COMPACT_CARD_OFFSET = 300;
+const COMPACT_CARD_OFFSET = 260;
 // Keep every transform layer on stable geometry while card metadata collapses.
 // In compact mode, move the upper hinge to the bottom of the visible card.
 const COMPACT_UPPER_HINGE_ORIGIN = 312 / 384;
@@ -221,7 +221,7 @@ function CarouselCard({
       aria-hidden={!isActive}
       className={clsx(
         'absolute top-1/2 left-1/2 aspect-[445/384] transition-[width] duration-700 ease-[cubic-bezier(0.2,0.78,0.2,1)] motion-reduce:transition-none',
-        compact ? 'w-[min(22rem,82%)]' : 'w-[27.8125rem]',
+        compact ? 'w-[min(20rem,78%)]' : 'w-[27.8125rem]',
         isActive ? 'pointer-events-auto' : 'pointer-events-none',
       )}
       inert={isActive ? undefined : true}

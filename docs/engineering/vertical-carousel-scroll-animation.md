@@ -15,16 +15,16 @@ Each card receives a circular delta relative to the active index:
 | Delta  | Position               | Transform                                                   | Opacity |
 | ------ | ---------------------- | ----------------------------------------------------------- | ------- |
 | `≤ -2` | Hidden above the stack | Holds or resets near the upper folded pose                  | `0`     |
-| `-1`   | Upper card             | `y: -380px` (`-300px` compact), `rotateX: 65deg`, scale `1` | `0.7`   |
+| `-1`   | Upper card             | `y: -380px` (`-260px` compact), `rotateX: 65deg`, scale `1` | `0.7`   |
 | `0`    | Active card            | `y: 0`, `rotateX: 0deg`, scale `1`                          | `1`     |
-| `1`    | Lower card             | `y: 400px` (`300px` compact), `rotateX: -65deg`, scale `1`  | `0.7`   |
+| `1`    | Lower card             | `y: 400px` (`260px` compact), `rotateX: -65deg`, scale `1`  | `0.7`   |
 | `≥ 2`  | Hidden below the stack | Holds or resets near the lower folded pose                  | `0`     |
 
-Distant cards do not accumulate another offset for every delta. For example, a landing-state card at `-2` is not placed at twice the upper-card offset, and a card at `2` is not placed at twice the lower-card offset. Cards beyond the adjacent positions are invisible. Under normal, uninterrupted movement they remain at or reset to the corresponding folded pose: `-380px` above and `400px` below on the landing page, and `±300px` in the compact reading state. The tighter compact offset preserves the visual spacing after card titles and tags collapse. If a card leaves the visible stack during an interrupted fold, it freezes at its current rendered transform instead.
+Distant cards do not accumulate another offset for every delta. For example, a landing-state card at `-2` is not placed at twice the upper-card offset, and a card at `2` is not placed at twice the lower-card offset. Cards beyond the adjacent positions are invisible. Under normal, uninterrupted movement they remain at or reset to the corresponding folded pose: `-380px` above and `400px` below on the landing page, and `±260px` in the compact reading state. The tighter compact offset preserves the visual spacing after card titles and tags collapse. If a card leaves the visible stack during an interrupted fold, it freezes at its current rendered transform instead.
 
 On the landing page, each card is centered and folded within a fixed `445px`-wide, `384px`-high frame. Its image is `312px` tall with `16px` corners, followed by plain title text and slash-separated metadata. Only the active landing-page card shows its title and tags; adjacent cards collapse their metadata while retaining the stable frame.
 
-Compact mode collapses metadata for every card and changes the frame to `min(352px, 82%)`, preserving the landing frame's `445:384` aspect ratio. The image preserves its `445:312` aspect ratio, so the card fits the narrower reading pane without clipping or distorting. Animated covers use their static thumbnail in compact mode. The compact card column is centered in the space left of the pagination controls. For the upper card, the hinge origin remains aligned with the bottom of the proportionally sized image. The lower card continues to hinge from the top edge.
+Compact mode collapses metadata for every card and changes the frame to `min(320px, 78%)`, preserving the landing frame's `445:384` aspect ratio. The image preserves its `445:312` aspect ratio, so the card fits the narrower reading pane without clipping or distorting. Animated covers use their static thumbnail in compact mode. The compact card column is centered in the space left of the pagination controls. For the upper card, the hinge origin remains aligned with the bottom of the proportionally sized image. The lower card continues to hinge from the top edge.
 
 The upper card hinges around its bottom edge. The lower card hinges around its top edge. This makes the edge nearest the active card act as the physical connection between positions. The rotating card uses a perspective of `1100px` and hides its back face.
 
