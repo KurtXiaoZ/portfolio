@@ -68,6 +68,7 @@ export const carouselItems = [
     card: {
       href: '/work/atomic-events',
       cover: <AtomicEventsCover />,
+      compactCover: <AtomicEventsThumbnail />,
       imageAlt: 'PayPal checkout applying rewards across two payment methods',
       tags: ['TypeScript', 'Observability'],
       title: 'Standardizing interaction telemetry at scale',
@@ -89,13 +90,7 @@ export const carouselItems = [
 function AtomicEventsCover() {
   return (
     <div className="relative overflow-hidden bg-[#eff5fb]">
-      <Image
-        alt=""
-        className="object-cover"
-        fill
-        sizes="445px"
-        src="/images/case-studies/atomic-events-apply-rewards-thumbnail.jpg"
-      />
+      <AtomicEventsThumbnail />
       <video
         aria-hidden="true"
         autoPlay
@@ -112,5 +107,17 @@ function AtomicEventsCover() {
         />
       </video>
     </div>
+  );
+}
+
+function AtomicEventsThumbnail() {
+  return (
+    <Image
+      alt=""
+      className="object-cover"
+      fill
+      sizes="445px"
+      src="/images/case-studies/atomic-events-apply-rewards-thumbnail.jpg"
+    />
   );
 }

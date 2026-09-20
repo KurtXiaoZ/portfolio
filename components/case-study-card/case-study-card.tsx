@@ -7,6 +7,7 @@ export interface CaseStudyCardProps extends Omit<
   'children' | 'title'
 > {
   compact?: boolean;
+  compactCover?: ReactNode;
   cover: ReactNode;
   imageAlt: string;
   tags: readonly string[];
@@ -16,6 +17,7 @@ export interface CaseStudyCardProps extends Omit<
 export function CaseStudyCard({
   className,
   compact = false,
+  compactCover,
   cover,
   imageAlt,
   tags,
@@ -35,7 +37,7 @@ export function CaseStudyCard({
         role="img"
         aria-label={imageAlt}
       >
-        {cover}
+        {compact ? (compactCover ?? cover) : cover}
       </div>
       <div
         className={clsx(

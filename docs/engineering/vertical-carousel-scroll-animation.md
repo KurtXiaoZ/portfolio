@@ -24,7 +24,7 @@ Distant cards do not accumulate another offset for every delta. For example, a l
 
 On the landing page, each card is centered and folded within a fixed `445px`-wide, `384px`-high frame. Its image is `312px` tall with `16px` corners, followed by plain title text and slash-separated metadata. Only the active landing-page card shows its title and tags; adjacent cards collapse their metadata while retaining the stable frame.
 
-Compact mode collapses metadata for every card and changes the frame to `min(352px, 82%)`, preserving the landing frame's `445:384` aspect ratio. The image preserves its `445:312` aspect ratio, so the card fits the narrower reading pane without clipping or distorting. The compact card column is centered in the space left of the pagination controls. For the upper card, the hinge origin remains aligned with the bottom of the proportionally sized image. The lower card continues to hinge from the top edge.
+Compact mode collapses metadata for every card and changes the frame to `min(352px, 82%)`, preserving the landing frame's `445:384` aspect ratio. The image preserves its `445:312` aspect ratio, so the card fits the narrower reading pane without clipping or distorting. Animated covers use their static thumbnail in compact mode. The compact card column is centered in the space left of the pagination controls. For the upper card, the hinge origin remains aligned with the bottom of the proportionally sized image. The lower card continues to hinge from the top edge.
 
 The upper card hinges around its bottom edge. The lower card hinges around its top edge. This makes the edge nearest the active card act as the physical connection between positions. The rotating card uses a perspective of `1100px` and hides its back face.
 
