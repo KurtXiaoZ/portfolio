@@ -2,8 +2,6 @@ import clsx from 'clsx';
 import Link from 'next/link';
 import type { ComponentPropsWithoutRef, ReactNode } from 'react';
 
-import { Tag } from '@/components/tag/tag';
-
 export interface CaseStudyCardProps extends Omit<
   ComponentPropsWithoutRef<typeof Link>,
   'children' | 'title'
@@ -27,13 +25,13 @@ export function CaseStudyCard({
   return (
     <Link
       className={clsx(
-        'group/card block w-full max-w-82 rounded-[18px] p-4 text-[#171814] no-underline focus-visible:-outline-offset-2 focus-visible:outline-2 focus-visible:outline-[#657800] dark:text-[#f0f0e9] dark:focus-visible:outline-[#c6ec39]',
+        'group/card block w-full max-w-82 rounded-2xl text-[#171814] no-underline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[#657800] dark:text-[#f0f0e9] dark:focus-visible:outline-[#c6ec39]',
         className,
       )}
       {...props}
     >
       <div
-        className="relative h-51.25 cursor-pointer overflow-hidden rounded-[11px] bg-[#faf9f5] max-[560px]:h-47.5 dark:bg-[#20211e] *:h-full *:w-full"
+        className="relative aspect-[445/312] cursor-pointer overflow-hidden rounded-2xl bg-[#faf9f5] dark:bg-[#20211e] *:h-full *:w-full"
         role="img"
         aria-label={imageAlt}
       >
@@ -53,12 +51,15 @@ export function CaseStudyCard({
             compact ? 'opacity-0 delay-0' : 'opacity-100 delay-[600ms]',
           )}
         >
-          <h3 className="mx-0.5 mt-3.75 mb-2.75 text-base leading-[1.3] font-medium tracking-tight text-[#171814] dark:text-[#f0f0e9]">
+          <h3 className="mx-2 mt-4 mb-1.5 text-base leading-[1.35] font-normal tracking-tight text-[#52534f] dark:text-[#d2d3cc]">
             {title}
           </h3>
-          <div className="flex flex-wrap gap-1.5 px-0.5 pb-0.5">
-            {tags.map((tag) => (
-              <Tag key={tag}>{tag}</Tag>
+          <div className="flex flex-wrap gap-x-1.5 px-2 pb-1 text-xs leading-5 text-[#969791] dark:text-[#8e9088]">
+            {tags.map((tag, index) => (
+              <span key={tag}>
+                {index > 0 && <span aria-hidden="true">/ </span>}
+                {tag}
+              </span>
             ))}
           </div>
         </div>

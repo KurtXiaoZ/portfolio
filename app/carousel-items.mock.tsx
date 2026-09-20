@@ -20,7 +20,7 @@ export const carouselItems = [
           className="object-cover"
           fill
           priority
-          sizes="(max-width: 760px) 82vw, (max-width: 1200px) 41vw, 328px"
+          sizes="445px"
           src="/images/case-studies/checkout-performance.svg"
         />
       ),
@@ -93,7 +93,7 @@ function AtomicEventsCover() {
         alt=""
         className="object-cover"
         fill
-        sizes="(max-width: 760px) 82vw, (max-width: 1200px) 41vw, 328px"
+        sizes="445px"
         src="/images/case-studies/atomic-events-apply-rewards-thumbnail.jpg"
       />
       <video

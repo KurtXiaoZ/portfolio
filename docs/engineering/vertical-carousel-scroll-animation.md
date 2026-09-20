@@ -12,17 +12,19 @@ This choreography covers movement between cards within the carousel. The route-l
 
 Each card receives a circular delta relative to the active index:
 
-| Delta  | Position               | Transform                                                        | Opacity |
-| ------ | ---------------------- | ---------------------------------------------------------------- | ------- |
-| `≤ -2` | Hidden above the stack | Holds or resets near the upper folded pose                       | `0`     |
-| `-1`   | Upper card             | `y: -380px` (`-300px` compact), `rotateX: 58deg`, scale `1.1656` | `0.7`   |
-| `0`    | Active card            | `y: 0`, `rotateX: 0deg`, scale `1.24`                            | `1`     |
-| `1`    | Lower card             | `y: 380px` (`300px` compact), `rotateX: -58deg`, scale `1.1656`  | `0.7`   |
-| `≥ 2`  | Hidden below the stack | Holds or resets near the lower folded pose                       | `0`     |
+| Delta  | Position               | Transform                                                   | Opacity |
+| ------ | ---------------------- | ----------------------------------------------------------- | ------- |
+| `≤ -2` | Hidden above the stack | Holds or resets near the upper folded pose                  | `0`     |
+| `-1`   | Upper card             | `y: -380px` (`-300px` compact), `rotateX: 65deg`, scale `1` | `0.7`   |
+| `0`    | Active card            | `y: 0`, `rotateX: 0deg`, scale `1`                          | `1`     |
+| `1`    | Lower card             | `y: 400px` (`300px` compact), `rotateX: -65deg`, scale `1`  | `0.7`   |
+| `≥ 2`  | Hidden below the stack | Holds or resets near the lower folded pose                  | `0`     |
 
-Distant cards do not accumulate another offset for every delta. For example, a landing-state card at `-2` is not placed at `y: -760px`, and a card at `2` is not placed at `y: 760px`. Cards beyond the adjacent positions are invisible. Under normal, uninterrupted movement they remain at or reset to the corresponding folded pose: `±380px` on the landing page and `±300px` in the compact reading state. The tighter compact offset preserves the visual spacing after card titles and tags collapse. If a card leaves the visible stack during an interrupted fold, it freezes at its current rendered transform instead.
+Distant cards do not accumulate another offset for every delta. For example, a landing-state card at `-2` is not placed at twice the upper-card offset, and a card at `2` is not placed at twice the lower-card offset. Cards beyond the adjacent positions are invisible. Under normal, uninterrupted movement they remain at or reset to the corresponding folded pose: `-380px` above and `400px` below on the landing page, and `±300px` in the compact reading state. The tighter compact offset preserves the visual spacing after card titles and tags collapse. If a card leaves the visible stack during an interrupted fold, it freezes at its current rendered transform instead.
 
-Each card is centered, scaled, and folded within a fixed-height frame sized for the expanded cover, title, and tags. The frame remains stable while the metadata collapses in compact mode, so layout changes do not introduce a second vertical movement. For the upper card, the hinge origin animates from the bottom of the expanded frame to the bottom of the visible compact card using the same timing and easing as the card offset. The lower card continues to hinge from the top edge, which does not move when metadata below the cover collapses.
+On the landing page, each card is centered and folded within a fixed `445px`-wide, `384px`-high frame. Its image is `312px` tall with `16px` corners, followed by plain title text and slash-separated metadata. Only the active landing-page card shows its title and tags; adjacent cards collapse their metadata while retaining the stable frame.
+
+Compact mode collapses metadata for every card and changes the frame to `min(352px, 82%)`, preserving the landing frame's `445:384` aspect ratio. The image preserves its `445:312` aspect ratio, so the card fits the narrower reading pane without clipping or distorting. The compact card column is centered in the space left of the pagination controls. For the upper card, the hinge origin remains aligned with the bottom of the proportionally sized image. The lower card continues to hinge from the top edge.
 
 The upper card hinges around its bottom edge. The lower card hinges around its top edge. This makes the edge nearest the active card act as the physical connection between positions. The rotating card uses a perspective of `1100px` and hides its back face.
 
@@ -34,8 +36,8 @@ The standard fold transition lasts `720ms` and uses the easing curve `[0.2, 0.78
 
 For a one-item move:
 
-1. The selected adjacent card translates to the center, returns to the active scale, and unfolds to `0deg`.
-2. The previously active card translates to the opposite adjacent position, adopts the adjacent scale, and folds to `58deg` or `-58deg` around the edge nearest the center.
+1. The selected adjacent card translates to the center and unfolds to `0deg` while retaining its scale.
+2. The previously active card translates to the opposite adjacent position and folds to `65deg` or `-65deg` around the edge nearest the center while retaining its scale.
 3. A card entering a newly exposed adjacent position is placed there while invisible. Its reveal waits `320ms`, then fades to `0.7` opacity over `400ms` with `easeInOut` easing. The delay prevents its text from overlapping the card moving into the center.
 4. A card leaving an adjacent position stops at its current rendered pose and fades out over `240ms`. It does not flatten, move farther away, or change scale during the exit.
 

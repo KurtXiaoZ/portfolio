@@ -46,7 +46,7 @@ Changing tabs updates only the right pane so the left-side introduction remains 
 
 ### Case Studies Tab
 
-The carousel uses a vertical perspective-fold transition. Each item presents an image, followed by the case-study title and quiet metadata tags. Color and visual emphasis should come primarily from the image rather than the card background or tags.
+The carousel uses a vertical perspective-fold transition. The active item presents a wide landscape image followed by the case-study title and quiet, slash-separated metadata; inactive items remain image-only. Cards do not add a separate panel background or padding around the image. Color and visual emphasis should come primarily from the image rather than the metadata.
 
 Cards moving into the upper position fold around their bottom edge; cards moving into the lower position fold around their top edge. Adjacent cards retain most of their size and remain visible so the movement feels like placing a card into a stack. A card leaving either adjacent position holds its current pose and fades out without further movement. Incoming cards unfold from the same edge, and looping repositions recycled cards without sending them through the center.
 
@@ -69,7 +69,7 @@ The opening transition should be orchestrated as follows:
 - Treat the case study as one continuous reading experience rather than a separate introduction followed by a different layout state. Long-form images and other content should render in normal document flow.
 - Settle with the content pane occupying roughly 65–70% of the viewport and the carousel occupying roughly 30–35%. These proportions can be tuned, but the case-study content must be the primary focus.
 - Keep the carousel visible in this secondary right-pane position for the entire case study. It should not collapse into a rail or disappear as the visitor scrolls.
-- Fade each card's title and tags before the shrinking pane can make them reflow. Keep the card's positioning frame stable while that metadata collapses so the stack does not shift vertically, tighten the distance between adjacent cards for the image-only reading state, and reveal the title over the image on hover or keyboard focus; keep tags exclusive to the landing state.
+- Fade each card's title and tags before the shrinking pane can make them reflow. Scale the image and its positioning frame proportionally to fit the narrower pane, tighten the distance between adjacent cards for the image-only reading state, and reveal the title over the image on hover or keyboard focus; keep tags exclusive to the landing state.
 - When returning to all work, reverse the sequence: remove the case-study content, expand the carousel, and restore the landing introduction and tabs with Case Studies active while preserving the previously selected card.
 
 As an initial timing target, the full opening transition should take approximately 700–900ms. The case-study content can begin entering around 100–200ms after the pane movement starts. Exact values should be tuned visually while preserving this order and overlap.

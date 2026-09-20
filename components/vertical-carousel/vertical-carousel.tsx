@@ -34,7 +34,7 @@ interface VisualState {
   opacity: number;
   /** Tilts the card around its horizontal axis to create the folded pose. */
   rotateX: number;
-  /** Sizes the active card and slightly reduces adjacent folded cards. */
+  /** Keeps every card at the same size throughout the fold transition. */
   scale: number;
   /** Positions the card in the active, upper, or lower carousel slot. */
   y: number;
@@ -46,13 +46,12 @@ const WHEEL_EVENT_THRESHOLD = 12;
 const WHEEL_GESTURE_GAP = 200;
 const FAST_WHEEL_SPEED = 1;
 const SWIPE_THRESHOLD = 35;
-const CARD_SCALE = 1.24;
-const CARD_OFFSET = 380;
+const CARD_SCALE = 1;
+const CARD_OFFSET = 400;
 const COMPACT_CARD_OFFSET = 300;
 // Keep every transform layer on stable geometry while card metadata collapses.
 // In compact mode, move the upper hinge to the bottom of the visible card.
-const CARD_FRAME_HEIGHT = 'h-[20.8125rem] max-[560px]:h-[19.875rem]';
-const COMPACT_UPPER_HINGE_ORIGIN = 237 / 333;
+const COMPACT_UPPER_HINGE_ORIGIN = 312 / 384;
 const FOLD_TRANSITION = {
   duration: 0.72,
   ease: [0.2, 0.78, 0.2, 1],
@@ -88,7 +87,11 @@ function getWheelDeltaInPixels(event: WheelEvent) {
 function getVisualState(delta: number, compact = false): VisualState {
   const direction = Math.sign(delta);
   const distance = Math.abs(delta);
-  const cardOffset = compact ? COMPACT_CARD_OFFSET : CARD_OFFSET;
+  const cardOffset = compact
+    ? COMPACT_CARD_OFFSET
+    : direction < 0
+      ? 380
+      : CARD_OFFSET;
   let opacity = 0;
 
   if (distance === 0) {
@@ -101,8 +104,8 @@ function getVisualState(delta: number, compact = false): VisualState {
     // Edge hinges leave the folded card's center closer to the active slot.
     // Give the hinge enough travel to park the card above or below it.
     y: delta === 0 ? 0 : direction * cardOffset,
-    scale: delta === 0 ? CARD_SCALE : CARD_SCALE * 0.94,
-    rotateX: delta === 0 ? 0 : direction * -58,
+    scale: CARD_SCALE,
+    rotateX: delta === 0 ? 0 : direction * -65,
     opacity,
     zIndex: 20 - distance,
   };
@@ -217,8 +220,8 @@ function CarouselCard({
       ref={scope}
       aria-hidden={!isActive}
       className={clsx(
-        'absolute top-1/2 left-1/2 w-[min(20.5rem,82%)]',
-        CARD_FRAME_HEIGHT,
+        'absolute top-1/2 left-1/2 aspect-[445/384] transition-[width] duration-700 ease-[cubic-bezier(0.2,0.78,0.2,1)] motion-reduce:transition-none',
+        compact ? 'w-[min(22rem,82%)]' : 'w-[27.8125rem]',
         isActive ? 'pointer-events-auto' : 'pointer-events-none',
       )}
       inert={isActive ? undefined : true}
@@ -249,7 +252,7 @@ function CarouselCard({
           <CaseStudyCard
             {...item.card}
             className={clsx('max-w-none', item.card.className)}
-            compact={compact}
+            compact={compact || !isActive}
           />
         </motion.div>
       </motion.div>
@@ -440,9 +443,17 @@ export function VerticalCarousel({
       role="region"
       tabIndex={0}
     >
-      <div className="absolute inset-[0_3.875rem_0_0] overflow-hidden">
+      <div
+        className={clsx(
+          'absolute overflow-hidden transition-[inset] duration-700 ease-[cubic-bezier(0.2,0.78,0.2,1)] motion-reduce:transition-none',
+          compact ? 'inset-[0_2.75rem_0_0]' : 'inset-[0_3.875rem_0_0]',
+        )}
+      >
         <div
-          className="absolute inset-y-0 left-1/2 w-[min(25.42rem,100%)] -translate-x-1/2"
+          className={clsx(
+            'absolute inset-y-0 w-[min(30rem,100%)] -translate-x-1/2 transition-[left] duration-700 ease-[cubic-bezier(0.2,0.78,0.2,1)] motion-reduce:transition-none',
+            compact ? 'left-1/2' : 'left-[44%]',
+          )}
           onPointerEnter={handleCardsPointerEnter}
           onPointerLeave={handleCardsPointerLeave}
         >
