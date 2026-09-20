@@ -1,6 +1,6 @@
 import Image from 'next/image';
 
-import type { VerticalCarouselItem } from '@/components/vertical-carousel/vertical-carousel';
+import type { ImageVerticalCarouselItem } from '@/components/image-vertical-carousel/image-vertical-carousel';
 
 export const implementedCaseStudySlugs = [
   'atomic-events',
@@ -85,7 +85,7 @@ export const carouselItems = [
       title: 'Building an embedded platform for BNPL products',
     },
   },
-] satisfies readonly VerticalCarouselItem[];
+] satisfies readonly ImageVerticalCarouselItem[];
 
 function AtomicEventsCover() {
   return (

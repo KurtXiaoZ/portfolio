@@ -14,9 +14,9 @@ import type {
 } from 'react';
 import { useCallback, useEffect, useRef, useState } from 'react';
 
-import type { VerticalCarouselItem } from '@/components/vertical-carousel/vertical-carousel';
+import type { ImageVerticalCarouselItem } from '@/components/image-vertical-carousel/image-vertical-carousel';
 
-export type TextVerticalCarouselItem = VerticalCarouselItem;
+export type TextVerticalCarouselItem = ImageVerticalCarouselItem;
 
 export interface TextVerticalCarouselProps extends Omit<
   ComponentPropsWithoutRef<'div'>,

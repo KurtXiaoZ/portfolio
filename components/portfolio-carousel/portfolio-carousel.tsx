@@ -4,13 +4,13 @@ import { useParams, useRouter } from 'next/navigation';
 import { useEffect } from 'react';
 
 import {
-  VerticalCarousel,
-  type VerticalCarouselItem,
-} from '@/components/vertical-carousel/vertical-carousel';
+  ImageVerticalCarousel,
+  type ImageVerticalCarouselItem,
+} from '@/components/image-vertical-carousel/image-vertical-carousel';
 
 interface PortfolioCarouselProps {
   implementedSlugs: readonly string[];
-  items: readonly VerticalCarouselItem[];
+  items: readonly ImageVerticalCarouselItem[];
 }
 
 export function PortfolioCarousel({
@@ -32,7 +32,7 @@ export function PortfolioCarousel({
   const selectedIndex = items.findIndex((item) => item.id === selectedSlug);
 
   return (
-    <VerticalCarousel
+    <ImageVerticalCarousel
       compact={selectedSlug !== null}
       initialIndex={selectedIndex >= 0 ? selectedIndex : 0}
       items={items}

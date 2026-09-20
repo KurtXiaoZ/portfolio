@@ -1,9 +1,9 @@
 import type { Meta, StoryObj } from '@storybook/nextjs-vite';
 
 import {
-  VerticalCarousel,
-  type VerticalCarouselItem,
-} from './vertical-carousel';
+  ImageVerticalCarousel,
+  type ImageVerticalCarouselItem,
+} from './image-vertical-carousel';
 
 const artwork = {
   speed: (
@@ -57,7 +57,7 @@ const artwork = {
   ),
 };
 
-const items: readonly VerticalCarouselItem[] = [
+const items: readonly ImageVerticalCarouselItem[] = [
   {
     id: 'checkout-performance',
     label: 'Halving first-page load latency',
@@ -116,8 +116,8 @@ const items: readonly VerticalCarouselItem[] = [
 ];
 
 const meta = {
-  title: 'Components/VerticalCarousel',
-  component: VerticalCarousel,
+  title: 'Components/ImageVerticalCarousel',
+  component: ImageVerticalCarousel,
   parameters: {
     layout: 'fullscreen',
   },
@@ -133,7 +133,7 @@ const meta = {
       </div>
     ),
   ],
-} satisfies Meta<typeof VerticalCarousel>;
+} satisfies Meta<typeof ImageVerticalCarousel>;
 
 export default meta;
 

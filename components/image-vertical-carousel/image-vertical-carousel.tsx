@@ -13,19 +13,19 @@ import {
   type CaseStudyCardProps,
 } from '@/components/case-study-card/case-study-card';
 
-export interface VerticalCarouselItem {
+export interface ImageVerticalCarouselItem {
   card: CaseStudyCardProps;
   id: string;
   label: string;
 }
 
-export interface VerticalCarouselProps extends Omit<
+export interface ImageVerticalCarouselProps extends Omit<
   ComponentPropsWithoutRef<'div'>,
   'children'
 > {
   compact?: boolean;
   initialIndex?: number;
-  items: readonly VerticalCarouselItem[];
+  items: readonly ImageVerticalCarouselItem[];
   onActiveIndexChange?: (index: number) => void;
 }
 
@@ -124,7 +124,7 @@ function CarouselCard({
 }: {
   compact: boolean;
   delta: number;
-  item: VerticalCarouselItem;
+  item: ImageVerticalCarouselItem;
 }) {
   const [scope, animate] = useAnimate<HTMLDivElement>();
   const previousDeltaRef = useRef(delta);
@@ -260,7 +260,7 @@ function CarouselCard({
   );
 }
 
-export function VerticalCarousel({
+export function ImageVerticalCarousel({
   'aria-label': ariaLabel = 'Featured case studies',
   className,
   compact = false,
@@ -268,7 +268,7 @@ export function VerticalCarousel({
   items,
   onActiveIndexChange,
   ...props
-}: VerticalCarouselProps) {
+}: ImageVerticalCarouselProps) {
   const itemCount = items.length;
   const [activeIndex, setActiveIndex] = useState(() =>
     itemCount === 0 ? 0 : wrapIndex(initialIndex, itemCount),

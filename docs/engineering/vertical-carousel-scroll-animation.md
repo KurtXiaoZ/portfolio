@@ -4,7 +4,7 @@
 
 The vertical carousel presents one active case study between folded cards above and below it. Its movement should feel like cards being placed into a vertical stack: a card unfolds from an adjacent position into the center while the current card folds toward the opposite position.
 
-This document describes the scrolling choreography implemented by `VerticalCarousel`. The landing-page product document remains the source for the intended experience; this document records the interaction rules, animation states, timings, and interruption behavior that produce it.
+This document describes the scrolling choreography implemented by `ImageVerticalCarousel`. The landing-page product document remains the source for the intended experience; this document records the interaction rules, animation states, timings, and interruption behavior that produce it.
 
 This choreography covers movement between cards within the carousel. The route-level transition that resizes the carousel pane while navigating between the landing page and case-study routes is documented separately in [Case-Study Route Transition](case-study-route-transition.md).
 
@@ -100,4 +100,4 @@ The fold choreography currently runs with the same timing regardless of the visi
 
 ## Implementation
 
-The choreography is implemented in [`components/vertical-carousel/vertical-carousel.tsx`](../../components/vertical-carousel/vertical-carousel.tsx). When changing animation constants or input behavior, update this document and the landing-page intent if the user experience changes.
+The choreography is implemented in [`components/image-vertical-carousel/image-vertical-carousel.tsx`](../../components/image-vertical-carousel/image-vertical-carousel.tsx). When changing animation constants or input behavior, update this document and the landing-page intent if the user experience changes.
