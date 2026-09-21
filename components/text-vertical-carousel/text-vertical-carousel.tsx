@@ -9,6 +9,7 @@ import {
 } from 'motion/react';
 import Link from 'next/link';
 import type {
+  CSSProperties,
   ComponentPropsWithoutRef,
   PointerEvent as ReactPointerEvent,
 } from 'react';
@@ -64,10 +65,10 @@ function getWheelDeltaInPixels(event: WheelEvent) {
   return event.deltaY;
 }
 
-function getItemVisualState(delta: number, compact: boolean) {
+function getItemVisualState(delta: number) {
   const distance = Math.abs(delta);
   const direction = Math.sign(delta);
-  const itemGap = compact ? 74 : 112;
+  const itemGap = 112;
 
   if (distance === 0) {
     return { opacity: 1, scale: 1, y: 0 };
@@ -86,7 +87,6 @@ function getItemVisualState(delta: number, compact: boolean) {
 
 function TextCarouselItem({
   active,
-  compact,
   delta,
   item,
   movement,
@@ -94,7 +94,6 @@ function TextCarouselItem({
   reducedMotion,
 }: {
   active: boolean;
-  compact: boolean;
   delta: number;
   item: TextVerticalCarouselItem;
   movement: number;
@@ -104,7 +103,7 @@ function TextCarouselItem({
   const [scope, animate] = useAnimate<HTMLDivElement>();
   const previousDeltaRef = useRef(delta);
   const isVisible = Math.abs(delta) <= 2;
-  const [initialState] = useState(() => getItemVisualState(delta, compact));
+  const [initialState] = useState(() => getItemVisualState(delta));
   const itemY = useMotionValue(initialState.y);
   const itemScale = useMotionValue(initialState.scale);
   const itemOpacity = useMotionValue(initialState.opacity);
@@ -113,7 +112,7 @@ function TextCarouselItem({
     let cancelled = false;
     const previousDelta = previousDeltaRef.current;
     previousDeltaRef.current = delta;
-    const state = getItemVisualState(delta, compact);
+    const state = getItemVisualState(delta);
     const positionChanged = previousDelta !== delta;
     const virtualDelta = positionChanged ? previousDelta - movement : delta;
     const crossedLoopBoundary = positionChanged && virtualDelta !== delta;
@@ -156,7 +155,7 @@ function TextCarouselItem({
         // Keep an outgoing row moving with the rest of the stack. Its virtual
         // delta preserves the navigation direction even when circular deltas
         // place its hidden destination on the opposite side.
-        const exitState = getItemVisualState(virtualDelta, compact);
+        const exitState = getItemVisualState(virtualDelta);
         animate(itemY, exitState.y, ITEM_TRANSITION);
         animate(itemScale, exitState.scale, ITEM_TRANSITION);
         animate(itemOpacity, 0, { ...ITEM_TRANSITION, duration: 0.4 });
@@ -177,7 +176,7 @@ function TextCarouselItem({
       // A multi-slot selection can require one visible row to leave one edge
       // and re-enter at the other. Complete that exit before recycling it so
       // the row never cuts across the center or appears to swap positions.
-      const exitState = getItemVisualState(virtualDelta, compact);
+      const exitState = getItemVisualState(virtualDelta);
 
       void Promise.all([
         animate(itemY, exitState.y, {
@@ -192,7 +191,7 @@ function TextCarouselItem({
       ]).then(() => {
         if (cancelled) return;
 
-        const entryState = getItemVisualState(Math.sign(delta) * 3, compact);
+        const entryState = getItemVisualState(Math.sign(delta) * 3);
         moveInvisiblyTo(entryState);
         animate(itemY, state.y, { ...ITEM_TRANSITION, duration: 0.34 });
         animate(itemScale, state.scale, {
@@ -222,9 +221,7 @@ function TextCarouselItem({
         // A rapid follow-up gesture can reverse a row while its previous exit
         // is still visible. Only recycle it when its rendered position is on
         // the wrong side; otherwise continue smoothly from the current pose.
-        moveInvisiblyTo(
-          getItemVisualState(Math.sign(state.y || movement) * 3, compact),
-        );
+        moveInvisiblyTo(getItemVisualState(Math.sign(state.y || movement) * 3));
       }
     }
 
@@ -236,7 +233,6 @@ function TextCarouselItem({
     };
   }, [
     animate,
-    compact,
     delta,
     isVisible,
     itemOpacity,
@@ -251,7 +247,7 @@ function TextCarouselItem({
       <span
         className={clsx(
           'block font-[family-name:var(--font-ibm-plex-mono,_monospace)] leading-[1.35] font-normal tracking-normal',
-          compact ? 'text-base' : 'text-[1.375rem]',
+          'text-[1.375rem]',
         )}
       >
         {item.card.title}
@@ -259,7 +255,7 @@ function TextCarouselItem({
       <span
         className={clsx(
           'mt-1.5 flex flex-wrap gap-x-1.5 font-[family-name:var(--font-ibm-plex-sans,_sans-serif)] leading-[1.44] font-normal tracking-[0.05em] text-[#8f908a] dark:text-[#96988f]',
-          compact ? 'text-[0.625rem]' : 'text-[0.6875rem]',
+          'text-[0.6875rem]',
         )}
       >
         {item.card.tags.map((tag, index) => (
@@ -310,6 +306,96 @@ function TextCarouselItem({
   );
 }
 
+const COMPACT_INACTIVE_MARKER_WIDTH = 20;
+const COMPACT_MARKER_STEP = 20;
+
+function CompactTextCarousel({
+  activeIndex,
+  className,
+  items,
+  props,
+}: {
+  activeIndex: number;
+  className?: string;
+  items: readonly TextVerticalCarouselItem[];
+  props: Omit<
+    ComponentPropsWithoutRef<'div'>,
+    'aria-label' | 'children' | 'className'
+  >;
+}) {
+  const [previewedIndex, setPreviewedIndex] = useState<number | null>(null);
+
+  if (items.length === 0) {
+    return (
+      <div {...props} className={clsx('relative min-h-0 flex-1', className)} />
+    );
+  }
+
+  const previewItem =
+    previewedIndex === null ? null : (items[previewedIndex] ?? null);
+  const centeredIndex =
+    previewedIndex === null ? 0 : previewedIndex - (items.length - 1) / 2;
+  const previewOffset = Math.max(
+    -80,
+    Math.min(80, centeredIndex * COMPACT_MARKER_STEP),
+  );
+  const previewStyle = {
+    '--compact-preview-offset': `${previewOffset}px`,
+  } as CSSProperties;
+
+  return (
+    <div
+      {...props}
+      className={clsx('relative min-h-0 flex-1 overflow-hidden', className)}
+    >
+      <div className="absolute top-1/2 left-4 z-20 flex -translate-y-1/2 flex-col max-[760px]:right-3 max-[760px]:bottom-2 max-[760px]:left-3 max-[760px]:top-auto max-[760px]:translate-y-0 max-[760px]:flex-row max-[760px]:justify-center">
+        {items.map((item, index) => {
+          const isCurrent = index === activeIndex;
+          const isPreviewed = index === previewedIndex;
+          const isActive = isCurrent || isPreviewed;
+          const markerWidth = isActive ? 52 : COMPACT_INACTIVE_MARKER_WIDTH;
+
+          return (
+            <div key={item.id}>
+              <Link
+                className="group flex h-5 w-14 items-center rounded-sm outline-none max-[760px]:w-8 max-[760px]:justify-center"
+                href={item.card.href}
+                onPointerEnter={() => setPreviewedIndex(index)}
+                onPointerLeave={() => setPreviewedIndex(null)}
+              >
+                <motion.span
+                  animate={{ width: markerWidth }}
+                  className={clsx(
+                    'block h-[3px] max-w-full origin-left transition-colors duration-200',
+                    isActive
+                      ? 'bg-[#20211d] dark:bg-[#f0f0e9]'
+                      : 'bg-[#cfd0ce] dark:bg-[#5f615b]',
+                  )}
+                  transition={{
+                    duration: 0.24,
+                    ease: [0.2, 0.78, 0.2, 1],
+                  }}
+                />
+              </Link>
+            </div>
+          );
+        })}
+      </div>
+
+      <div
+        className="pointer-events-none absolute top-1/2 right-5 left-20 z-10 [transform:translateY(calc(-50%+var(--compact-preview-offset)))] max-[760px]:top-auto max-[760px]:right-5 max-[760px]:bottom-14 max-[760px]:left-5 max-[760px]:[transform:none] max-[760px]:text-center"
+        style={previewStyle}
+      >
+        {previewItem && (
+          <span className="inline-block max-w-[24rem] font-[family-name:var(--font-ibm-plex-mono,_monospace)] text-base leading-[1.4] font-normal tracking-normal text-[#20211d] dark:text-[#f0f0e9]">
+            {previewItem.card.title}
+          </span>
+        )}
+      </div>
+    </div>
+  );
+}
+
 export function TextVerticalCarousel({
   'aria-label': ariaLabel = 'Featured case studies',
   className,
@@ -348,7 +434,7 @@ export function TextVerticalCarousel({
 
   useEffect(() => {
     const viewport = viewportRef.current;
-    if (!viewport || itemCount < 2) return;
+    if (compact || !viewport || itemCount < 2) return;
 
     let wheelEventCount = 0;
     let wheelDirection = 0;
@@ -398,7 +484,7 @@ export function TextVerticalCarousel({
     viewport.addEventListener('wheel', handleWheel, { passive: false });
 
     return () => viewport.removeEventListener('wheel', handleWheel);
-  }, [itemCount, setActive]);
+  }, [compact, itemCount, setActive]);
 
   const handleKeyDown = (event: React.KeyboardEvent<HTMLDivElement>) => {
     if (event.key === 'ArrowDown') {
@@ -441,6 +527,17 @@ export function TextVerticalCarousel({
     pointerStartRef.current = null;
   };
 
+  if (compact) {
+    return (
+      <CompactTextCarousel
+        activeIndex={activeIndex}
+        className={className}
+        items={items}
+        props={props}
+      />
+    );
+  }
+
   return (
     <div
       {...props}
@@ -458,19 +555,13 @@ export function TextVerticalCarousel({
       role="region"
       tabIndex={0}
     >
-      <div
-        className={clsx(
-          'absolute inset-y-0 left-1/2 w-full -translate-x-1/2 transition-[width] duration-700 ease-[cubic-bezier(0.2,0.78,0.2,1)] motion-reduce:transition-none',
-          compact ? 'max-w-[28rem]' : 'max-w-[44rem]',
-        )}
-      >
+      <div className="absolute inset-y-0 left-1/2 w-full max-w-[44rem] -translate-x-1/2">
         {items.map((item, index) => {
           const delta = getCircularDelta(index, activeIndex, itemCount);
 
           return (
             <TextCarouselItem
               active={index === activeIndex}
-              compact={compact}
               delta={delta}
               item={item}
               key={item.id}
