@@ -1,7 +1,6 @@
 import type { ReactNode } from 'react';
 
 import { BackToWorkLink } from '@/components/back-to-work-link/back-to-work-link';
-import { TableOfContents } from '@/components/table-of-contents/table-of-contents';
 
 const facts = [
   ['Scale', '150+ flags per request'],
@@ -15,22 +14,10 @@ const flagFlow = [
   ['03', 'Scoped cache', 'Reuse results for the lifetime of the request.'],
 ] as const;
 
-const tableOfContentsLinks = [
-  { href: '#challenge', text: 'The challenge' },
-  { href: '#system-design', text: 'System design' },
-  { href: '#developer-api', text: 'Developer API' },
-  { href: '#outcome', text: 'Outcome' },
-] as const;
-
 export function FeatureFlagSystemCaseStudy() {
   return (
-    <article className="mx-auto w-full max-w-3xl px-10 pt-9 pb-28 min-[1200px]:mr-auto min-[1200px]:ml-36 min-[1200px]:w-[calc(100%-9rem)] max-[960px]:px-7 max-[560px]:px-5">
+    <article className="mx-auto w-full max-w-3xl px-10 pt-9 pb-28 max-[960px]:px-7 max-[560px]:px-5">
       <BackToWorkLink />
-
-      <TableOfContents
-        className="left-4 z-10 hidden w-28 min-[1200px]:block"
-        links={tableOfContentsLinks}
-      />
 
       <header className="pt-20 pb-14 max-[760px]:pt-12">
         <p className="mb-5 text-sm font-medium tracking-[0.14em] text-[#6a6c62] uppercase dark:text-[#a8aaa2]">

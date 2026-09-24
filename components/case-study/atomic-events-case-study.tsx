@@ -1,10 +1,4 @@
 import { BackToWorkLink } from '@/components/back-to-work-link/back-to-work-link';
-import { TableOfContents } from '@/components/table-of-contents/table-of-contents';
-
-const tableOfContentsLinks = [
-  { href: '#context', text: 'Context' },
-  { href: '#problem', text: 'Problem' },
-] as const;
 
 const observabilityChallenges = [
   'Checkout experiences spanned teams and repositories with different telemetry standards.',
@@ -15,13 +9,8 @@ const observabilityChallenges = [
 
 export function AtomicEventsCaseStudy() {
   return (
-    <article className="mx-auto w-full max-w-3xl px-10 pt-9 pb-28 min-[1200px]:mr-auto min-[1200px]:ml-36 min-[1200px]:w-[calc(100%-9rem)] max-[960px]:px-7 max-[560px]:px-5">
+    <article className="mx-auto w-full max-w-3xl px-10 pt-9 pb-28 max-[960px]:px-7 max-[560px]:px-5">
       <BackToWorkLink />
-
-      <TableOfContents
-        className="left-4 z-10 hidden w-28 min-[1200px]:block"
-        links={tableOfContentsLinks}
-      />
 
       <section aria-labelledby="context" className="pt-20 max-[760px]:pt-12">
         <h1
