@@ -1,12 +1,17 @@
 'use client';
 
 import clsx from 'clsx';
-import { motion, useAnimate, useMotionValue } from 'motion/react';
+import {
+  animate,
+  motion,
+  useMotionValue,
+  type MotionStyle,
+} from 'motion/react';
 import type {
   ComponentPropsWithoutRef,
   PointerEvent as ReactPointerEvent,
 } from 'react';
-import { useCallback, useEffect, useRef, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 
 import {
   CaseStudyCard,
@@ -29,50 +34,57 @@ export interface ImageVerticalCarouselProps extends Omit<
   onActiveIndexChange?: (index: number) => void;
 }
 
-interface VisualState {
-  /** Controls whether the card is active, adjacent, or hidden. */
+interface Pose {
+  coverOpacity: number;
+  lowerSlab: number;
   opacity: number;
-  /** Tilts the card around its horizontal axis to create the folded pose. */
+  originY: number;
   rotateX: number;
-  /** Keeps every card at the same size throughout the fold transition. */
   scale: number;
-  /** Positions the card in the active, upper, or lower carousel slot. */
+  upperSlab: number;
   y: number;
-  /** Keeps cards closer to the active slot above more distant cards. */
   zIndex: number;
 }
 
-const WHEEL_EVENT_THRESHOLD = 12;
-const WHEEL_GESTURE_GAP = 200;
-const FAST_WHEEL_SPEED = 1;
+// A light trackpad scroll is many small ticks. Add them up, then step once.
+const WHEEL_STEP_DELTA = 24;
+// The first card of a gesture swallows a longer flick before a fast scroll can start.
+const WHEEL_LOCK_FIRST = 520;
+// After that, a scroll that is still going can take the next card.
+const WHEEL_LOCK_REPEAT = 120;
+const WHEEL_GESTURE_GAP = 520;
+// A follow-up tick continues the fold instead of restarting the one-card ease-in.
+const WHEEL_FOLLOW_EASE = [0.16, 0.84, 0.24, 1] as const;
+const WHEEL_FOLLOW_MS = 0.26;
 const SWIPE_THRESHOLD = 35;
-const CARD_SCALE = 1;
-const CARD_OFFSET = 400;
+const LANDING_FOLDED_SCALE = 0.74;
 const COMPACT_CARD_OFFSET = 260;
-// Keep every transform layer on stable geometry while card metadata collapses.
-// In compact mode, move the upper hinge to the bottom of the visible card.
+const LANDING_UPPER_OFFSET = 428;
+const LANDING_LOWER_OFFSET = 448;
+const COMPACT_PERSPECTIVE = 1100;
+const LANDING_PERSPECTIVE = 620;
 const COMPACT_UPPER_HINGE_ORIGIN = 312 / 384;
-const FOLD_TRANSITION = {
-  duration: 0.72,
-  ease: [0.2, 0.78, 0.2, 1],
-} as const;
+const COMPACT_FOLD_ANGLE = 65;
+const LANDING_FOLD_ANGLE = 78;
+// Cards past the adjacent slot keep traveling and fade out across this span.
+const EXIT_SPAN = 0.4;
+// The hinge leads the cover: the image holds through the start of the fold.
+const COVER_LEAD = 0.12;
+const FOLD_EASE = [0.2, 0.78, 0.2, 1] as const;
+// Stay slow, then accelerate, then overshoot past the resting card.
+const LANDING_HINGE_EASE = [0.86, 0, 0.38, 1.62] as const;
+const COMPACT_STEP_MS = 0.72;
+const LANDING_STEP_MS = 0.64;
 
 function wrapIndex(index: number, itemCount: number) {
   return ((index % itemCount) + itemCount) % itemCount;
 }
 
-function getCircularDelta(
-  index: number,
-  activeIndex: number,
-  itemCount: number,
-) {
-  const delta = index - activeIndex;
-  const halfwayPoint = itemCount / 2;
-
-  if (delta > halfwayPoint) return delta - itemCount;
-  if (delta < -halfwayPoint) return delta + itemCount;
-
-  return delta;
+function circularOffset(index: number, progress: number, itemCount: number) {
+  const raw = index - progress;
+  const positive = ((raw % itemCount) + itemCount) % itemCount;
+  if (positive > itemCount / 2) return positive - itemCount;
+  return positive;
 }
 
 function getWheelDeltaInPixels(event: WheelEvent) {
@@ -84,170 +96,164 @@ function getWheelDeltaInPixels(event: WheelEvent) {
   return event.deltaY;
 }
 
-function getVisualState(delta: number, compact = false): VisualState {
-  const direction = Math.sign(delta);
-  const distance = Math.abs(delta);
-  const cardOffset = compact
-    ? COMPACT_CARD_OFFSET
-    : direction < 0
-      ? 380
-      : CARD_OFFSET;
-  let opacity = 0;
-
-  if (distance === 0) {
-    opacity = 1;
-  } else if (distance === 1) {
-    opacity = 0.7;
-  }
-
-  return {
-    // Edge hinges leave the folded card's center closer to the active slot.
-    // Give the hinge enough travel to park the card above or below it.
-    y: delta === 0 ? 0 : direction * cardOffset,
-    scale: CARD_SCALE,
-    rotateX: delta === 0 ? 0 : direction * -65,
-    opacity,
-    zIndex: 20 - distance,
-  };
+function clamp01(value: number) {
+  return Math.min(1, Math.max(0, value));
 }
 
-function getHingeOrigin(delta: number, compact = false) {
-  if (delta < 0) return compact ? COMPACT_UPPER_HINGE_ORIGIN : 1;
-  if (delta > 0) return 0;
-  return 0.5;
+interface LandingPose {
+  foldAngle: number;
+  lowerOffset: number;
+  upperOffset: number;
+}
+
+const DEFAULT_LANDING_POSE: LandingPose = {
+  foldAngle: LANDING_FOLD_ANGLE,
+  lowerOffset: LANDING_LOWER_OFFSET,
+  upperOffset: LANDING_UPPER_OFFSET,
+};
+
+function getPose(
+  offset: number,
+  compact: boolean,
+  landing: LandingPose = DEFAULT_LANDING_POSE,
+): Pose {
+  const distance = Math.abs(offset);
+  const fold = Math.min(distance, 1);
+  const slot = compact
+    ? COMPACT_CARD_OFFSET
+    : offset < 0
+      ? landing.upperOffset
+      : landing.lowerOffset;
+  const exit = distance <= 1 ? 1 : clamp01(1 - (distance - 1) / EXIT_SPAN);
+  const shellOpacity = (compact ? 1 - 0.3 * fold : 1) * exit;
+  const coverFade = clamp01((fold - COVER_LEAD) / (1 - COVER_LEAD));
+
+  return {
+    y: offset * slot,
+    scale: compact ? 1 : 1 - (1 - LANDING_FOLDED_SCALE) * fold,
+    rotateX:
+      Math.sign(offset) *
+      -(compact ? COMPACT_FOLD_ANGLE : landing.foldAngle) *
+      fold,
+    opacity: shellOpacity,
+    zIndex: Math.round(40 - distance * 10),
+    originY:
+      offset < 0
+        ? compact
+          ? COMPACT_UPPER_HINGE_ORIGIN
+          : 1
+        : offset > 0
+          ? 0
+          : 0.5,
+    coverOpacity: compact ? 1 : 1 - coverFade,
+    upperSlab: !compact && offset < 0 ? coverFade : 0,
+    lowerSlab: !compact && offset > 0 ? coverFade : 0,
+  };
 }
 
 function CarouselCard({
   compact,
-  delta,
+  index,
+  isActive,
   item,
+  itemCount,
+  landing,
+  progress,
 }: {
   compact: boolean;
-  delta: number;
+  index: number;
+  isActive: boolean;
   item: ImageVerticalCarouselItem;
+  itemCount: number;
+  landing: LandingPose;
+  progress: ReturnType<typeof useMotionValue<number>>;
 }) {
-  const [scope, animate] = useAnimate<HTMLDivElement>();
-  const previousDeltaRef = useRef(delta);
-  const [initialState] = useState(() => ({
-    ...getVisualState(delta, compact),
-    originY: getHingeOrigin(delta, compact),
-  }));
-  // Bind values from mount, including for initially hidden cards. Recycling
-  // must update existing values so .set() schedules a render before revealing
-  // the card, even when the following animation has the same target.
-  const cardY = useMotionValue(initialState.y);
-  const cardScale = useMotionValue(initialState.scale);
-  const cardOpacity = useMotionValue(initialState.opacity);
-  const cardOriginY = useMotionValue(initialState.originY);
-  const cardRotateX = useMotionValue(initialState.rotateX);
-  const isActive = delta === 0;
+  const initialPose = getPose(
+    circularOffset(index, progress.get(), itemCount),
+    compact,
+    landing,
+  );
+  const y = useMotionValue(initialPose.y);
+  const scale = useMotionValue(initialPose.scale);
+  const rotateX = useMotionValue(initialPose.rotateX);
+  const opacity = useMotionValue(initialPose.opacity);
+  const originY = useMotionValue(initialPose.originY);
+  const coverOpacity = useMotionValue(initialPose.coverOpacity);
+  const upperSlab = useMotionValue(initialPose.upperSlab);
+  const lowerSlab = useMotionValue(initialPose.lowerSlab);
+  const zIndex = useMotionValue(initialPose.zIndex);
 
   useEffect(() => {
-    const previousDelta = previousDeltaRef.current;
-    previousDeltaRef.current = delta;
-    const state = getVisualState(delta, compact);
+    const apply = () => {
+      const pose = getPose(
+        circularOffset(index, progress.get(), itemCount),
+        compact,
+        landing,
+      );
+      y.set(pose.y);
+      scale.set(pose.scale);
+      rotateX.set(pose.rotateX);
+      opacity.set(pose.opacity);
+      originY.set(pose.originY);
+      coverOpacity.set(pose.coverOpacity);
+      upperSlab.set(pose.upperSlab);
+      lowerSlab.set(pose.lowerSlab);
+      zIndex.set(pose.zIndex);
+    };
 
-    if (Math.abs(delta) > 1) {
-      // Freeze the actual rendered pose, including an interrupted fold.
-      // A departing neighbor only fades; it has no further spatial target.
-      cardY.stop();
-      cardScale.stop();
-      cardOriginY.stop();
-      cardRotateX.stop();
-      cardOpacity.stop();
-      animate(cardOpacity, 0, {
-        duration: 0.24,
-      });
-      return;
-    }
-
-    const isChangingSides =
-      previousDelta !== 0 &&
-      delta !== 0 &&
-      Math.sign(previousDelta) !== Math.sign(delta);
-    const hingeDelta = isActive ? previousDelta : delta;
-    const originY = getHingeOrigin(hingeDelta, compact);
-
-    if (Math.abs(previousDelta) > 1 || isChangingSides) {
-      // Reintroduce recycled cards from their new edge while invisible,
-      // never by rotating or translating across the back of the carousel.
-      const entryState = getVisualState(Math.sign(hingeDelta), compact);
-      cardY.stop();
-      cardScale.stop();
-      cardOpacity.stop();
-      cardOriginY.stop();
-      cardRotateX.stop();
-      cardY.set(entryState.y);
-      cardScale.set(entryState.scale);
-      cardOpacity.set(0);
-      cardOriginY.set(originY);
-      cardRotateX.set(entryState.rotateX);
-    }
-
-    const isEnteringAdjacentSlot =
-      Math.abs(delta) === 1 && (Math.abs(previousDelta) > 1 || isChangingSides);
-
-    if (isEnteringAdjacentSlot) {
-      // Let the previous adjacent card clear this slot before revealing its
-      // replacement.
-      animate(cardOpacity, state.opacity, {
-        delay: 0.32,
-        duration: 0.4,
-        ease: 'easeInOut',
-      });
-    } else {
-      animate(cardOpacity, state.opacity, FOLD_TRANSITION);
-    }
-
-    animate(cardY, state.y, FOLD_TRANSITION);
-    animate(cardScale, state.scale, FOLD_TRANSITION);
-    animate(cardOriginY, originY, FOLD_TRANSITION);
-    animate(cardRotateX, state.rotateX, FOLD_TRANSITION);
+    apply();
+    return progress.on('change', apply);
   }, [
-    animate,
-    cardOpacity,
-    cardOriginY,
-    cardRotateX,
-    cardScale,
-    cardY,
     compact,
-    delta,
-    isActive,
+    coverOpacity,
+    landing,
+    index,
+    itemCount,
+    lowerSlab,
+    opacity,
+    originY,
+    progress,
+    rotateX,
+    scale,
+    upperSlab,
+    y,
+    zIndex,
   ]);
 
   return (
-    <div
-      ref={scope}
+    <motion.div
       aria-hidden={!isActive}
       className={clsx(
         'absolute top-1/2 left-1/2 aspect-[445/384] transition-[width] duration-700 ease-[cubic-bezier(0.2,0.78,0.2,1)] motion-reduce:transition-none',
-        compact ? 'w-[min(20rem,78%)]' : 'w-[27.8125rem]',
+        compact ? 'w-[min(20rem,78%)]' : 'w-[30.5rem]',
         isActive ? 'pointer-events-auto' : 'pointer-events-none',
       )}
       inert={isActive ? undefined : true}
-      style={{
-        translate: '-50% -50%',
-        zIndex: getVisualState(delta, compact).zIndex,
-      }}
+      style={{ translate: '-50% -50%', zIndex }}
     >
       <motion.div
         className="h-full"
         style={{
-          scale: cardScale,
-          y: cardY,
-          perspective: 1100,
+          y,
+          perspective: compact ? COMPACT_PERSPECTIVE : LANDING_PERSPECTIVE,
           perspectiveOrigin: '50% 50%',
         }}
       >
         <motion.div
           className="h-full"
-          style={{
-            opacity: cardOpacity,
-            originY: cardOriginY,
-            rotateX: cardRotateX,
-            backfaceVisibility: 'hidden',
-            WebkitBackfaceVisibility: 'hidden',
-          }}
+          style={
+            {
+              opacity,
+              originY,
+              rotateX,
+              scale,
+              '--case-study-cover-opacity': coverOpacity,
+              '--case-study-upper-slab': upperSlab,
+              '--case-study-lower-slab': lowerSlab,
+              backfaceVisibility: 'hidden',
+              WebkitBackfaceVisibility: 'hidden',
+            } as MotionStyle
+          }
         >
           <CaseStudyCard
             {...item.card}
@@ -256,7 +262,7 @@ function CarouselCard({
           />
         </motion.div>
       </motion.div>
-    </div>
+    </motion.div>
   );
 }
 
@@ -270,80 +276,188 @@ export function ImageVerticalCarousel({
   ...props
 }: ImageVerticalCarouselProps) {
   const itemCount = items.length;
-  const [activeIndex, setActiveIndex] = useState(() =>
-    itemCount === 0 ? 0 : wrapIndex(initialIndex, itemCount),
-  );
-  const activeIndexRef = useRef(activeIndex);
+  const startingIndex =
+    itemCount === 0 ? 0 : wrapIndex(initialIndex, itemCount);
+  const [activeIndex, setActiveIndex] = useState(startingIndex);
+  const progress = useMotionValue(startingIndex);
+  const activeIndexRef = useRef(startingIndex);
+  const intendedRef = useRef(startingIndex);
+  const modeRef = useRef<'idle' | 'step'>('idle');
+  const runRef = useRef(0);
+  const animationRef = useRef<{ stop: () => void } | null>(null);
+  const settleTimerRef = useRef(0);
   const viewportRef = useRef<HTMLDivElement>(null);
   const isPointerOverRef = useRef(false);
   const pointerStartRef = useRef<{ id: number; y: number } | null>(null);
+  const onActiveIndexChangeRef = useRef(onActiveIndexChange);
+  const compactRef = useRef(compact);
+  const itemCountRef = useRef(itemCount);
+  onActiveIndexChangeRef.current = onActiveIndexChange;
+  compactRef.current = compact;
+  itemCountRef.current = itemCount;
 
-  const setActive = useCallback(
-    (nextIndex: number) => {
-      if (itemCount === 0) return;
+  const commitIndex = (index: number) => {
+    const count = itemCountRef.current;
+    if (count === 0) return;
+    const wrapped = wrapIndex(Math.round(index), count);
+    if (wrapped === activeIndexRef.current) return;
+    activeIndexRef.current = wrapped;
+    setActiveIndex(wrapped);
+    onActiveIndexChangeRef.current?.(wrapped);
+  };
 
-      const wrappedIndex = wrapIndex(nextIndex, itemCount);
-      if (wrappedIndex === activeIndexRef.current) return;
+  const stepTo = (destination: number) => {
+    const count = itemCountRef.current;
+    if (count === 0) return;
 
-      activeIndexRef.current = wrappedIndex;
-      setActiveIndex(wrappedIndex);
-      onActiveIndexChange?.(wrappedIndex);
-    },
-    [itemCount, onActiveIndexChange],
-  );
+    window.clearTimeout(settleTimerRef.current);
+    runRef.current += 1;
+    const runId = runRef.current;
+    animationRef.current?.stop();
+    intendedRef.current = destination;
+    modeRef.current = 'step';
+
+    const distance = Math.abs(destination - progress.get());
+    if (distance < 0.02) {
+      progress.set(destination);
+      modeRef.current = 'idle';
+      commitIndex(destination);
+      return;
+    }
+
+    const onComplete = () => {
+      if (runRef.current !== runId) return;
+      modeRef.current = 'idle';
+    };
+
+    const full = compactRef.current ? COMPACT_STEP_MS : LANDING_STEP_MS;
+    const duration = Math.max(0.22, Math.min(full, full * distance));
+    animationRef.current = animate(progress, destination, {
+      duration,
+      ease: compactRef.current ? [...FOLD_EASE] : [...LANDING_HINGE_EASE],
+      onComplete,
+    });
+  };
+
+  const stepBy = (direction: number) => {
+    const origin =
+      modeRef.current === 'step'
+        ? intendedRef.current
+        : Math.round(progress.get());
+    stepTo(origin + direction);
+  };
+
+  const followTo = (destination: number) => {
+    const count = itemCountRef.current;
+    if (count === 0) return;
+
+    runRef.current += 1;
+    const runId = runRef.current;
+    animationRef.current?.stop();
+    intendedRef.current = destination;
+    modeRef.current = 'step';
+
+    const distance = Math.abs(destination - progress.get());
+    if (distance < 0.02) {
+      progress.set(destination);
+      modeRef.current = 'idle';
+      commitIndex(destination);
+      return;
+    }
+
+    animationRef.current = animate(progress, destination, {
+      duration: Math.min(WHEEL_FOLLOW_MS, Math.max(0.12, distance * 0.16)),
+      ease: [...WHEEL_FOLLOW_EASE],
+      onComplete: () => {
+        if (runRef.current !== runId) return;
+        modeRef.current = 'idle';
+      },
+    });
+  };
+
+  const wheelStep = (direction: number) => {
+    const origin =
+      modeRef.current === 'step'
+        ? intendedRef.current
+        : Math.round(progress.get());
+    const destination = origin + direction;
+    if (modeRef.current === 'step') {
+      followTo(destination);
+      return;
+    }
+    stepTo(destination);
+  };
+
+  const goToIndex = (index: number) => {
+    const count = itemCountRef.current;
+    if (count === 0) return;
+    stepTo(progress.get() + circularOffset(index, progress.get(), count));
+  };
+
+  const apiRef = useRef({
+    commitIndex,
+    goToIndex,
+    stepBy,
+    stepTo,
+    wheelStep,
+  });
+  apiRef.current = {
+    commitIndex,
+    goToIndex,
+    stepBy,
+    stepTo,
+    wheelStep,
+  };
 
   useEffect(() => {
-    if (itemCount === 0) return;
-    setActive(activeIndexRef.current);
-  }, [itemCount, setActive]);
+    const unsubscribe = progress.on('change', (value) => {
+      apiRef.current.commitIndex(value);
+    });
+    return unsubscribe;
+  }, [progress]);
 
   useEffect(() => {
     const viewport = viewportRef.current;
     if (!viewport || itemCount < 2) return;
 
-    let wheelEventCount = 0;
-    let wheelDirection = 0;
+    let wheelLockedUntil = 0;
+    let pendingDelta = 0;
+    let pendingDirection = 0;
     let lastWheelEventAt = 0;
-    let gestureHasMoved = false;
-    let gestureIsFast = false;
+    let gestureHasStepped = false;
 
     const handleWheel = (event: WheelEvent) => {
       if (Math.abs(event.deltaY) <= Math.abs(event.deltaX)) return;
 
-      const now = performance.now();
-      const direction = Math.sign(event.deltaY);
-      const isNewGesture =
-        direction !== wheelDirection ||
-        now - lastWheelEventAt > WHEEL_GESTURE_GAP;
-      const elapsed = isNewGesture ? 16 : Math.max(now - lastWheelEventAt, 1);
-      const speed = Math.abs(getWheelDeltaInPixels(event)) / elapsed;
+      const pixels = getWheelDeltaInPixels(event);
+      const distance = Math.abs(pixels);
+      if (distance === 0) return;
 
-      if (isNewGesture) {
-        wheelDirection = direction;
-        wheelEventCount = 0;
-        gestureHasMoved = false;
-        gestureIsFast = false;
+      event.preventDefault();
+
+      const now = performance.now();
+      const direction = Math.sign(pixels);
+      if (
+        now - lastWheelEventAt > WHEEL_GESTURE_GAP ||
+        (pendingDirection !== 0 && direction !== pendingDirection)
+      ) {
+        pendingDelta = 0;
+        pendingDirection = direction;
+        gestureHasStepped = false;
       }
 
       lastWheelEventAt = now;
-      gestureIsFast = gestureIsFast || speed >= FAST_WHEEL_SPEED;
+      if (now < wheelLockedUntil) return;
 
-      const currentIndex = activeIndexRef.current;
-      event.preventDefault();
+      pendingDirection = direction;
+      pendingDelta += distance;
+      if (pendingDelta < WHEEL_STEP_DELTA) return;
 
-      if (!gestureHasMoved) {
-        gestureHasMoved = true;
-        setActive(currentIndex + direction);
-        return;
-      }
-
-      if (!gestureIsFast) return;
-
-      wheelEventCount += 1;
-      if (wheelEventCount < WHEEL_EVENT_THRESHOLD) return;
-
-      wheelEventCount = 0;
-      setActive(currentIndex + direction);
+      pendingDelta = 0;
+      wheelLockedUntil =
+        now + (gestureHasStepped ? WHEEL_LOCK_REPEAT : WHEEL_LOCK_FIRST);
+      gestureHasStepped = true;
+      apiRef.current.wheelStep(direction);
     };
 
     viewport.addEventListener('wheel', handleWheel, { passive: false });
@@ -351,28 +465,27 @@ export function ImageVerticalCarousel({
     return () => {
       viewport.removeEventListener('wheel', handleWheel);
     };
-  }, [itemCount, setActive]);
+  }, [itemCount, progress]);
 
   useEffect(() => {
     const handleWindowKeyDown = (event: KeyboardEvent) => {
-      if (!isPointerOverRef.current || event.defaultPrevented) {
-        return;
-      }
-
+      if (!isPointerOverRef.current || event.defaultPrevented) return;
       if (event.key !== 'ArrowDown' && event.key !== 'ArrowUp') return;
 
-      const direction = event.key === 'ArrowDown' ? 1 : -1;
-
       event.preventDefault();
-      setActive(activeIndexRef.current + direction);
+      apiRef.current.stepBy(event.key === 'ArrowDown' ? 1 : -1);
     };
 
     window.addEventListener('keydown', handleWindowKeyDown);
+    return () => window.removeEventListener('keydown', handleWindowKeyDown);
+  }, []);
 
+  useEffect(() => {
     return () => {
-      window.removeEventListener('keydown', handleWindowKeyDown);
+      window.clearTimeout(settleTimerRef.current);
+      animationRef.current?.stop();
     };
-  }, [setActive]);
+  }, []);
 
   const handlePointerDown = (event: ReactPointerEvent<HTMLDivElement>) => {
     if (!event.isPrimary) return;
@@ -394,16 +507,16 @@ export function ImageVerticalCarousel({
 
     if (event.key === 'ArrowDown') {
       event.preventDefault();
-      setActive(activeIndexRef.current + 1);
+      apiRef.current.stepBy(1);
     } else if (event.key === 'ArrowUp') {
       event.preventDefault();
-      setActive(activeIndexRef.current - 1);
+      apiRef.current.stepBy(-1);
     } else if (event.key === 'Home') {
       event.preventDefault();
-      setActive(0);
+      apiRef.current.goToIndex(0);
     } else if (event.key === 'End') {
       event.preventDefault();
-      setActive(itemCount - 1);
+      apiRef.current.goToIndex(itemCount - 1);
     }
   };
 
@@ -424,7 +537,7 @@ export function ImageVerticalCarousel({
 
     if (Math.abs(distance) <= SWIPE_THRESHOLD) return;
 
-    setActive(activeIndexRef.current + Math.sign(distance));
+    apiRef.current.stepBy(Math.sign(distance));
   };
 
   return (
@@ -451,7 +564,7 @@ export function ImageVerticalCarousel({
       >
         <div
           className={clsx(
-            'absolute inset-y-0 w-[min(30rem,100%)] -translate-x-1/2 transition-[left] duration-700 ease-[cubic-bezier(0.2,0.78,0.2,1)] motion-reduce:transition-none',
+            'absolute inset-y-0 w-[min(33rem,100%)] -translate-x-1/2 transition-[left] duration-700 ease-[cubic-bezier(0.2,0.78,0.2,1)] motion-reduce:transition-none',
             compact ? 'left-1/2' : 'left-[44%]',
           )}
           onPointerEnter={handleCardsPointerEnter}
@@ -460,9 +573,13 @@ export function ImageVerticalCarousel({
           {items.map((item, index) => (
             <CarouselCard
               compact={compact}
-              delta={getCircularDelta(index, activeIndex, itemCount)}
+              index={index}
+              isActive={index === activeIndex}
               item={item}
+              itemCount={itemCount}
               key={item.id}
+              landing={DEFAULT_LANDING_POSE}
+              progress={progress}
             />
           ))}
         </div>
@@ -482,7 +599,7 @@ export function ImageVerticalCarousel({
                 isActive && 'opacity-100',
               )}
               key={item.id}
-              onClick={() => setActive(index)}
+              onClick={() => apiRef.current.goToIndex(index)}
               type="button"
             />
           );

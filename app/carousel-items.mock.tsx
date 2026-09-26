@@ -20,7 +20,7 @@ export const carouselItems = [
           className="object-cover"
           fill
           priority
-          sizes="445px"
+          sizes="488px"
           src="/images/case-studies/checkout-performance.svg"
         />
       ),
@@ -116,7 +116,7 @@ function AtomicEventsThumbnail() {
       alt=""
       className="object-cover"
       fill
-      sizes="445px"
+      sizes="488px"
       src="/images/case-studies/atomic-events-apply-rewards-thumbnail.jpg"
     />
   );
