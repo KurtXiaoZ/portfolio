@@ -48,9 +48,9 @@ Changing tabs updates only the right pane so the left-side introduction remains 
 
 ### Work Tab
 
-The carousel uses a vertical perspective-fold transition. The active item presents a wide landscape image followed by the case-study title and quiet, slash-separated metadata; inactive items remain image-only. Cards do not add a separate panel background or padding around the image. Color and visual emphasis should come primarily from the image rather than the metadata.
+The carousel uses a vertical perspective-fold transition. The active item presents a wide landscape image followed by the case-study title and quiet, slash-separated metadata. Adjacent cards fold into smaller neutral slabs and do not show their pictures. The cover fades in as a card moves into the center and fades out as it leaves, in either direction. Each slab is a light neutral in light mode and a matching dark neutral in dark mode, with a linear fade and progressive blur toward its outer edge. Cards do not add a separate panel background or padding around the image. Color and visual emphasis on the active card should come primarily from the image rather than the metadata.
 
-Cards moving into the upper position fold around their bottom edge; cards moving into the lower position fold around their top edge. Adjacent cards retain most of their size and remain visible so the movement feels like placing a card into a stack. A card leaving either adjacent position holds its current pose and fades out without further movement. Incoming cards unfold from the same edge, and looping repositions recycled cards without sending them through the center.
+Cards moving into the upper position fold around their bottom edge; cards moving into the lower position fold around their top edge. Adjacent cards retain most of their size and remain visible so the movement feels like placing a card into a stack. A card leaving an adjacent position keeps traveling outward and fades out, and the next card fades in from that side. Incoming cards unfold from the same edge. Looping takes the short way around the stack, so a card does not travel through the center to reach the other side.
 
 See [Vertical Carousel Scroll Animation](../../engineering/vertical-carousel-scroll-animation.md) for the implemented interaction choreography, timing, and interruption behavior.
 
