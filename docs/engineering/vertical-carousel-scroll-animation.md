@@ -35,7 +35,7 @@ The card closest to the center has the highest stacking level. Each step farther
 
 Slow and fast scrolling are the same motion at different speeds, because both move `progress`.
 
-Compact mode eases a one-card change over `720ms` with `[0.2, 0.78, 0.2, 1]`. A one-card landing change lasts `640ms` and uses `[0.86, 0, 0.38, 1.62]`: it holds near the start, accelerates, then overshoots past the resting card before settling. The cover is tied to travel rather than a separate clock, so the ease-in makes the image fade in the later part of that `640ms`. A shorter remainder, such as the end of a flick, uses the same curve and scales the duration down to the distance, with a floor of `220ms`.
+Compact mode eases a one-card change over `720ms` with `[0.2, 0.78, 0.2, 1]`. A one-card landing change lasts `640ms` and uses `[0.86, 0, 0.38, 1.22]`: it holds near the start, accelerates, then overshoots the resting card slightly before settling. The cover is tied to travel rather than a separate clock, so the ease-in makes the image fade in the later part of that `640ms`. A shorter remainder, such as the end of a flick, uses the same curve and scales the duration down to the distance, with a floor of `220ms`.
 
 For a one-card move from a settled position:
 

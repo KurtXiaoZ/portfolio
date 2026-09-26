@@ -72,7 +72,7 @@ const EXIT_SPAN = 0.4;
 const COVER_LEAD = 0.12;
 const FOLD_EASE = [0.2, 0.78, 0.2, 1] as const;
 // Stay slow, then accelerate, then overshoot past the resting card.
-const LANDING_HINGE_EASE = [0.86, 0, 0.38, 1.62] as const;
+const LANDING_HINGE_EASE = [0.86, 0, 0.38, 1.22] as const;
 const COMPACT_STEP_MS = 0.72;
 const LANDING_STEP_MS = 0.64;
 
