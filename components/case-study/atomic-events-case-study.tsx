@@ -185,6 +185,86 @@ export function AtomicEventsCaseStudy() {
               src="/images/case-studies/atomic-events-state-machine-placeholder.svg"
             />
           </div>
+          <hr className="border-0 border-t border-[#171814]/10 dark:border-[#f0f0e9]/15" />
+          <div>
+            <h3 className="text-base leading-tight font-medium tracking-[-0.02em] text-[#30312d] dark:text-[#dedfd8]">
+              Technical decision: an in-house state machine over Redux
+            </h3>
+            <p className="mt-4">
+              We chose a lightweight reducer over Redux for four reasons:
+            </p>
+            <ul className="mt-4 list-disc space-y-3 pl-5 marker:text-[#168465] dark:marker:text-[#71d9b7]">
+              <li>
+                <strong>Portability:</strong> It needed to work across
+                applications with different frameworks and state-management
+                approaches.
+              </li>
+              <li>
+                <strong>Focused scope:</strong> With only two states—ready and
+                waiting—Redux added unnecessary complexity.
+              </li>
+              <li>
+                <strong>Small footprint:</strong> Avoiding another runtime
+                dependency kept the library lightweight.
+              </li>
+              <li>
+                <strong>Controlled API surface:</strong> The public API exposed
+                only lifecycle operations, keeping transitions and dispatch
+                internal.
+              </li>
+            </ul>
+            <p className="mt-5">
+              The in-house state machine provided the core capabilities we
+              needed from Redux:
+            </p>
+            <ol className="mt-4 list-decimal space-y-3 pl-5 marker:text-[#168465] dark:marker:text-[#71d9b7]">
+              <li>
+                <strong>Store:</strong> An internal state-history array stores
+                each resulting state.
+              </li>
+              <li>
+                <strong>Actions:</strong> Typed actions represent:
+                <ul className="mt-2 list-disc space-y-2 pl-5">
+                  <li>Starting an interaction</li>
+                  <li>Marking an interaction with an error or failure</li>
+                  <li>Completing an interaction when the UI becomes ready</li>
+                </ul>
+              </li>
+              <li>
+                <strong>Dispatch:</strong> A central dispatcher retrieves the
+                current state, passes it and the action to the reducer, stores
+                the resulting state, and invokes middleware and listeners.
+              </li>
+              <li>
+                <strong>Reducers:</strong> Separate reducers handle actions
+                based on the current state: <code>ready</code> or{' '}
+                <code>waiting</code>.
+              </li>
+              <li>
+                <strong>Immutable updates:</strong> Each update creates a new
+                state object and appends it to the state-history array.
+              </li>
+              <li>
+                <strong>Middleware:</strong> Processes state transitions to
+                generate metrics, persist state for cross-application handoff,
+                and run consumer-defined middleware.
+              </li>
+              <li>
+                <strong>Subscriptions:</strong> State changes are published to
+                callbacks for telemetry, developer tools, and custom
+                integrations.
+              </li>
+            </ol>
+            <div className="relative mt-5 aspect-[3003/3518] overflow-hidden rounded-[18px] bg-white">
+              <Image
+                alt="Detailed Atomic Events state-flow diagram showing actions, ready and waiting states, state changes, and ignored actions"
+                className="object-contain"
+                fill
+                sizes="(max-width: 760px) 100vw, 42rem"
+                src="/images/case-studies/atomic-events-state-flow.png"
+              />
+            </div>
+          </div>
         </div>
       </section>
     </article>
