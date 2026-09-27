@@ -143,6 +143,7 @@ export function AtomicEventsCaseStudy() {
               </li>
             </ul>
           </div>
+          <hr className="border-0 border-t border-[#171814]/10 dark:border-[#f0f0e9]/15" />
           <div>
             <p>
               The interaction model maps naturally to a state machine built
