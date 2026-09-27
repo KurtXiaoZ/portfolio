@@ -68,6 +68,30 @@ export function AtomicEventsCaseStudy() {
           </ol>
         </div>
       </section>
+
+      <section aria-labelledby="solution" className="mt-[3.75rem]">
+        <h2
+          className="max-w-2xl scroll-mt-9 text-xl leading-tight font-medium tracking-[-0.035em] text-balance focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[#657800] max-[560px]:text-lg dark:text-[#f0f0e9] dark:focus-visible:outline-[#c6ec39]"
+          id="solution"
+          tabIndex={-1}
+        >
+          Solution
+        </h2>
+        <div className="mt-5 max-w-2xl space-y-5 text-sm leading-6 text-[#55574f] max-[560px]:text-[0.8125rem] max-[560px]:leading-5 dark:text-[#b7b9af]">
+          <p>
+            To address these challenges, I designed and built Atomic Events, a
+            shared library for measuring customer interactions and perceived
+            latency across applications and domains.
+          </p>
+          <p>
+            I partnered with Product, Analytics, and engineering teams to
+            translate business and analytics needs into technical requirements.
+            Through iterative technical design reviews, we defined Atomic
+            Events’ core measurement model:{' '}
+            <strong>customer interaction</strong>.
+          </p>
+        </div>
+      </section>
     </article>
   );
 }
