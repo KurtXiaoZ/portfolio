@@ -143,6 +143,47 @@ export function AtomicEventsCaseStudy() {
               </li>
             </ul>
           </div>
+          <div>
+            <p>
+              The interaction model maps naturally to a state machine built
+              around limited states, event-driven transitions, and explicit
+              rules:
+            </p>
+            <ol className="mt-4 list-decimal space-y-3 pl-5 marker:text-[#168465] dark:marker:text-[#71d9b7]">
+              <li>
+                <strong>Limited states:</strong> The UI is either ready or
+                waiting.
+              </li>
+              <li>
+                <strong>Event-driven transitions:</strong> A click, navigation,
+                or initial render moves the UI to waiting. A usable result
+                returns it to ready.
+              </li>
+              <li>
+                <strong>State guards:</strong> An interaction starts only from
+                ready and ends only from waiting, preventing unmatched or
+                duplicate events.
+              </li>
+              <li>
+                <strong>Deterministic effects:</strong> State transitions have
+                defined effects — preserving context, calculating duration, and
+                emitting outcome metrics.
+              </li>
+            </ol>
+            <p className="mt-4">
+              The state machine turns this lifecycle into consistent, testable
+              behavior across applications.
+            </p>
+          </div>
+          <div className="relative aspect-[15/8] overflow-hidden rounded-[18px] bg-[#f3f5ef] dark:bg-[#20221d]">
+            <Image
+              alt="State machine showing the UI transitioning between ready and waiting"
+              className="object-cover"
+              fill
+              sizes="(max-width: 760px) 100vw, 42rem"
+              src="/images/case-studies/atomic-events-state-machine-placeholder.svg"
+            />
+          </div>
         </div>
       </section>
     </article>

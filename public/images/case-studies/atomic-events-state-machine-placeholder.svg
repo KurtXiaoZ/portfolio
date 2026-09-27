@@ -1,0 +1,50 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 640" role="img" aria-labelledby="title description">
+  <title id="title">Ready and waiting state machine</title>
+  <desc id="description">Two states labeled Ready and Waiting connect through forward and return transitions.</desc>
+  <defs>
+    <marker id="arrow" viewBox="0 0 12 12" refX="10" refY="6" markerWidth="12" markerHeight="12" orient="auto-start-reverse">
+      <path class="arrow-head" d="M1 1 11 6 1 11Z" />
+    </marker>
+  </defs>
+  <style>
+    .background { fill: #f3f5ef; }
+    .ready { fill: #ddefe8; stroke: #168465; }
+    .waiting { fill: #f1e9cd; stroke: #c09c31; }
+    .text { fill: #272923; }
+    .muted { fill: #666a61; }
+    .connector { fill: none; stroke: #168465; }
+    .arrow-head { fill: #168465; }
+    .dot { fill: #168465; opacity: 0.14; }
+
+    @media (prefers-color-scheme: dark) {
+      .background { fill: #20221d; }
+      .ready { fill: #29473d; stroke: #71d9b7; }
+      .waiting { fill: #4b442c; stroke: #d0b75e; }
+      .text { fill: #f0f0e9; }
+      .muted { fill: #b7b9af; }
+      .connector { stroke: #71d9b7; }
+      .arrow-head { fill: #71d9b7; }
+      .dot { fill: #71d9b7; }
+    }
+  </style>
+
+  <rect class="background" width="1200" height="640" />
+
+  <circle class="dot" cx="600" cy="320" r="252" />
+  <circle class="dot" cx="600" cy="320" r="182" opacity="0.08" />
+
+  <path class="connector" d="M412 252C510 126 690 126 788 252" stroke-width="7" stroke-linecap="round" marker-end="url(#arrow)" />
+  <path class="connector" d="M788 388C690 514 510 514 412 388" stroke-width="7" stroke-linecap="round" marker-end="url(#arrow)" />
+
+  <g>
+    <circle class="ready" cx="310" cy="320" r="142" stroke-width="4" />
+    <text class="text" x="310" y="311" text-anchor="middle" font-family="Inter, ui-sans-serif, system-ui, sans-serif" font-size="38" font-weight="500" letter-spacing="3">READY</text>
+    <text class="muted" x="310" y="354" text-anchor="middle" font-family="Inter, ui-sans-serif, system-ui, sans-serif" font-size="22">UI is usable</text>
+  </g>
+
+  <g>
+    <circle class="waiting" cx="890" cy="320" r="142" stroke-width="4" />
+    <text class="text" x="890" y="311" text-anchor="middle" font-family="Inter, ui-sans-serif, system-ui, sans-serif" font-size="38" font-weight="500" letter-spacing="3">WAITING</text>
+    <text class="muted" x="890" y="354" text-anchor="middle" font-family="Inter, ui-sans-serif, system-ui, sans-serif" font-size="22">Work in progress</text>
+  </g>
+</svg>
