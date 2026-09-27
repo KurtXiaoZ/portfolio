@@ -1,3 +1,5 @@
+import Image from 'next/image';
+
 import { BackToWorkLink } from '@/components/back-to-work-link/back-to-work-link';
 
 const observabilityChallenges = [
@@ -88,8 +90,59 @@ export function AtomicEventsCaseStudy() {
             translate business and analytics needs into technical requirements.
             Through iterative technical design reviews, we defined Atomic
             Events’ core measurement model:{' '}
-            <strong>customer interaction</strong>.
+            <strong>customer interaction</strong> — the interval from a user’s
+            intent to the moment the resulting UI is ready for their next
+            action.
           </p>
+          <div className="relative aspect-[15/8] overflow-hidden rounded-[18px] bg-[#f3f5ef] dark:bg-[#20221d]">
+            <Image
+              alt="A customer interaction moving from intent, through waiting, to a ready interface"
+              className="object-cover"
+              fill
+              sizes="(max-width: 760px) 100vw, 42rem"
+              src="/images/case-studies/atomic-events-interaction-lifecycle.svg"
+            />
+          </div>
+          <div>
+            <p>Each interaction is defined by:</p>
+            <ul className="mt-4 list-disc space-y-3 pl-5 marker:text-[#168465] dark:marker:text-[#71d9b7]">
+              <li>
+                <strong>Start/intent:</strong> A click, navigation, or initial
+                render puts the UI in a waiting state.
+              </li>
+              <li>
+                <strong>Waiting:</strong> Work is in progress, preventing the
+                user’s next meaningful action.
+              </li>
+              <li>
+                <strong>End/ready:</strong> The UI becomes usable again; the
+                elapsed time is the perceived wait time.
+              </li>
+              <li>
+                <strong>Outcome:</strong>
+                <ul className="mt-2 list-disc space-y-2 pl-5">
+                  <li>
+                    <strong>Ok:</strong> successful.
+                  </li>
+                  <li>
+                    <strong>Cancel:</strong> canceled by the user.
+                  </li>
+                  <li>
+                    <strong>Error:</strong> expected or handled failure.
+                  </li>
+                  <li>
+                    <strong>FCI:</strong> unexpected technical or system
+                    failure.
+                  </li>
+                </ul>
+              </li>
+              <li>
+                <strong>Context:</strong> Relevant details such as intent, type,
+                task, flow, owning domain, starting location, and resulting
+                view.
+              </li>
+            </ul>
+          </div>
         </div>
       </section>
     </article>
