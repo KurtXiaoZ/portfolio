@@ -20,7 +20,7 @@ export function AtomicEventsCaseStudy() {
         >
           Context
         </h1>
-        <div className="mt-7 max-w-2xl space-y-5 text-sm leading-6 text-[#55574f] max-[560px]:text-[0.8125rem] max-[560px]:leading-5 dark:text-[#b7b9af]">
+        <div className="mt-5 max-w-2xl space-y-5 text-sm leading-6 text-[#55574f] max-[560px]:text-[0.8125rem] max-[560px]:leading-5 dark:text-[#b7b9af]">
           <p>
             At its core, PayPal Branded Checkout is a transaction form designed
             to help customers pay reliably, quickly, and with flexibility. At
@@ -34,7 +34,7 @@ export function AtomicEventsCaseStudy() {
         </div>
       </section>
 
-      <section aria-labelledby="problem" className="mt-18">
+      <section aria-labelledby="problem" className="mt-[3.75rem]">
         <h2
           className="max-w-2xl scroll-mt-9 text-xl leading-tight font-medium tracking-[-0.035em] text-balance focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[#657800] max-[560px]:text-lg dark:text-[#f0f0e9] dark:focus-visible:outline-[#c6ec39]"
           id="problem"
@@ -42,7 +42,7 @@ export function AtomicEventsCaseStudy() {
         >
           Problem
         </h2>
-        <div className="mt-6 max-w-2xl text-sm leading-6 text-[#55574f] max-[560px]:text-[0.8125rem] max-[560px]:leading-5 dark:text-[#b7b9af]">
+        <div className="mt-5 max-w-2xl text-sm leading-6 text-[#55574f] max-[560px]:text-[0.8125rem] max-[560px]:leading-5 dark:text-[#b7b9af]">
           <p>
             However, the flexibility PayPal Checkout provides also creates
             significant observability challenges:
