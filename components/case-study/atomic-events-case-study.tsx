@@ -265,6 +265,44 @@ export function AtomicEventsCaseStudy() {
               />
             </div>
           </div>
+          <hr className="border-0 border-t border-[#171814]/10 dark:border-[#f0f0e9]/15" />
+          <div>
+            <p>
+              The <strong>customer-interaction model</strong> defines the data
+              and lifecycle semantics that every interaction must capture. The{' '}
+              <strong>state machine</strong> centralizes how that data is
+              validated, sequenced, timed, and translated into telemetry.
+            </p>
+            <p className="mt-5">
+              Consumers therefore only describe what starts a customer
+              interaction, when it ends, and where the resulting telemetry
+              should go. This creates a{' '}
+              <strong>declarative integration surface</strong>:
+            </p>
+            <ul className="mt-4 list-disc space-y-3 pl-5 marker:text-[#168465] dark:marker:text-[#71d9b7]">
+              <li>
+                <strong>Interaction starts:</strong> DOM attributes declare the
+                user’s intent and context; a document-level listener captures
+                them.
+              </li>
+              <li>
+                <strong>Interaction endings:</strong> A React component (
+                <code>&lt;MarkUIReady&gt;</code>) declares when the resulting UI
+                becomes usable. The component synchronizes interaction
+                completion with the React lifecycle.
+              </li>
+              <li>
+                <strong>Telemetry delivery:</strong> A configured callback
+                defines how emitted events enter the consumer’s observability
+                pipeline; pub/sub invokes registered callbacks.
+              </li>
+              <li>
+                <strong>Type-safe vocabulary:</strong> Consumers configure an
+                allowlist of instrumentation values, enabling compile-time
+                guidance and runtime validation.
+              </li>
+            </ul>
+          </div>
         </div>
       </section>
     </article>
