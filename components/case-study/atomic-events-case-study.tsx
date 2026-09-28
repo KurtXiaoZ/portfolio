@@ -303,6 +303,36 @@ export function AtomicEventsCaseStudy() {
               </li>
             </ul>
           </div>
+          <hr className="border-0 border-t border-[#171814]/10 dark:border-[#f0f0e9]/15" />
+          <div>
+            <p>
+              The initial design focused on interactions within one application,
+              but we later discovered that some interactions began in one
+              application and ended in another. To address this, I iteratively
+              extended the existing design to preserve interactions across
+              application boundaries:
+            </p>
+            <ul className="mt-4 list-disc space-y-3 pl-5 marker:text-[#168465] dark:marker:text-[#71d9b7]">
+              <li>
+                <strong>State capture:</strong> I added middleware that
+                serializes and stores the current state after every dispatched
+                action.
+              </li>
+              <li>
+                <strong>State transport:</strong> Same-origin applications reuse
+                the serialized state from <code>sessionStorage</code>.
+                Cross-domain redirects carry it in a Base64-encoded query
+                parameter, while iframe and custom integrations pass it
+                explicitly through state-handoff APIs.
+              </li>
+              <li>
+                <strong>State restoration:</strong> The destination decodes,
+                deserializes, and validates the transferred <code>waiting</code>{' '}
+                state, then resumes the interaction instead of starting a new
+                one.
+              </li>
+            </ul>
+          </div>
         </div>
       </section>
     </article>
