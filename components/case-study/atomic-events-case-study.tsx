@@ -346,7 +346,9 @@ export function AtomicEventsCaseStudy() {
         </h2>
         <div className="mt-5 max-w-2xl text-sm leading-6 text-[#55574f] max-[560px]:text-[0.8125rem] max-[560px]:leading-5 dark:text-[#b7b9af]">
           <ul className="list-disc space-y-3 pl-5 marker:text-[#168465] dark:marker:text-[#71d9b7]">
-            <li>Instrumented 350+ customer interactions across Branded Checkout.</li>
+            <li>
+              Instrumented 350+ customer interactions across Branded Checkout.
+            </li>
             <li>Captured 30M+ telemetry events daily.</li>
             <li>Adopted across 9 repositories.</li>
             <li>Powered 10+ critical release dashboards.</li>
