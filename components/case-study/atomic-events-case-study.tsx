@@ -335,6 +335,32 @@ export function AtomicEventsCaseStudy() {
           </div>
         </div>
       </section>
+
+      <section aria-labelledby="impacts" className="mt-[3.75rem]">
+        <h2
+          className="max-w-2xl scroll-mt-9 text-xl leading-tight font-medium tracking-[-0.035em] text-balance focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[#657800] max-[560px]:text-lg dark:text-[#f0f0e9] dark:focus-visible:outline-[#c6ec39]"
+          id="impacts"
+          tabIndex={-1}
+        >
+          Impacts
+        </h2>
+        <div className="mt-5 max-w-2xl text-sm leading-6 text-[#55574f] max-[560px]:text-[0.8125rem] max-[560px]:leading-5 dark:text-[#b7b9af]">
+          <ul className="list-disc space-y-3 pl-5 marker:text-[#168465] dark:marker:text-[#71d9b7]">
+            <li>Instrumented 350+ customer interactions across Branded Checkout.</li>
+            <li>Captured 30M+ telemetry events daily.</li>
+            <li>Adopted across 9 repositories.</li>
+            <li>Powered 10+ critical release dashboards.</li>
+            <li>
+              Enabled latency initiatives that reduced P95 interaction latency
+              by 1.2s.
+            </li>
+            <li>
+              Informed product improvements across flows such as Add Card and
+              BNPL, contributing $76M in annual TPV and $1.5M in annual revenue.
+            </li>
+          </ul>
+        </div>
+      </section>
     </article>
   );
 }
