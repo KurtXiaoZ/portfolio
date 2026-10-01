@@ -6,7 +6,7 @@ import { FeatureFlagSystemCaseStudy } from '@/components/case-study/feature-flag
 
 const caseStudies = {
   'atomic-events': AtomicEventsCaseStudy,
-  'checkout-performance': CheckoutLatencyReductionCaseStudy,
+  'checkout-latency-reduction': CheckoutLatencyReductionCaseStudy,
   'feature-flag-system': FeatureFlagSystemCaseStudy,
 } as const;
 

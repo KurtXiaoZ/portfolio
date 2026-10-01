@@ -19,7 +19,7 @@ const meta = {
     layout: 'centered',
   },
   args: {
-    href: '#checkout-performance',
+    href: '#checkout-latency-reduction',
     cover: artwork,
     imageAlt: 'Abstract visualization of accelerated page loading',
     tags: ['PayPal', 'Performance'],

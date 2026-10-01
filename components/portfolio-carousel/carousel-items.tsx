@@ -4,16 +4,16 @@ import type { ImageVerticalCarouselItem } from '@/components/image-vertical-caro
 
 export const implementedCaseStudySlugs = [
   'atomic-events',
-  'checkout-performance',
+  'checkout-latency-reduction',
   'feature-flag-system',
 ] as const;
 
 export const carouselItems = [
   {
-    id: 'checkout-performance',
+    id: 'checkout-latency-reduction',
     label: 'Reducing checkout latency across the stack',
     card: {
-      href: '/work/checkout-performance',
+      href: '/work/checkout-latency-reduction',
       cover: (
         <Image
           alt=""

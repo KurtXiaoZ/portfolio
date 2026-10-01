@@ -59,10 +59,10 @@ const artwork = {
 
 const items: readonly ImageVerticalCarouselItem[] = [
   {
-    id: 'checkout-performance',
+    id: 'checkout-latency-reduction',
     label: 'Reducing checkout latency across the stack',
     card: {
-      href: '#checkout-performance',
+      href: '#checkout-latency-reduction',
       cover: artwork.speed,
       imageAlt: 'Abstract visualization of accelerated page loading',
       tags: ['PayPal', 'Performance'],
