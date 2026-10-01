@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from '@storybook/nextjs-vite';
 
-import { carouselItems } from '@/app/carousel-items.mock';
+import { carouselItems } from '@/components/portfolio-carousel/carousel-items';
 
 import { TextVerticalCarousel } from './text-vertical-carousel';
 

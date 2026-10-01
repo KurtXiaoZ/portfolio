@@ -29,6 +29,7 @@ export const carouselItems = [
       title: 'Reducing checkout latency across the stack',
     },
   },
+  // Mock carousel item.
   {
     id: 'feature-flag-system',
     label: 'Resolving 150+ feature flags in under 200ms',
@@ -40,6 +41,7 @@ export const carouselItems = [
       title: 'Resolving 150+ feature flags in under 200ms',
     },
   },
+  // Mock carousel item.
   {
     id: 'design-system',
     label: 'Scaling a design system across teams',
@@ -51,6 +53,7 @@ export const carouselItems = [
       title: 'Scaling a design system across teams',
     },
   },
+  // Mock carousel item.
   {
     id: 'developer-tools',
     label: 'Making local development feel instant',
@@ -74,6 +77,7 @@ export const carouselItems = [
       title: 'Standardizing interaction telemetry at scale',
     },
   },
+  // Mock carousel item.
   {
     id: 'bnpl-platform',
     label: 'Building an embedded platform for BNPL products',

@@ -8,7 +8,7 @@ import { useLayoutEffect, useRef, type ReactNode } from 'react';
 import {
   carouselItems,
   implementedCaseStudySlugs,
-} from '@/app/carousel-items.mock';
+} from '@/components/portfolio-carousel/carousel-items';
 import { AboutPanel } from '@/components/about-panel/about-panel';
 import { GalleryPanel } from '@/components/gallery-panel/gallery-panel';
 import { PortfolioCarousel } from '@/components/portfolio-carousel/portfolio-carousel';
