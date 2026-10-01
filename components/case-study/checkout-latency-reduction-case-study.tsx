@@ -13,6 +13,14 @@ export function CheckoutLatencyReductionCaseStudy() {
         >
           Context
         </h1>
+        <div className="mt-5 max-w-2xl space-y-5 text-sm leading-6 text-[#55574f] max-[560px]:text-[0.8125rem] max-[560px]:leading-5 dark:text-[#b7b9af]">
+          <p>
+            PayPal Branded Checkout helps customers complete purchases with
+            PayPal. At this high-intent moment, speed is essential: delays
+            interrupt momentum, erode confidence, and increase the risk of
+            abandonment.
+          </p>
+        </div>
       </section>
 
       <section aria-labelledby="problem" className="mt-[3.75rem]">
