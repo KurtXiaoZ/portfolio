@@ -31,6 +31,24 @@ export function CheckoutLatencyReductionCaseStudy() {
         >
           Problem
         </h2>
+        <div className="mt-5 max-w-2xl text-sm leading-6 text-[#55574f] max-[560px]:text-[0.8125rem] max-[560px]:leading-5 dark:text-[#b7b9af]">
+          <p>
+            As a dynamic, data-dependent experience, PayPal Branded Checkout
+            presents different content and flows for each transaction, making
+            latency difficult to predict and optimize.
+          </p>
+          <ul className="mt-4 list-disc space-y-3 pl-5 marker:text-[#168465] dark:marker:text-[#71d9b7]">
+            <li>Checkout flows require different combinations of data and UI.</li>
+            <li>Downstream services have variable response times.</li>
+            <li>
+              Some operations must run sequentially to preserve payment
+              correctness.
+            </li>
+            <li>
+              Buyer devices, browsers, and network conditions vary widely.
+            </li>
+          </ul>
+        </div>
       </section>
 
       <section aria-labelledby="solution" className="mt-[3.75rem]">
