@@ -38,7 +38,9 @@ export function CheckoutLatencyReductionCaseStudy() {
             latency difficult to predict and optimize.
           </p>
           <ul className="mt-4 list-disc space-y-3 pl-5 marker:text-[#168465] dark:marker:text-[#71d9b7]">
-            <li>Checkout flows require different combinations of data and UI.</li>
+            <li>
+              Checkout flows require different combinations of data and UI.
+            </li>
             <li>Downstream services have variable response times.</li>
             <li>
               Some operations must run sequentially to preserve payment
