@@ -1,12 +1,12 @@
 import { notFound } from 'next/navigation';
 
 import { AtomicEventsCaseStudy } from '@/components/case-study/atomic-events-case-study';
-import { CheckoutPerformanceCaseStudy } from '@/components/case-study/checkout-performance-case-study';
+import { CheckoutLatencyReductionCaseStudy } from '@/components/case-study/checkout-latency-reduction-case-study';
 import { FeatureFlagSystemCaseStudy } from '@/components/case-study/feature-flag-system-case-study';
 
 const caseStudies = {
   'atomic-events': AtomicEventsCaseStudy,
-  'checkout-performance': CheckoutPerformanceCaseStudy,
+  'checkout-performance': CheckoutLatencyReductionCaseStudy,
   'feature-flag-system': FeatureFlagSystemCaseStudy,
 } as const;
 

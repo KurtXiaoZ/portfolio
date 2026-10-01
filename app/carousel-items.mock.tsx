@@ -11,7 +11,7 @@ export const implementedCaseStudySlugs = [
 export const carouselItems = [
   {
     id: 'checkout-performance',
-    label: 'Halving first-page load latency',
+    label: 'Reducing checkout latency across the stack',
     card: {
       href: '/work/checkout-performance',
       cover: (
@@ -24,9 +24,9 @@ export const carouselItems = [
           src="/images/case-studies/checkout-performance.svg"
         />
       ),
-      imageAlt: 'Abstract visualization of accelerated page loading',
+      imageAlt: 'Abstract demo artwork representing reduced latency',
       tags: ['PayPal', 'Performance'],
-      title: 'Halving first-page load latency',
+      title: 'Reducing checkout latency across the stack',
     },
   },
   {

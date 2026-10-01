@@ -1,4 +1,4 @@
-# Halving First-Page Load Latency
+# Reducing Checkout Latency Across the Stack
 
 ## Status
 

@@ -2,7 +2,7 @@
 
 ## Selected Case Studies
 
-1. [Halving first-page load latency](checkout-performance.md)
+1. [Reducing checkout latency across the stack](checkout-performance.md)
 2. [Resolving 150+ feature flags in under 200ms](feature-flag-system.md)
 3. [Standardizing interaction telemetry at scale](interaction-telemetry-sdk.md)
 4. [Building an embedded platform for BNPL products](bnpl-embedded-platform.md)

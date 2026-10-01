@@ -23,7 +23,7 @@ const meta = {
     cover: artwork,
     imageAlt: 'Abstract visualization of accelerated page loading',
     tags: ['PayPal', 'Performance'],
-    title: 'Halving first-page load latency',
+    title: 'Reducing checkout latency across the stack',
   },
 } satisfies Meta<typeof CaseStudyCard>;
 

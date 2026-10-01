@@ -88,7 +88,7 @@ This direction is desktop-first. An initial stacked mobile layout is implemented
 
 ## Selected Case Studies
 
-- [Halving first-page load latency](../case-studies/checkout-performance.md)
+- [Reducing checkout latency across the stack](../case-studies/checkout-performance.md)
 - [Resolving 150+ feature flags in under 200ms](../case-studies/feature-flag-system.md)
 - [Standardizing interaction telemetry at scale](../case-studies/interaction-telemetry-sdk.md)
 - [Building an embedded platform for BNPL products](../case-studies/bnpl-embedded-platform.md)
