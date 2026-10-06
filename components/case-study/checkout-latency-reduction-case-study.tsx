@@ -61,6 +61,41 @@ export function CheckoutLatencyReductionCaseStudy() {
         >
           Solution
         </h2>
+        <div className="mt-5 max-w-2xl space-y-10">
+          <section aria-labelledby="page-load-latency">
+            <h3
+              className="scroll-mt-9 text-base leading-tight font-medium tracking-[-0.02em] text-[#30312d] focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[#657800] dark:text-[#dedfd8] dark:focus-visible:outline-[#c6ec39]"
+              id="page-load-latency"
+              tabIndex={-1}
+            >
+              Page-load latency
+            </h3>
+          </section>
+
+          <hr className="border-0 border-t border-[#171814]/10 dark:border-[#f0f0e9]/15" />
+
+          <section aria-labelledby="downstream-request-latency">
+            <h3
+              className="scroll-mt-9 text-base leading-tight font-medium tracking-[-0.02em] text-[#30312d] focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[#657800] dark:text-[#dedfd8] dark:focus-visible:outline-[#c6ec39]"
+              id="downstream-request-latency"
+              tabIndex={-1}
+            >
+              Downstream request latency
+            </h3>
+          </section>
+
+          <hr className="border-0 border-t border-[#171814]/10 dark:border-[#f0f0e9]/15" />
+
+          <section aria-labelledby="measurement-and-regression-protection">
+            <h3
+              className="scroll-mt-9 text-base leading-tight font-medium tracking-[-0.02em] text-[#30312d] focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[#657800] dark:text-[#dedfd8] dark:focus-visible:outline-[#c6ec39]"
+              id="measurement-and-regression-protection"
+              tabIndex={-1}
+            >
+              Measurement and regression protection
+            </h3>
+          </section>
+        </div>
       </section>
 
       <section aria-labelledby="impacts" className="mt-[3.75rem]">
