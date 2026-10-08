@@ -344,6 +344,18 @@ export function CheckoutLatencyReductionCaseStudy() {
             >
               Measurement and regression protection
             </h3>
+            <p className="mt-4 text-sm leading-6 text-[#55574f] max-[560px]:text-[0.8125rem] max-[560px]:leading-5 dark:text-[#b7b9af]">
+              We measured latency across the checkout lifecycle and added
+              automated safeguards to detect regressions before and after
+              release.
+            </p>
+            <ul className="mt-4 list-disc space-y-3 pl-5 text-sm leading-6 text-[#55574f] marker:text-[#168465] max-[560px]:text-[0.8125rem] max-[560px]:leading-5 dark:text-[#b7b9af] dark:marker:text-[#71d9b7]">
+              <li>End-to-end latency measurement and tracing.</li>
+              <li>Percentile-based dashboards and regression alerts.</li>
+              <li>
+                Automated bundle-size budgets and pull-request comparisons.
+              </li>
+            </ul>
           </section>
         </div>
       </section>
