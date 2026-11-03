@@ -4,6 +4,7 @@ import type { ImageVerticalCarouselItem } from '@/components/image-vertical-caro
 
 export const implementedCaseStudySlugs = [
   'atomic-events',
+  'bnpl-platform',
   'checkout-latency-reduction',
   'feature-flag-system',
 ] as const;
@@ -77,14 +78,21 @@ export const carouselItems = [
       title: 'Standardizing interaction telemetry at scale',
     },
   },
-  // Mock carousel item.
   {
     id: 'bnpl-platform',
     label: 'Building an embedded platform for BNPL products',
     card: {
-      href: '#bnpl-platform',
-      cover: <div className="bg-[#ffc857]" />,
-      imageAlt: 'Placeholder artwork for an embedded BNPL platform',
+      href: '/work/bnpl-platform',
+      cover: (
+        <Image
+          alt=""
+          className="object-cover"
+          fill
+          sizes="445px"
+          src="/images/case-studies/bnpl-platform-placeholder.svg"
+        />
+      ),
+      imageAlt: 'Illustrative checkout with an embedded BNPL application',
       tags: ['Platform', 'Fintech'],
       title: 'Building an embedded platform for BNPL products',
     },
