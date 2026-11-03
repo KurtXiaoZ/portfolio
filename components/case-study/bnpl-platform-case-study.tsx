@@ -2,6 +2,13 @@ import Image from 'next/image';
 import type { ReactNode } from 'react';
 
 import { BackToWorkLink } from '@/components/back-to-work-link/back-to-work-link';
+import {
+  InitializationVisual,
+  LaunchScenariosVisual,
+  PreloadVisual,
+  ReadinessVisual,
+  SelectionChangeVisual,
+} from '@/components/case-study/bnpl-launch-visuals';
 
 const sharedContextExample = `const BNPLContext = createContext(null);
 
@@ -32,6 +39,53 @@ function Checkout() {
 function useBNPL() {
   return useContext(BNPLContext);
 }`;
+
+const preloadIframeExample = `function PreloadIframe() {
+  const iframeRef = useRef(null);
+
+  useEffect(() => {
+    const doc = iframeRef.current.contentDocument;
+    doc.open();
+    doc.write(\`
+      <!DOCTYPE html>
+      <html>
+        <body>
+          <div id="bnpl-root"></div>
+          <script src="/assets/bnpl-app.js"></script>
+        </body>
+      </html>
+    \`);
+    doc.close();
+  }, []);
+
+  return (
+    <iframe
+      ref={iframeRef}
+      title="BNPL application"
+      style={{ display: "none" }}
+    />
+  );
+}`;
+
+const checkoutInitializationExample = `const appWindow = iframeRef.current.contentWindow;
+
+appWindow.checkoutBridge = {
+  context: { session: checkoutSession, offer: selectedOffer, locale },
+  onReady: () => setApplicationReady(true),
+  onComplete: handleApplicationComplete,
+  onError: handleApplicationError,
+};
+
+await appWindow.bnplApp.initialize();`;
+
+const applicationInitializationExample = `window.bnplApp = {
+  async initialize() {
+    const { context, onReady } = window.checkoutBridge;
+
+    await loadStylesAndLocalization(context.locale);
+    renderApplication({ context, onReady });
+  },
+};`;
 
 const headingClassName =
   'max-w-2xl scroll-mt-9 text-xl leading-tight font-medium tracking-[-0.035em] text-balance focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[#657800] max-[560px]:text-lg dark:text-[#f0f0e9] dark:focus-visible:outline-[#c6ec39]';
@@ -123,19 +177,18 @@ export function BnplPlatformCaseStudy() {
             state, and outcome/error callbacks available to components using the
             integration.
           </p>
-          <p className="mt-4" id="shared-context-description">
-            The following simplified example illustrates how the provider shared
-            state and callbacks. Types, reducer logic, and checkout handlers are
-            omitted.
-          </p>
-          <pre
-            aria-describedby="shared-context-description"
-            aria-label="Simplified BNPL provider and shared context example"
-            className="mt-5 overflow-x-auto rounded-[18px] bg-[#f3f5ef] p-5 text-xs leading-6 text-[#30312d] focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[#657800] dark:bg-[#20221d] dark:text-[#dedfd8] dark:focus-visible:outline-[#c6ec39]"
-            tabIndex={0}
-          >
-            <code>{sharedContextExample}</code>
-          </pre>
+          <ImplementationDetails label="View shared context example">
+            <p id="shared-context-description">
+              Simplified JSX; types, reducer logic, and checkout handlers are
+              omitted.
+            </p>
+            <CodeExample
+              descriptionId="shared-context-description"
+              label="Simplified BNPL provider and shared context example"
+            >
+              {sharedContextExample}
+            </CodeExample>
+          </ImplementationDetails>
         </div>
 
         <hr className="border-0 border-t border-[#171814]/10 dark:border-[#f0f0e9]/15" />
@@ -165,8 +218,133 @@ export function BnplPlatformCaseStudy() {
             </li>
           </ul>
         </div>
+
+        <hr className="border-0 border-t border-[#171814]/10 dark:border-[#f0f0e9]/15" />
+
+        <div className="pt-3">
+          <h3
+            className="scroll-mt-9 text-base leading-tight font-medium tracking-[-0.02em] text-[#30312d] dark:text-[#dedfd8]"
+            id="preload-and-launch"
+          >
+            Preload and launch
+          </h3>
+          <p className="mt-4">
+            Prepare early. Open when the buyer and the application are ready.
+          </p>
+        </div>
+
+        <div>
+          <h4 className="font-medium text-[#30312d] dark:text-[#dedfd8]">
+            Preload
+          </h4>
+          <PreloadVisual />
+          <ImplementationDetails label="View iframe implementation">
+            <p id="preload-iframe-description">
+              A simplified HTML shell loads the selected application’s bundle.
+              The asset path is illustrative.
+            </p>
+            <CodeExample
+              descriptionId="preload-iframe-description"
+              label="Simplified hidden iframe preload example"
+            >
+              {preloadIframeExample}
+            </CodeExample>
+          </ImplementationDetails>
+        </div>
+
+        <div className="pt-5">
+          <h4 className="font-medium text-[#30312d] dark:text-[#dedfd8]">
+            Initialize
+          </h4>
+          <InitializationVisual />
+          <ImplementationDetails label="View initialization examples">
+            <p id="initialization-description">
+              Simplified names illustrate the contract. Business logic and error
+              handling are omitted.
+            </p>
+            <p className="mt-5 font-medium">Checkout side</p>
+            <CodeExample
+              descriptionId="initialization-description"
+              label="Simplified checkout initialization example"
+            >
+              {checkoutInitializationExample}
+            </CodeExample>
+            <p className="mt-5 font-medium">BNPL application side</p>
+            <CodeExample
+              descriptionId="initialization-description"
+              label="Simplified BNPL application initialization example"
+            >
+              {applicationInitializationExample}
+            </CodeExample>
+          </ImplementationDetails>
+        </div>
+
+        <div className="pt-5">
+          <h4 className="font-medium text-[#30312d] dark:text-[#dedfd8]">
+            Readiness
+          </h4>
+          <ReadinessVisual />
+        </div>
+
+        <div className="pt-5">
+          <h4 className="font-medium text-[#30312d] dark:text-[#dedfd8]">
+            Launch
+          </h4>
+          <LaunchScenariosVisual />
+        </div>
+
+        <div className="pt-5">
+          <h4 className="font-medium text-[#30312d] dark:text-[#dedfd8]">
+            Selection changes
+          </h4>
+          <SelectionChangeVisual />
+        </div>
       </CaseStudySection>
     </article>
+  );
+}
+
+function ImplementationDetails({
+  children,
+  label,
+}: {
+  children: ReactNode;
+  label: string;
+}) {
+  return (
+    <details className="group rounded-xl border border-[#171814]/10 text-xs leading-6 dark:border-[#f0f0e9]/15">
+      <summary className="flex cursor-pointer list-none items-center justify-between gap-4 rounded-xl px-4 py-3 font-medium text-[#55574f] focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[#657800] [&::-webkit-details-marker]:hidden dark:text-[#b7b9af] dark:focus-visible:outline-[#c6ec39]">
+        {label}
+        <span
+          aria-hidden="true"
+          className="text-lg transition-transform group-open:rotate-45 motion-reduce:transition-none"
+        >
+          +
+        </span>
+      </summary>
+      <div className="min-w-0 px-4 pb-4">{children}</div>
+    </details>
+  );
+}
+
+function CodeExample({
+  children,
+  descriptionId,
+  label,
+}: {
+  children: string;
+  descriptionId: string;
+  label: string;
+}) {
+  return (
+    <pre
+      aria-describedby={descriptionId}
+      aria-label={label}
+      className="mt-5 overflow-x-auto rounded-[18px] bg-[#f3f5ef] p-5 text-xs leading-6 text-[#30312d] focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[#657800] dark:bg-[#20221d] dark:text-[#dedfd8] dark:focus-visible:outline-[#c6ec39]"
+      tabIndex={0}
+    >
+      <code>{children}</code>
+    </pre>
   );
 }
 
