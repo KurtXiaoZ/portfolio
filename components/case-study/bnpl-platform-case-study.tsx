@@ -6,6 +6,7 @@ import {
   InitializationVisual,
   LaunchScenariosVisual,
   PreloadVisual,
+  ProductFlowsVisual,
   ReadinessVisual,
   SelectionChangeVisual,
 } from '@/components/case-study/bnpl-launch-visuals';
@@ -299,6 +300,25 @@ export function BnplPlatformCaseStudy() {
           </h4>
           <SelectionChangeVisual />
         </div>
+
+        <hr className="border-0 border-t border-[#171814]/10 dark:border-[#f0f0e9]/15" />
+
+        <section aria-labelledby="product-flows" className="pt-3">
+          <h3
+            className="scroll-mt-9 text-base leading-tight font-medium tracking-[-0.02em] text-[#30312d] dark:text-[#dedfd8]"
+            id="product-flows"
+          >
+            Product flows inside the embedded application
+          </h3>
+          <p className="mt-4">
+            Once initialized, the financing application used the selected offer
+            and checkout details to choose the experience to display. Shared
+            logic managed screens, application state, and requests to credit
+            services. Product configuration defined the steps, form fields, and
+            disclosures.
+          </p>
+          <ProductFlowsVisual />
+        </section>
       </CaseStudySection>
     </article>
   );

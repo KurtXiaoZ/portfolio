@@ -14,6 +14,13 @@ panels, including the shared context example. The diagrams use HTML and SVG,
 remain server-rendered, and adapt to the article’s width. Checkout artwork is
 illustrative.
 
+The concise product-flow section follows preload and launch, using the source
+draft’s description of shared application logic and product configuration. A
+responsive architecture diagram shows checkout supplying offer details, the
+embedded BNPL application exchanging product data with BNPL downstream services, and the
+application outcome returning to checkout. Labels use terms that are meaningful
+without PayPal-specific knowledge.
+
 The source draft's Impacts section is empty. The page omits impact claims and
 the scale metrics below until supporting evidence and publication review are
 complete. Personal responsibilities also need confirmation before adding
