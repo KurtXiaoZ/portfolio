@@ -1,0 +1,36 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="640" viewBox="0 0 1200 640" fill="none">
+  <rect width="1200" height="640" fill="#FFC857"/>
+  <circle cx="1075" cy="35" r="270" fill="#FFDB91"/>
+  <circle cx="80" cy="665" r="265" fill="#EDB13D"/>
+  <rect x="190" y="76" width="820" height="500" rx="24" fill="#B47C14" opacity=".15"/>
+  <rect x="190" y="64" width="820" height="500" rx="24" fill="#FFFCF5"/>
+  <path d="M214 64h772a24 24 0 0 1 24 24v28H190V88a24 24 0 0 1 24-24Z" fill="#F3EDDF"/>
+  <circle cx="218" cy="90" r="5" fill="#D4C7AA"/>
+  <circle cx="236" cy="90" r="5" fill="#D4C7AA"/>
+  <circle cx="254" cy="90" r="5" fill="#D4C7AA"/>
+  <rect x="457" y="82" width="286" height="16" rx="8" fill="#E3DAC6"/>
+  <text x="238" y="165" fill="#33372D" font-family="system-ui, sans-serif" font-size="21" font-weight="600">Checkout</text>
+  <rect x="238" y="196" width="198" height="113" rx="12" fill="#F1EBDD"/>
+  <rect x="256" y="216" width="48" height="72" rx="8" fill="#D9CBAB"/>
+  <rect x="319" y="224" width="92" height="9" rx="4.5" fill="#C7BDA5"/>
+  <rect x="319" y="245" width="66" height="7" rx="3.5" fill="#D8CFBC"/>
+  <rect x="319" y="279" width="46" height="8" rx="4" fill="#C7BDA5"/>
+  <rect x="238" y="341" width="154" height="9" rx="4.5" fill="#D8CFBC"/>
+  <rect x="238" y="363" width="198" height="7" rx="3.5" fill="#E3DAC6"/>
+  <rect x="238" y="401" width="98" height="9" rx="4.5" fill="#D8CFBC"/>
+  <rect x="238" y="423" width="198" height="7" rx="3.5" fill="#E3DAC6"/>
+  <rect x="479" y="145" width="490" height="380" rx="18" fill="#F7F9FC" stroke="#B9C8DF" stroke-width="2" stroke-dasharray="7 7"/>
+  <text x="509" y="182" fill="#53657D" font-family="system-ui, sans-serif" font-size="12" font-weight="600" letter-spacing="2">EMBEDDED BNPL APPLICATION</text>
+  <text x="509" y="225" fill="#183257" font-family="system-ui, sans-serif" font-size="25" font-weight="600">Choose how to pay</text>
+  <rect x="509" y="251" width="430" height="73" rx="12" fill="white" stroke="#3068A8" stroke-width="2"/>
+  <circle cx="535" cy="287" r="9" stroke="#3068A8" stroke-width="2"/>
+  <circle cx="535" cy="287" r="4" fill="#3068A8"/>
+  <text x="560" y="282" fill="#183257" font-family="system-ui, sans-serif" font-size="16" font-weight="600">Pay over time</text>
+  <rect x="560" y="296" width="169" height="6" rx="3" fill="#CCD7E5"/>
+  <rect x="509" y="340" width="430" height="73" rx="12" fill="white" stroke="#DBE2EC"/>
+  <circle cx="535" cy="376" r="9" stroke="#A6B4C6" stroke-width="2"/>
+  <text x="560" y="371" fill="#53657D" font-family="system-ui, sans-serif" font-size="16" font-weight="600">More payment options</text>
+  <rect x="560" y="385" width="205" height="6" rx="3" fill="#DBE2EC"/>
+  <rect x="509" y="439" width="430" height="49" rx="24.5" fill="#183257"/>
+  <text x="724" y="470" fill="white" font-family="system-ui, sans-serif" font-size="16" font-weight="600" text-anchor="middle">Continue</text>
+</svg>

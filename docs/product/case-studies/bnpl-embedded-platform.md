@@ -2,7 +2,16 @@
 
 ## Status
 
-Selected for the initial portfolio. Narrative development and publication review are pending.
+Implemented at `/work/bnpl-platform` and linked from the featured-work carousel.
+The page follows `knowledge-base/bnpl-platform/case-study.md` in the sibling
+`paypal` repository, covering context, integration challenges, the reusable
+iframe solution, shared React context, and session recovery. Images are
+illustrative placeholders.
+
+The source draft's Impacts section is empty. The page omits impact claims and
+the scale metrics below until supporting evidence and publication review are
+complete. Personal responsibilities also need confirmation before adding
+individual attribution beyond the source's team-level account.
 
 ## Resume Statement
 
