@@ -5,8 +5,14 @@
 Implemented at `/work/bnpl-platform` and linked from the featured-work carousel.
 The page follows `knowledge-base/bnpl-platform/case-study.md` in the sibling
 `paypal` repository, covering context, integration challenges, the reusable
-iframe solution, shared React context, and session recovery. Images are
-illustrative placeholders.
+iframe solution, shared React context, session recovery, and preload and launch
+orchestration. The preload and launch section uses responsive diagrams for
+background preparation, the initialization handshake, readiness milestones,
+both launch orderings, and offer changes. Short captions carry the main story;
+the source draft’s simplified code examples are available in native expandable
+panels, including the shared context example. The diagrams use HTML and SVG,
+remain server-rendered, and adapt to the article’s width. Checkout artwork is
+illustrative.
 
 The source draft's Impacts section is empty. The page omits impact claims and
 the scale metrics below until supporting evidence and publication review are
