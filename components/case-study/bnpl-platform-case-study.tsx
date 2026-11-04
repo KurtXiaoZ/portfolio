@@ -319,6 +319,38 @@ export function BnplPlatformCaseStudy() {
           </p>
           <ProductFlowsVisual />
         </section>
+
+        <hr className="border-0 border-t border-[#171814]/10 dark:border-[#f0f0e9]/15" />
+
+        <section aria-labelledby="completion" className="pt-3">
+          <h3
+            className="scroll-mt-9 text-base leading-tight font-medium tracking-[-0.02em] text-[#30312d] dark:text-[#dedfd8]"
+            id="completion"
+          >
+            Completion
+          </h3>
+          <p className="mt-4">
+            When the BNPL application ended, the integration returned its result
+            and control to checkout. Checkout applied the outcome and retained
+            responsibility for payment authorization.
+          </p>
+          <figure className="mt-5">
+            <div
+              aria-label="Completion sequence diagram; scroll horizontally on smaller screens"
+              className="overflow-x-auto rounded-[18px] border border-[#171814]/10 bg-white p-4 focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[#657800] dark:border-[#f0f0e9]/15 dark:focus-visible:outline-[#c6ec39]"
+              role="region"
+              tabIndex={0}
+            >
+              <Image
+                alt="Sequence diagram: the embedded BNPL application reports its outcome to the iframe integration, which closes the iframe by default and invokes checkout’s completion callback. Checkout applies the application outcome."
+                className="h-auto w-full min-w-[640px]"
+                height={473}
+                src="/images/case-studies/bnpl-completion.svg"
+                width={788}
+              />
+            </div>
+          </figure>
+        </section>
       </CaseStudySection>
     </article>
   );
