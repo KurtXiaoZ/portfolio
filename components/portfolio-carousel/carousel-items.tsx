@@ -6,6 +6,7 @@ export const implementedCaseStudySlugs = [
   'atomic-events',
   'bnpl-platform',
   'checkout-latency-reduction',
+  'developer-toolbar',
   'feature-flag-system',
 ] as const;
 
@@ -54,16 +55,23 @@ export const carouselItems = [
       title: 'Scaling a design system across teams',
     },
   },
-  // Mock carousel item.
   {
-    id: 'developer-tools',
-    label: 'Making local development feel instant',
+    id: 'developer-toolbar',
+    label: 'A developer toolkit, built into checkout',
     card: {
-      href: '#developer-tools',
-      cover: <div className="bg-[#d9b8ff]" />,
-      imageAlt: 'Placeholder artwork for developer tools',
+      href: '/work/developer-toolbar',
+      cover: (
+        <Image
+          alt=""
+          className="object-cover"
+          fill
+          sizes="445px"
+          src="/images/case-studies/developer-toolbar-placeholder.svg"
+        />
+      ),
+      imageAlt: 'Illustrative developer toolbar alongside a checkout screen',
       tags: ['Developer experience', 'Tooling'],
-      title: 'Making local development feel instant',
+      title: 'A developer toolkit, built into checkout',
     },
   },
   {

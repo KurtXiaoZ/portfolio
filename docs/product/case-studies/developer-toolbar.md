@@ -2,7 +2,18 @@
 
 ## Status
 
-Selected for the initial portfolio. Narrative development and publication review are pending.
+Implemented at `/work/developer-toolbar` with a matching featured-work carousel
+entry. The page follows the feature-led narrative in
+`paypal/knowledge-base/developer-toolbar/case-study.md`: a short introduction,
+feature flags, checkout scenarios, accessibility checks, React Scan, and compact
+toolbar interactions.
+
+The original outline below is retained as background; the supplied source takes
+precedence for the current presentation. All visuals are static, simplified
+mockups using illustrative data. Replace them with reviewed recordings or images
+when available. The source's contribution placeholder is omitted until Kurt's
+role and scope are confirmed. The page makes no quantified velocity claims.
+Publication review remains pending.
 
 ## Resume Statement
 
