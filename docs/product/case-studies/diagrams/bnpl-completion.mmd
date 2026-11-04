@@ -1,0 +1,8 @@
+sequenceDiagram
+  participant App as Embedded BNPL application
+  participant Integration as Iframe integration
+  participant Checkout
+  App->>Integration: Report application outcome
+  Integration->>Integration: Close iframe by default
+  Integration->>Checkout: Invoke completion callback
+  Checkout->>Checkout: Apply application outcome

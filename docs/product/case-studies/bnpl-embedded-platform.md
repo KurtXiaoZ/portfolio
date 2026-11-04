@@ -21,6 +21,15 @@ embedded BNPL application exchanging product data with BNPL downstream services,
 application outcome returning to checkout. Labels use terms that are meaningful
 without PayPal-specific knowledge.
 
+Completion follows the product-flow section with the source draft’s concise
+paragraph and its original Mermaid sequence diagram, rendered as a static SVG.
+The [copied Mermaid source](diagrams/bnpl-completion.mmd) preserves the three
+participants, message labels, and self-calls; regenerate the SVG when it changes.
+The application’s top and bottom participant boxes have 20px of extra space on
+each side of the label; preserve this padding when regenerating the SVG.
+The graph scrolls horizontally on smaller screens to keep its labels readable.
+Checkout retains responsibility for payment authorization.
+
 The source draft's Impacts section is empty. The page omits impact claims and
 the scale metrics below until supporting evidence and publication review are
 complete. Personal responsibilities also need confirmation before adding
