@@ -30,10 +30,11 @@ each side of the label; preserve this padding when regenerating the SVG.
 The graph scrolls horizontally on smaller screens to keep its labels readable.
 Checkout retains responsibility for payment authorization.
 
-The source draft's Impacts section is empty. The page omits impact claims and
-the scale metrics below until supporting evidence and publication review are
-complete. Personal responsibilities also need confirmation before adding
-individual attribution beyond the source's team-level account.
+The Impacts section follows the source draft’s two results: 18 BNPL products
+integrated through the reusable embedded platform and 840K applications
+supported per day. The page presents these as adoption and scale metrics.
+Personal responsibilities still need confirmation before adding individual
+attribution beyond the source's team-level account.
 
 ## Resume Statement
 

@@ -352,6 +352,37 @@ export function BnplPlatformCaseStudy() {
           </figure>
         </section>
       </CaseStudySection>
+
+      <CaseStudySection id="impacts" title="Impacts">
+        <dl className="grid grid-cols-2 gap-x-8 gap-y-7 max-[560px]:grid-cols-1">
+          <div className="border-t border-[#171814]/10 pt-5 dark:border-[#f0f0e9]/15">
+            <dt className="text-xs font-medium tracking-[0.12em] text-[#777970] uppercase dark:text-[#989b91]">
+              Adoption
+            </dt>
+            <dd className="mt-4">
+              <span className="block text-4xl leading-none font-medium tracking-[-0.04em] text-[#168465] dark:text-[#71d9b7]">
+                18
+              </span>
+              <span className="mt-3 block">
+                BNPL products integrated through the reusable embedded platform.
+              </span>
+            </dd>
+          </div>
+          <div className="border-t border-[#171814]/10 pt-5 dark:border-[#f0f0e9]/15">
+            <dt className="text-xs font-medium tracking-[0.12em] text-[#777970] uppercase dark:text-[#989b91]">
+              Scale
+            </dt>
+            <dd className="mt-4">
+              <span className="block text-4xl leading-none font-medium tracking-[-0.04em] text-[#168465] dark:text-[#71d9b7]">
+                840K
+              </span>
+              <span className="mt-3 block">
+                Applications supported per day.
+              </span>
+            </dd>
+          </div>
+        </dl>
+      </CaseStudySection>
     </article>
   );
 }
