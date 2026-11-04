@@ -1,0 +1,35 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="890" height="624" viewBox="0 0 890 624" fill="none">
+  <rect width="890" height="624" fill="#E9DDF5"/>
+  <circle cx="755" cy="66" r="240" fill="#DFCEEF"/>
+  <circle cx="70" cy="601" r="220" fill="#F2EAF9"/>
+  <g transform="translate(75 90)">
+    <rect width="360" height="440" rx="20" fill="white"/>
+    <path d="M0 42H360" stroke="#E7E2EC"/>
+    <g fill="#C9BFD5"><circle cx="22" cy="22" r="4"/><circle cx="36" cy="22" r="4"/><circle cx="50" cy="22" r="4"/></g>
+    <text x="28" y="88" fill="#74677E" font-family="Arial,sans-serif" font-size="12" letter-spacing="2">DEMO STORE</text>
+    <text x="28" y="138" fill="#30283E" font-family="Arial,sans-serif" font-size="24" font-weight="600">Choose how to pay</text>
+    <rect x="28" y="168" width="304" height="78" rx="10" fill="#FAF8FF" stroke="#B0A0C3"/>
+    <circle cx="51" cy="207" r="7" fill="#78608E"/>
+    <text x="72" y="201" fill="#30283E" font-family="Arial,sans-serif" font-size="16">Demo card</text>
+    <text x="72" y="224" fill="#82748C" font-family="Arial,sans-serif" font-size="12">•••• 1234</text>
+    <rect x="28" y="258" width="304" height="68" rx="10" fill="#EFE5FA" stroke="#A383C3"/>
+    <circle cx="51" cy="292" r="7" stroke="#A383C3"/>
+    <text x="72" y="298" fill="#684581" font-family="Arial,sans-serif" font-size="16">Pay later</text>
+    <rect x="28" y="354" width="304" height="44" rx="22" fill="#30283E"/>
+    <text x="180" y="382" text-anchor="middle" fill="white" font-family="Arial,sans-serif" font-size="15">Continue</text>
+  </g>
+  <g transform="translate(458 123)">
+    <rect width="356" height="380" rx="20" fill="#30283E"/>
+    <text x="28" y="44" fill="#C1B2D2" font-family="Arial,sans-serif" font-size="12" letter-spacing="1">DEVELOPER TOOLBAR</text>
+    <text x="28" y="84" fill="#F5F0FA" font-family="Arial,sans-serif" font-size="23">Explore. Test. Inspect.</text>
+    <path d="M28 110H328M28 162H328M28 214H328M28 266H328" stroke="#51465F"/>
+    <g fill="#E8D6FF" font-family="Arial,sans-serif" font-size="16">
+      <text x="30" y="143">⚑</text><text x="70" y="143">Feature flags</text>
+      <text x="28" y="195">{ }</text><text x="70" y="195">Response mocks</text>
+      <text x="30" y="247">◎</text><text x="70" y="247">Accessibility</text>
+      <text x="30" y="299">⌁</text><text x="70" y="299">React Scan</text>
+    </g>
+    <rect x="28" y="324" width="300" height="34" rx="8" fill="#514061"/>
+    <text x="178" y="347" text-anchor="middle" fill="#E8D6FF" font-family="monospace" font-size="18">‹/›  ⚑  { }  ◎  ⌁</text>
+  </g>
+</svg>
