@@ -3,12 +3,11 @@
 ## Selected Case Studies
 
 1. [Reducing checkout latency across the stack](checkout-performance.md)
-2. [Resolving 150+ feature flags in under 200ms](feature-flag-system.md)
-3. [Standardizing interaction telemetry at scale](interaction-telemetry-sdk.md)
-4. [Building an embedded platform for BNPL products](bnpl-embedded-platform.md)
-5. [Building a developer toolbar for 200+ engineers](developer-toolbar.md)
+2. [Standardizing interaction telemetry at scale](interaction-telemetry-sdk.md)
+3. [Building an embedded platform for BNPL products](bnpl-embedded-platform.md)
+4. [Building a developer toolbar for 200+ engineers](developer-toolbar.md)
 
-All five are selected for the initial portfolio. Their presentation order remains open.
+These four source-based narratives make up the portfolio. The illustrative Feature Flag System narrative and mock Design System entry have been removed. Their presentation order remains open.
 
 ## Shared Requirements
 

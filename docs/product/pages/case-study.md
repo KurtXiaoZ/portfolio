@@ -44,7 +44,6 @@ The persistent carousel provides direct navigation to the other featured case st
 
 ## Open Questions
 
-- Which projects will become case studies?
 - How long and detailed should each case study be?
 - What visuals or artifacts are available for each project?
 - How should case studies with confidential details be presented?

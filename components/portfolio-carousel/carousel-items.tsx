@@ -7,7 +7,6 @@ export const implementedCaseStudySlugs = [
   'bnpl-platform',
   'checkout-latency-reduction',
   'developer-toolbar',
-  'feature-flag-system',
 ] as const;
 
 export const carouselItems = [
@@ -29,30 +28,6 @@ export const carouselItems = [
       imageAlt: 'Abstract demo artwork representing reduced latency',
       tags: ['PayPal', 'Performance'],
       title: 'Reducing checkout latency across the stack',
-    },
-  },
-  // Mock carousel item.
-  {
-    id: 'feature-flag-system',
-    label: 'Resolving 150+ feature flags in under 200ms',
-    card: {
-      href: '/work/feature-flag-system',
-      cover: <div className="bg-[#ff8b66]" />,
-      imageAlt: 'Abstract artwork for a feature flag platform',
-      tags: ['Platform', 'Node.js'],
-      title: 'Resolving 150+ feature flags in under 200ms',
-    },
-  },
-  // Mock carousel item.
-  {
-    id: 'design-system',
-    label: 'Scaling a design system across teams',
-    card: {
-      href: '#design-system',
-      cover: <div className="bg-[#8ab4ff]" />,
-      imageAlt: 'Placeholder artwork for a design system',
-      tags: ['Design systems', 'Leadership'],
-      title: 'Scaling a design system across teams',
     },
   },
   {
