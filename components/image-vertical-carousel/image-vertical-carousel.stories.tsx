@@ -13,20 +13,6 @@ const artwork = {
       <span className="absolute top-[68%] left-[-28%] h-4 w-[124%] -rotate-12 rounded-full bg-[#c9ef3e]" />
     </div>
   ),
-  flags: (
-    <div className="grid grid-cols-3 gap-2 bg-[#f8f8f2] p-6 dark:bg-[#20211e]">
-      {[0, 1, 2, 3, 4, 5].map((index) => (
-        <span
-          className={
-            index % 2 === 0
-              ? 'rounded-lg border border-current/15'
-              : 'rounded-lg bg-[#c9ef3e]/50'
-          }
-          key={index}
-        />
-      ))}
-    </div>
-  ),
   signal: (
     <div className="flex items-center justify-center gap-2.5 bg-[#f8f8f2] dark:bg-[#20211e]">
       {[30, 66, 110, 156, 110, 66, 30].map((height, index) => (
@@ -67,17 +53,6 @@ const items: readonly ImageVerticalCarouselItem[] = [
       imageAlt: 'Abstract visualization of accelerated page loading',
       tags: ['PayPal', 'Performance'],
       title: 'Reducing checkout latency across the stack',
-    },
-  },
-  {
-    id: 'feature-flags',
-    label: 'Resolving 150+ feature flags in under 200ms',
-    card: {
-      href: '#feature-flags',
-      cover: artwork.flags,
-      imageAlt: 'Abstract grid representing a feature flag platform',
-      tags: ['PayPal', 'Platform'],
-      title: 'Resolving 150+ feature flags in under 200ms',
     },
   },
   {
