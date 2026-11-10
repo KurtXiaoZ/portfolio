@@ -3,10 +3,9 @@
 ## Status
 
 Implemented at `/work/feature-flag-system` with a matching featured-work carousel
-entry. Context and Problem follow
+entry. Context, Problem, and Impacts follow
 `paypal/knowledge-base/feature-flags/case-study.md` in the sibling repository.
-Solution and Impacts contain section titles only, as requested; their source
-content and metrics are intentionally deferred.
+Solution contains a section title only; its content is intentionally deferred.
 
 This source-based page replaces the previously removed illustrative narrative.
 The carousel cover is a simplified illustration, not an internal product image.
@@ -20,7 +19,9 @@ The carousel cover is a simplified illustration, not an internal product image.
   shared flag decisions within a request, and attribution to conversion and
   performance metrics.
 - Solution: heading only.
-- Impacts: heading only.
+- Impacts: reduced time to first byte by 141 ms, largest contentful paint by
+  184 ms, and downstream experimentation calls by 93%; removed more than 150
+  `async`/`await` points to simplify server-rendering code.
 
 ## Content Boundaries
 

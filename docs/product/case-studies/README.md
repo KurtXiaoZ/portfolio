@@ -9,8 +9,8 @@
 5. [Feature Flag Platform](feature-flag-system.md)
 
 These five source-based narratives make up the portfolio. The Feature Flag
-Platform currently includes Context and Problem, with empty Solution and Impacts
-sections. It replaces the previously removed illustrative Feature Flag System
+Platform currently includes Context, Problem, and Impacts, with an empty Solution
+section. It replaces the previously removed illustrative Feature Flag System
 narrative. The mock Design System entry remains removed. Presentation order
 remains open.
 
