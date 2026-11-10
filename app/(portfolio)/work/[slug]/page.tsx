@@ -4,12 +4,14 @@ import { AtomicEventsCaseStudy } from '@/components/case-study/atomic-events-cas
 import { BnplPlatformCaseStudy } from '@/components/case-study/bnpl-platform-case-study';
 import { CheckoutLatencyReductionCaseStudy } from '@/components/case-study/checkout-latency-reduction-case-study';
 import { DeveloperToolbarCaseStudy } from '@/components/case-study/developer-toolbar-case-study';
+import { FeatureFlagSystemCaseStudy } from '@/components/case-study/feature-flag-system-case-study';
 
 const caseStudies = {
   'atomic-events': AtomicEventsCaseStudy,
   'bnpl-platform': BnplPlatformCaseStudy,
   'checkout-latency-reduction': CheckoutLatencyReductionCaseStudy,
   'developer-toolbar': DeveloperToolbarCaseStudy,
+  'feature-flag-system': FeatureFlagSystemCaseStudy,
 } as const;
 
 interface CaseStudyPageProps {

@@ -6,8 +6,13 @@
 2. [Standardizing interaction telemetry at scale](interaction-telemetry-sdk.md)
 3. [Building an embedded platform for BNPL products](bnpl-embedded-platform.md)
 4. [Building a developer toolbar for 200+ engineers](developer-toolbar.md)
+5. [Feature Flag Platform](feature-flag-system.md)
 
-These four source-based narratives make up the portfolio. The illustrative Feature Flag System narrative and mock Design System entry have been removed. Their presentation order remains open.
+These five source-based narratives make up the portfolio. The Feature Flag
+Platform currently includes Context and Problem, with empty Solution and Impacts
+sections. It replaces the previously removed illustrative Feature Flag System
+narrative. The mock Design System entry remains removed. Presentation order
+remains open.
 
 ## Shared Requirements
 
