@@ -83,6 +83,27 @@ export function FeatureFlagSystemCaseStudy() {
         >
           Impacts
         </h2>
+        <ul className="mt-5 max-w-2xl list-disc space-y-3 pl-5 text-sm leading-6 text-[#55574f] marker:text-[#168465] max-[560px]:text-[0.8125rem] max-[560px]:leading-5 dark:text-[#b7b9af] dark:marker:text-[#71d9b7]">
+          <li>
+            Reduced time to first byte by{' '}
+            <strong className="font-bold">141 ms</strong>.
+          </li>
+          <li>
+            Reduced largest contentful paint by{' '}
+            <strong className="font-bold">184 ms</strong>.
+          </li>
+          <li>
+            Reduced calls to the downstream experimentation platform by{' '}
+            <strong className="font-bold">93%</strong>.
+          </li>
+          <li>
+            Removed{' '}
+            <strong className="font-bold">
+              more than 150 <code>async</code>/<code>await</code> points
+            </strong>{' '}
+            from the application, simplifying server-rendering code.
+          </li>
+        </ul>
       </section>
     </article>
   );
