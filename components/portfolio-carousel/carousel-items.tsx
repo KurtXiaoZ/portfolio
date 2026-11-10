@@ -7,6 +7,7 @@ export const implementedCaseStudySlugs = [
   'bnpl-platform',
   'checkout-latency-reduction',
   'developer-toolbar',
+  'feature-flag-system',
 ] as const;
 
 export const carouselItems = [
@@ -28,6 +29,25 @@ export const carouselItems = [
       imageAlt: 'Abstract demo artwork representing reduced latency',
       tags: ['PayPal', 'Performance'],
       title: 'Reducing checkout latency across the stack',
+    },
+  },
+  {
+    id: 'feature-flag-system',
+    label: 'Feature Flag Platform',
+    card: {
+      href: '/work/feature-flag-system',
+      cover: (
+        <Image
+          alt=""
+          className="object-cover"
+          fill
+          sizes="445px"
+          src="/images/case-studies/feature-flag-system-placeholder.svg"
+        />
+      ),
+      imageAlt: 'Illustrative feature flag controls for a checkout experience',
+      tags: ['Platform', 'Experimentation'],
+      title: 'Feature Flag Platform',
     },
   },
   {
