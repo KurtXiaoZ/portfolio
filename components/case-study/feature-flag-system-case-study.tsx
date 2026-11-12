@@ -1,6 +1,7 @@
 import { BackToWorkLink } from '@/components/back-to-work-link/back-to-work-link';
 import { FeatureFlagCatalogVisual } from '@/components/case-study/feature-flag-catalog-visual';
 import { FeatureFlagContractVisual } from '@/components/case-study/feature-flag-contract-visual';
+import { RequestScopedDecisionsVisual } from '@/components/case-study/request-scoped-decisions-visual';
 
 export function FeatureFlagSystemCaseStudy() {
   return (
@@ -118,29 +119,86 @@ export function FeatureFlagSystemCaseStudy() {
               Consistent decisions within each request
             </h3>
             <p className="mt-4">
-              To avoid repeated work and keep decisions consistent, early
-              middleware created a request-scoped store using Node.js’s{' '}
-              <code>AsyncLocalStorage</code>, shared across middleware and
-              Server Components.
+              A <strong className="font-bold">request-scoped cache</strong> let
+              different parts of the codebase reuse the same flag decision
+              within one server request.
             </p>
-            <ul className="mt-4 list-disc space-y-3 pl-5 marker:text-[#168465] dark:marker:text-[#71d9b7]">
+            <RequestScopedDecisionsVisual />
+            <ol className="mt-5 list-decimal space-y-3 pl-5 marker:text-[#168465] dark:marker:text-[#71d9b7]">
               <li>
-                Evaluate flags when application code calls them, so unused flags
-                require no decision work.
+                <strong className="font-bold">A request arrives.</strong>{' '}
+                Middleware opens a dedicated decision store for that request.
+                Other requests receive their own, keeping decisions separate.
+                <pre
+                  aria-label="Pseudocode: create a store for each request"
+                  className="mt-3 border-l-2 border-[#168465]/30 bg-[#168465]/[0.03] px-4 py-3 font-mono text-xs leading-6 whitespace-pre-wrap [overflow-wrap:anywhere] dark:border-[#71d9b7]/30 dark:bg-[#71d9b7]/[0.03]"
+                >
+                  <code>{`const stores = new AsyncLocalStorage();
+
+// In request middleware
+stores.run({
+  context: { request },
+  cache: new Map(),
+}, next);`}</code>
+                </pre>
               </li>
               <li>
-                Cache decisions by flag key and reuse them across components
-                within the request.
+                <strong className="font-bold">
+                  Work moves through the codebase.
+                </strong>{' '}
+                <code>AsyncLocalStorage</code> keeps that store accessible
+                across middleware, rendering, and asynchronous work, without
+                each function having to pass it along.
+                <pre
+                  aria-label="Pseudocode: access the current request's store"
+                  className="mt-3 border-l-2 border-[#168465]/30 bg-[#168465]/[0.03] px-4 py-3 font-mono text-xs leading-6 whitespace-pre-wrap [overflow-wrap:anywhere] dark:border-[#71d9b7]/30 dark:bg-[#71d9b7]/[0.03]"
+                >
+                  <code>{`// Inside a flag call, wherever it happens
+const { cache, context } = stores.getStore();
+// Same request → same store`}</code>
+                </pre>
               </li>
               <li>
-                Cache in-flight promises for asynchronous decisions, allowing
-                concurrent consumers to share the same evaluation.
+                <strong className="font-bold">
+                  Different callers ask the same question.
+                </strong>{' '}
+                The first flag check starts an evaluation. For an asynchronous
+                flag, it caches the pending promise immediately, before waiting
+                for the result. Concurrent callers find that promise and wait
+                for the same evaluation, preventing duplicate work. Once it
+                resolves, they all receive the same decision.
+                <pre
+                  aria-label="Pseudocode: reuse a decision or pending evaluation"
+                  className="mt-3 border-l-2 border-[#168465]/30 bg-[#168465]/[0.03] px-4 py-3 font-mono text-xs leading-6 whitespace-pre-wrap [overflow-wrap:anywhere] dark:border-[#71d9b7]/30 dark:bg-[#71d9b7]/[0.03]"
+                >
+                  <code>{`// Inside the shared flag function
+if (!cache.has(flag.key)) {
+  const decision = flag.decide(context);
+  cache.set(flag.key, decision); // Save the promise immediately
+}
+
+const sharedDecision = cache.get(flag.key);
+
+if (isPromiseLike(sharedDecision)) {
+  // Every caller waits for the same evaluation
+  return sharedDecision.then(value => value.result);
+}
+
+return sharedDecision.result; // Synchronous flag`}</code>
+                </pre>
+                <pre
+                  aria-label="Pseudocode: two concurrent calls share one evaluation"
+                  className="mt-3 border-l-2 border-[#168465]/30 bg-[#168465]/[0.03] px-4 py-3 font-mono text-xs leading-6 whitespace-pre-wrap [overflow-wrap:anywhere] dark:border-[#71d9b7]/30 dark:bg-[#71d9b7]/[0.03]"
+                >
+                  <code>{`// Same request: two calls, one evaluation
+const [a, b] = await Promise.all([
+  showSummary(),
+  showSummary(),
+]);
+// Both receive the same result`}</code>
+                </pre>
               </li>
-              <li>
-                Create a fresh decision cache for each HTTP request, keeping
-                results isolated across requests and buyers.
-              </li>
-            </ul>
+            </ol>
           </section>
 
           <section aria-labelledby="local-experiment-evaluation">

@@ -38,6 +38,17 @@ The carousel cover is a simplified illustration, not an internal product image.
   definitions converge into a generated inventory and types, then branch to
   preloading, developer tools, and typed overrides. The generated-file view uses
   illustrative flag metadata and avoids repeating the carousel’s code layout.
+  The request-consistency section uses a short introduction and a shared-cache
+  diagram: middleware, React Server Components, and server-side rendering call
+  the same flag within one server request. The boundary shows an example
+  checkout GET request. The cache shares one decision or in-flight evaluation.
+  A three-step request journey explains store creation, `AsyncLocalStorage`
+  carrying access across the codebase, and callers reusing a decision or an
+  evaluation already in progress. Each step pairs concise prose with simplified
+  pseudocode showing store creation, access, and caching before awaiting a
+  decision. The final step explicitly shows returning a result from the shared
+  promise and two concurrent calls reusing one evaluation. The diagram stacks
+  vertically when its container is narrow.
 - Impacts: reduced time to first byte by 141 ms, largest contentful paint by
   184 ms, and downstream experimentation calls by 93%; removed more than 150
   `async`/`await` points to simplify server-rendering code.
