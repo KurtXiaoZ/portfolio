@@ -20,8 +20,8 @@ The carousel cover is a simplified illustration, not an internal product image.
 - Solution: a shared TypeScript flag contract and generated catalog,
   request-scoped decisions with `AsyncLocalStorage`, local experiment evaluation
   backed by a process-wide rules cache, and consistent decision telemetry.
-  The narrative explains the availability tradeoff of background rule refreshes
-  and defaults when rules are missing.
+  The narrative explains background rule refreshes, retaining existing rules
+  after failed refreshes, and defaults when rules are missing.
   The shared contract section centers on the adapter pattern: boolean
   experiment checks and multi-treatment ramp flags extend a core flag primitive
   while preserving TypeScript result types and valid defaults. A shorter
@@ -49,6 +49,13 @@ The carousel cover is a simplified illustration, not an internal product image.
   decision. The final step explicitly shows returning a result from the shared
   promise and two concurrent calls reusing one evaluation. The diagram stacks
   vertically when its container is narrow.
+  The local-evaluation section follows the same concise, illustrated approach:
+  the downstream experiment service supplies a per-instance rules cache, while request
+  context feeds synchronous local evaluation. Three story steps and simplified
+  pseudocode cover catalog-driven preloading and indexing, evaluation with
+  defaults and background refresh on missing rules, and retaining existing rules
+  after refresh failures. Each server instance refreshes its rules periodically
+  in the background.
 - Impacts: reduced time to first byte by 141 ms, largest contentful paint by
   184 ms, and downstream experimentation calls by 93%; removed more than 150
   `async`/`await` points to simplify server-rendering code.
