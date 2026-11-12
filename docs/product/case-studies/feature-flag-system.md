@@ -34,10 +34,10 @@ The carousel cover is a simplified illustration, not an internal product image.
   consumer call and return type. Navigation supports named buttons, previous
   and next controls, arrow keys, touch/trackpad scrolling, and reduced motion.
   Examples use illustrative names and eligibility logic.
-  A compact static illustration follows the catalog paragraph: application
-  definitions and a generated inventory appear in two columns, with preloading,
-  developer tools, and typed overrides below. The snippets abbreviate flag
-  configuration and catalog metadata.
+  A compact static flow illustration follows the catalog paragraph: application
+  definitions converge into a generated inventory and types, then branch to
+  preloading, developer tools, and typed overrides. The generated-file view uses
+  illustrative flag metadata and avoids repeating the carousel’s code layout.
 - Impacts: reduced time to first byte by 141 ms, largest contentful paint by
   184 ms, and downstream experimentation calls by 93%; removed more than 150
   `async`/`await` points to simplify server-rendering code.
