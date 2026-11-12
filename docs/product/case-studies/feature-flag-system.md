@@ -56,6 +56,11 @@ The carousel cover is a simplified illustration, not an internal product image.
   defaults and background refresh on missing rules, and retaining existing rules
   after refresh failures. Each server instance refreshes its rules periodically
   in the background.
+  The instrumentation section pairs a concise summary with a shared-callback
+  flow into analytics and monitoring. Three story steps and simplified
+  pseudocode explain resolution signals and optional experiment attribution,
+  error reporting with default values, and request-cache reads that avoid
+  repeating resolution telemetry.
 - Impacts: reduced time to first byte by 141 ms, largest contentful paint by
   184 ms, and downstream experimentation calls by 93%; removed more than 150
   `async`/`await` points to simplify server-rendering code.
