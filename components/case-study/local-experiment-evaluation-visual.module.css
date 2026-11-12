@@ -1,0 +1,27 @@
+.root {
+  container-type: inline-size;
+}
+
+.flow {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 1.5rem minmax(0, 1fr) 1.5rem minmax(
+      0,
+      1fr
+    );
+  align-items: center;
+}
+
+.arrow {
+  text-align: center;
+}
+
+@container (max-width: 35rem) {
+  .flow {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 0.75rem;
+  }
+
+  .arrow {
+    transform: rotate(90deg);
+  }
+}

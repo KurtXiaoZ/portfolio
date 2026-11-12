@@ -1,6 +1,7 @@
 import { BackToWorkLink } from '@/components/back-to-work-link/back-to-work-link';
 import { FeatureFlagCatalogVisual } from '@/components/case-study/feature-flag-catalog-visual';
 import { FeatureFlagContractVisual } from '@/components/case-study/feature-flag-contract-visual';
+import { LocalExperimentEvaluationVisual } from '@/components/case-study/local-experiment-evaluation-visual';
 import { RequestScopedDecisionsVisual } from '@/components/case-study/request-scoped-decisions-visual';
 
 export function FeatureFlagSystemCaseStudy() {
@@ -210,42 +211,78 @@ const [a, b] = await Promise.all([
               Local experiment evaluation
             </h3>
             <p className="mt-4">
-              To reduce rendering delays and downstream dependencies, a
-              process-wide rules cache enabled synchronous experiment evaluation
-              using each request’s buyer and checkout context.
+              A{' '}
+              <strong className="font-bold">
+                shared experiment rules cache
+              </strong>{' '}
+              let the application evaluate experiments locally, reducing
+              rendering delays and dependence on downstream services.
             </p>
-            <ul className="mt-4 list-disc space-y-3 pl-5 marker:text-[#168465] dark:marker:text-[#71d9b7]">
+            <LocalExperimentEvaluationVisual />
+            <ol className="mt-5 list-decimal space-y-3 pl-5 marker:text-[#168465] dark:marker:text-[#71d9b7]">
               <li>
-                Use the generated catalog to identify which experiment groups to
-                preload during server initialization.
+                <strong className="font-bold">
+                  Prepare before requests arrive.
+                </strong>{' '}
+                The generated flag catalog identified the experiment rules to
+                preload. The server organized them into indexed lookups, ready
+                to reuse across requests.
+                <pre
+                  aria-label="Pseudocode: preload and index experiment rules"
+                  className="mt-3 border-l-2 border-[#168465]/30 bg-[#168465]/[0.03] px-4 py-3 font-mono text-xs leading-6 whitespace-pre-wrap [overflow-wrap:anywhere] dark:border-[#71d9b7]/30 dark:bg-[#71d9b7]/[0.03]"
+                >
+                  <code>{`// During server initialization
+const experiments = experimentsFrom(flagCatalog);
+const metadata = await fetchRules(experiments);
+rulesCache = indexRules(metadata);`}</code>
+                </pre>
               </li>
               <li>
-                Convert experiment metadata into indexed Maps, including
-                treatment-name and allocation-bucket indexes, to reduce repeated
-                traversal during evaluation.
+                <strong className="font-bold">
+                  A request needs a decision.
+                </strong>{' '}
+                The local evaluator checked the buyer and checkout context
+                against cached rules to determine eligibility and treatment.
+                Missing rules returned the flag’s default and triggered a
+                background refresh, keeping rendering synchronous.
+                <pre
+                  aria-label="Pseudocode: evaluate with cached rules and request context"
+                  className="mt-3 border-l-2 border-[#168465]/30 bg-[#168465]/[0.03] px-4 py-3 font-mono text-xs leading-6 whitespace-pre-wrap [overflow-wrap:anywhere] dark:border-[#71d9b7]/30 dark:bg-[#71d9b7]/[0.03]"
+                >
+                  <code>{`const rules = rulesCache.get(flag.experiment);
+
+if (!rules) {
+  logCacheMiss(flag);
+  refreshInBackground();
+  return flag.defaultValue;
+}
+
+return evaluateLocally(rules, requestContext);`}</code>
+                </pre>
               </li>
               <li>
-                Evaluate eligibility, audience filters, and treatment assignment
-                locally, simplifying flag consumption in server-rendered
-                components.
+                <strong className="font-bold">
+                  Rules refresh periodically.
+                </strong>{' '}
+                Each server instance periodically fetched updated experiment
+                rules in the background, replacing its cache only after a
+                successful fetch. If the experiment service was unavailable, the
+                server kept its existing rules and continued evaluating requests
+                locally.
+                <pre
+                  aria-label="Pseudocode: retain existing rules when a refresh fails"
+                  className="mt-3 border-l-2 border-[#168465]/30 bg-[#168465]/[0.03] px-4 py-3 font-mono text-xs leading-6 whitespace-pre-wrap [overflow-wrap:anywhere] dark:border-[#71d9b7]/30 dark:bg-[#71d9b7]/[0.03]"
+                >
+                  <code>{`// Each server instance runs this periodically
+try {
+  const updated = await fetchRules(experiments);
+  rulesCache = indexRules(updated);
+} catch (error) {
+  logRefreshFailure(error); // Keep existing rules
+}`}</code>
+                </pre>
               </li>
-              <li>
-                Refresh rules in the background and retain the previous rules
-                when a refresh fails.
-              </li>
-              <li>
-                Return a default when required rules are unavailable, log
-                unexpected cache misses, and trigger a background refresh for
-                missing experiment groups.
-              </li>
-            </ul>
-            <p className="mt-5">
-              Keeping rules in memory allowed requests to continue during
-              downstream outages. This traded immediate rule updates for
-              continued availability: running instances could use older rules
-              until refresh succeeded, while instances without rules used
-              defaults.
-            </p>
+            </ol>
           </section>
 
           <section aria-labelledby="consistent-instrumentation">
