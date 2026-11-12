@@ -1,4 +1,6 @@
 import { BackToWorkLink } from '@/components/back-to-work-link/back-to-work-link';
+import { FeatureFlagCatalogVisual } from '@/components/case-study/feature-flag-catalog-visual';
+import { FeatureFlagContractVisual } from '@/components/case-study/feature-flag-contract-visual';
 
 export function FeatureFlagSystemCaseStudy() {
   return (
@@ -73,6 +75,155 @@ export function FeatureFlagSystemCaseStudy() {
         >
           Solution
         </h2>
+        <div className="mt-5 max-w-2xl space-y-10 text-sm leading-6 text-[#55574f] max-[560px]:text-[0.8125rem] max-[560px]:leading-5 dark:text-[#b7b9af]">
+          <p>
+            The shared feature flag platform standardized flag definitions,
+            evaluation, and instrumentation across checkout. An in-memory
+            experiment evaluator built on this foundation to reduce network
+            dependencies and simplify server rendering.
+          </p>
+
+          <section aria-labelledby="shared-flag-contract">
+            <h3
+              className="scroll-mt-9 text-base leading-tight font-medium tracking-[-0.02em] text-[#30312d] focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[#657800] dark:text-[#dedfd8] dark:focus-visible:outline-[#c6ec39]"
+              id="shared-flag-contract"
+              tabIndex={-1}
+            >
+              A shared flag contract
+            </h3>
+            <p className="mt-4">
+              A shared, typed flag contract in TypeScript standardized how
+              engineers integrated feature decisions.
+            </p>
+            <p className="mt-5">
+              I designed a typed{' '}
+              <strong className="font-bold">adapter pattern</strong> to support
+              multiple feature flag use cases through a shared contract.
+            </p>
+            <FeatureFlagContractVisual />
+            <p className="mt-5">
+              The same definitions also generated a typed flag catalog,
+              supporting experiment-rule preloading, developer tooling, and
+              type-safe test overrides.
+            </p>
+            <FeatureFlagCatalogVisual />
+          </section>
+
+          <section aria-labelledby="request-scoped-decisions">
+            <h3
+              className="scroll-mt-9 text-base leading-tight font-medium tracking-[-0.02em] text-[#30312d] focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[#657800] dark:text-[#dedfd8] dark:focus-visible:outline-[#c6ec39]"
+              id="request-scoped-decisions"
+              tabIndex={-1}
+            >
+              Consistent decisions within each request
+            </h3>
+            <p className="mt-4">
+              To avoid repeated work and keep decisions consistent, early
+              middleware created a request-scoped store using Node.js’s{' '}
+              <code>AsyncLocalStorage</code>, shared across middleware and
+              Server Components.
+            </p>
+            <ul className="mt-4 list-disc space-y-3 pl-5 marker:text-[#168465] dark:marker:text-[#71d9b7]">
+              <li>
+                Evaluate flags when application code calls them, so unused flags
+                require no decision work.
+              </li>
+              <li>
+                Cache decisions by flag key and reuse them across components
+                within the request.
+              </li>
+              <li>
+                Cache in-flight promises for asynchronous decisions, allowing
+                concurrent consumers to share the same evaluation.
+              </li>
+              <li>
+                Create a fresh decision cache for each HTTP request, keeping
+                results isolated across requests and buyers.
+              </li>
+            </ul>
+          </section>
+
+          <section aria-labelledby="local-experiment-evaluation">
+            <h3
+              className="scroll-mt-9 text-base leading-tight font-medium tracking-[-0.02em] text-[#30312d] focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[#657800] dark:text-[#dedfd8] dark:focus-visible:outline-[#c6ec39]"
+              id="local-experiment-evaluation"
+              tabIndex={-1}
+            >
+              Local experiment evaluation
+            </h3>
+            <p className="mt-4">
+              To reduce rendering delays and downstream dependencies, a
+              process-wide rules cache enabled synchronous experiment evaluation
+              using each request’s buyer and checkout context.
+            </p>
+            <ul className="mt-4 list-disc space-y-3 pl-5 marker:text-[#168465] dark:marker:text-[#71d9b7]">
+              <li>
+                Use the generated catalog to identify which experiment groups to
+                preload during server initialization.
+              </li>
+              <li>
+                Convert experiment metadata into indexed Maps, including
+                treatment-name and allocation-bucket indexes, to reduce repeated
+                traversal during evaluation.
+              </li>
+              <li>
+                Evaluate eligibility, audience filters, and treatment assignment
+                locally, simplifying flag consumption in server-rendered
+                components.
+              </li>
+              <li>
+                Refresh rules in the background and retain the previous rules
+                when a refresh fails.
+              </li>
+              <li>
+                Return a default when required rules are unavailable, log
+                unexpected cache misses, and trigger a background refresh for
+                missing experiment groups.
+              </li>
+            </ul>
+            <p className="mt-5">
+              Keeping rules in memory allowed requests to continue during
+              downstream outages. This traded immediate rule updates for
+              continued availability: running instances could use older rules
+              until refresh succeeded, while instances without rules used
+              defaults.
+            </p>
+          </section>
+
+          <section aria-labelledby="consistent-instrumentation">
+            <h3
+              className="scroll-mt-9 text-base leading-tight font-medium tracking-[-0.02em] text-[#30312d] focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[#657800] dark:text-[#dedfd8] dark:focus-visible:outline-[#c6ec39]"
+              id="consistent-instrumentation"
+              tabIndex={-1}
+            >
+              Consistent instrumentation
+            </h3>
+            <p className="mt-4">
+              To connect flag outcomes with conversion and performance metrics,
+              shared callbacks standardized decision telemetry across checkout’s
+              analytics and monitoring pipelines.
+            </p>
+            <ul className="mt-4 list-disc space-y-3 pl-5 marker:text-[#168465] dark:marker:text-[#71d9b7]">
+              <li>
+                Capture the flag key, resolved value, and any ineligibility
+                reason through the resolution callback.
+              </li>
+              <li>
+                Include experiment and treatment attribution when an experiment
+                assignment was available.
+              </li>
+              <li>
+                Record evaluation failures through a common error callback while
+                returning the flag’s default value.
+              </li>
+              <li>
+                Emit resolution telemetry for fresh decisions; subsequent cache
+                reads reused the result without emitting the same resolution
+                event again.
+              </li>
+            </ul>
+          </section>
+        </div>
       </section>
 
       <section aria-labelledby="impacts" className="mt-[3.75rem]">
