@@ -1,6 +1,7 @@
 import { BackToWorkLink } from '@/components/back-to-work-link/back-to-work-link';
 import { FeatureFlagCatalogVisual } from '@/components/case-study/feature-flag-catalog-visual';
 import { FeatureFlagContractVisual } from '@/components/case-study/feature-flag-contract-visual';
+import { FlagInstrumentationVisual } from '@/components/case-study/flag-instrumentation-visual';
 import { LocalExperimentEvaluationVisual } from '@/components/case-study/local-experiment-evaluation-visual';
 import { RequestScopedDecisionsVisual } from '@/components/case-study/request-scoped-decisions-visual';
 
@@ -294,29 +295,66 @@ try {
               Consistent instrumentation
             </h3>
             <p className="mt-4">
-              To connect flag outcomes with conversion and performance metrics,
-              shared callbacks standardized decision telemetry across checkout’s
-              analytics and monitoring pipelines.
+              <strong className="font-bold">Shared decision callbacks</strong>{' '}
+              standardized flag telemetry so teams could monitor failures and
+              connect experiment assignments with conversion and performance
+              metrics.
             </p>
-            <ul className="mt-4 list-disc space-y-3 pl-5 marker:text-[#168465] dark:marker:text-[#71d9b7]">
+            <FlagInstrumentationVisual />
+            <ol className="mt-5 list-decimal space-y-3 pl-5 marker:text-[#168465] dark:marker:text-[#71d9b7]">
               <li>
-                Capture the flag key, resolved value, and any ineligibility
-                reason through the resolution callback.
+                <strong className="font-bold">A flag resolves.</strong> One
+                shared callback reported the flag, its decision, and any
+                ineligibility reason.
+                <pre
+                  aria-label="Pseudocode: report a flag decision with experiment attribution"
+                  className="mt-3 border-l-2 border-[#168465]/30 bg-[#168465]/[0.03] px-4 py-3 font-mono text-xs leading-6 whitespace-pre-wrap [overflow-wrap:anywhere] dark:border-[#71d9b7]/30 dark:bg-[#71d9b7]/[0.03]"
+                >
+                  <code>{`// Shared resolution callback
+onResolve(flag, decision) {
+  emitDecision({
+    flag: flag.key,
+    value: decision.result,
+    reason: decision.ineligibilityReason,
+    ...experimentAttribution(decision),
+  });
+}`}</code>
+                </pre>
               </li>
               <li>
-                Include experiment and treatment attribution when an experiment
-                assignment was available.
+                <strong className="font-bold">An evaluation fails.</strong> A
+                common error callback recorded the failure for monitoring, while
+                the flag returned its configured default so callers could
+                continue.
+                <pre
+                  aria-label="Pseudocode: report an evaluation failure and return the configured default"
+                  className="mt-3 border-l-2 border-[#168465]/30 bg-[#168465]/[0.03] px-4 py-3 font-mono text-xs leading-6 whitespace-pre-wrap [overflow-wrap:anywhere] dark:border-[#71d9b7]/30 dark:bg-[#71d9b7]/[0.03]"
+                >
+                  <code>{`// Shared failure handling
+onError(flag, error);
+return flag.defaultValue;`}</code>
+                </pre>
               </li>
               <li>
-                Record evaluation failures through a common error callback while
-                returning the flag’s default value.
+                <strong className="font-bold">
+                  The same flag is read again.
+                </strong>{' '}
+                Resolution telemetry belonged to the evaluation, not every
+                caller. Later reads from the request cache reused the decision
+                without emitting another resolution event.
+                <pre
+                  aria-label="Pseudocode: reuse a cached decision without repeating resolution telemetry"
+                  className="mt-3 border-l-2 border-[#168465]/30 bg-[#168465]/[0.03] px-4 py-3 font-mono text-xs leading-6 whitespace-pre-wrap [overflow-wrap:anywhere] dark:border-[#71d9b7]/30 dark:bg-[#71d9b7]/[0.03]"
+                >
+                  <code>{`if (cache.has(flag.key)) {
+  // No new onResolve event
+  return readCachedDecision(flag.key);
+}
+
+// Only a fresh evaluation triggers onResolve`}</code>
+                </pre>
               </li>
-              <li>
-                Emit resolution telemetry for fresh decisions; subsequent cache
-                reads reused the result without emitting the same resolution
-                event again.
-              </li>
-            </ul>
+            </ol>
           </section>
         </div>
       </section>
