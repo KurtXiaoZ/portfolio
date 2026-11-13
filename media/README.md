@@ -4,10 +4,14 @@ Plan, collect, and prepare images and recordings for the case studies and
 gallery here. Project folders use the website's case-study route slugs so media
 can be matched to its destination without relying on display titles.
 
+Agents creating or editing media should follow the
+[media generation guidelines](AGENTS.md).
+
 ## Structure
 
 ```text
 media/
+├── AGENTS.md
 ├── README.md
 ├── gallery.md
 └── projects/
@@ -32,17 +36,17 @@ Nothing under `media/` is intended to be served by the website.
 
 ## Thumbnail Plan
 
-These are initial directions to discuss, not approved captures or final artwork.
-All five thumbnail specs are **planned**. An existing file does not imply that
-it has been reviewed for publication.
+Atomic Events has an accepted thumbnail integrated into the portfolio. The other
+four rows remain initial directions to discuss, not approved captures or final
+artwork. An existing file does not imply that it has been reviewed for publication.
 
-| Case study             | Proposed focal point                          | Initial format                   | Spec                                                            |
-| ---------------------- | --------------------------------------------- | -------------------------------- | --------------------------------------------------------------- |
-| Checkout performance   | Checkout becoming usable as content loads     | Short clip + poster              | [Checkout latency](projects/checkout-latency-reduction/spec.md) |
-| Feature Flag Platform  | Typed flag definition and consumer call       | Still image                      | [Feature flags](projects/feature-flag-system/spec.md)           |
-| Developer toolbar      | A real toolbar panel beside checkout          | Still first; optional clip       | [Developer toolbar](projects/developer-toolbar/spec.md)         |
-| Interaction telemetry  | Applying rewards and reaching the ready state | Existing clip + poster candidate | [Atomic Events](projects/atomic-events/spec.md)                 |
-| Embedded BNPL platform | Checkout launching an embedded application    | Short clip + poster              | [BNPL platform](projects/bnpl-platform/spec.md)                 |
+| Case study             | Proposed focal point                                  | Initial format                      | Spec                                                            |
+| ---------------------- | ----------------------------------------------------- | ----------------------------------- | --------------------------------------------------------------- |
+| Checkout performance   | Checkout becoming usable as content loads             | Short clip + poster                 | [Checkout latency](projects/checkout-latency-reduction/spec.md) |
+| Feature Flag Platform  | Typed flag definition and consumer call               | Still image                         | [Feature flags](projects/feature-flag-system/spec.md)           |
+| Developer toolbar      | A real toolbar panel beside checkout                  | Still first; optional clip          | [Developer toolbar](projects/developer-toolbar/spec.md)         |
+| Interaction telemetry  | Checkout alongside an abstract circular state machine | Accepted video + poster; integrated | [Atomic Events](projects/atomic-events/spec.md)                 |
+| Embedded BNPL platform | Checkout launching an embedded application            | Short clip + poster                 | [BNPL platform](projects/bnpl-platform/spec.md)                 |
 
 ### Shared thumbnail direction
 

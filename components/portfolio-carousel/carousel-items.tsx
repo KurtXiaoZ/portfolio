@@ -76,7 +76,8 @@ export const carouselItems = [
       href: '/work/atomic-events',
       cover: <AtomicEventsCover />,
       compactCover: <AtomicEventsThumbnail />,
-      imageAlt: 'PayPal checkout applying rewards across two payment methods',
+      imageAlt:
+        'PayPal checkout alongside a circular state machine tracking customer interactions',
       tags: ['TypeScript', 'Observability'],
       title: 'Standardizing interaction telemetry at scale',
     },
@@ -104,7 +105,7 @@ export const carouselItems = [
 
 function AtomicEventsCover() {
   return (
-    <div className="relative overflow-hidden bg-[#eff5fb]">
+    <div className="relative overflow-hidden bg-[#f7f8f5]">
       <AtomicEventsThumbnail />
       <video
         aria-hidden="true"
@@ -113,11 +114,11 @@ function AtomicEventsCover() {
         loop
         muted
         playsInline
-        poster="/images/case-studies/atomic-events-apply-rewards-thumbnail.jpg"
+        poster="/images/case-studies/atomic-events-circular-orbit-thumbnail.jpg"
         preload="metadata"
       >
         <source
-          src="/videos/case-studies/atomic-events-apply-rewards-thumbnail.mp4"
+          src="/videos/case-studies/atomic-events-circular-orbit-thumbnail.mp4"
           type="video/mp4"
         />
       </video>
@@ -132,7 +133,7 @@ function AtomicEventsThumbnail() {
       className="object-cover"
       fill
       sizes="445px"
-      src="/images/case-studies/atomic-events-apply-rewards-thumbnail.jpg"
+      src="/images/case-studies/atomic-events-circular-orbit-thumbnail.jpg"
     />
   );
 }
