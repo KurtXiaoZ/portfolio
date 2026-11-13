@@ -1,5 +1,7 @@
 # Feature Flag Platform
 
+Media planning: [thumbnail and capture spec](../../../media/projects/feature-flag-system/spec.md).
+
 ## Status
 
 Implemented at `/work/feature-flag-system` with a matching featured-work carousel

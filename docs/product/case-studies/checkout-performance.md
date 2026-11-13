@@ -1,5 +1,7 @@
 # Reducing Checkout Latency Across the Stack
 
+Media planning: [thumbnail and capture spec](../../../media/projects/checkout-latency-reduction/spec.md).
+
 ## Status
 
 Selected for the initial portfolio. Narrative development and publication review are pending.
