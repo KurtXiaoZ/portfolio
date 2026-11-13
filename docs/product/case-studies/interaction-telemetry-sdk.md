@@ -1,5 +1,7 @@
 # Standardizing Interaction Telemetry at Scale
 
+Media planning: [thumbnail and capture spec](../../../media/projects/atomic-events/spec.md).
+
 ## Status
 
 Selected for the initial portfolio. Narrative development and publication review are pending.

@@ -1,5 +1,7 @@
 # Building a Developer Toolbar for 200+ Engineers
 
+Media planning: [thumbnail and capture spec](../../../media/projects/developer-toolbar/spec.md).
+
 ## Status
 
 Implemented at `/work/developer-toolbar` with a matching featured-work carousel

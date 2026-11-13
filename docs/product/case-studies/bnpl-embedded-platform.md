@@ -1,5 +1,7 @@
 # Building an Embedded Platform for BNPL Products
 
+Media planning: [thumbnail and capture spec](../../../media/projects/bnpl-platform/spec.md).
+
 ## Status
 
 Implemented at `/work/bnpl-platform` and linked from the featured-work carousel.
