@@ -3,7 +3,7 @@ import type { ReactNode } from 'react';
 
 import { BackToWorkLink } from '@/components/back-to-work-link/back-to-work-link';
 import {
-  InitializationVisual,
+  AppStartVisual,
   LaunchScenariosVisual,
   PreloadVisual,
   ProductFlowsVisual,
@@ -230,13 +230,15 @@ export function BnplPlatformCaseStudy() {
             Preload and launch
           </h3>
           <p className="mt-4">
-            Prepare early. Open when the buyer and the application are ready.
+            Preload → App start → Readiness → Launch. The application prepares
+            in the background; checkout reveals it once the first screen is
+            ready and the buyer has clicked Continue.
           </p>
         </div>
 
         <div>
           <h4 className="font-medium text-[#30312d] dark:text-[#dedfd8]">
-            Preload
+            1. Preload
           </h4>
           <PreloadVisual />
           <ImplementationDetails label="View iframe implementation">
@@ -255,10 +257,10 @@ export function BnplPlatformCaseStudy() {
 
         <div className="pt-5">
           <h4 className="font-medium text-[#30312d] dark:text-[#dedfd8]">
-            Initialize
+            2. App start
           </h4>
-          <InitializationVisual />
-          <ImplementationDetails label="View initialization examples">
+          <AppStartVisual />
+          <ImplementationDetails label="View app start examples">
             <p id="initialization-description">
               Simplified names illustrate the contract. Business logic and error
               handling are omitted.
@@ -282,21 +284,21 @@ export function BnplPlatformCaseStudy() {
 
         <div className="pt-5">
           <h4 className="font-medium text-[#30312d] dark:text-[#dedfd8]">
-            Readiness
+            3. Readiness
           </h4>
           <ReadinessVisual />
         </div>
 
         <div className="pt-5">
           <h4 className="font-medium text-[#30312d] dark:text-[#dedfd8]">
-            Launch
+            4. Launch
           </h4>
           <LaunchScenariosVisual />
         </div>
 
         <div className="pt-5">
           <h4 className="font-medium text-[#30312d] dark:text-[#dedfd8]">
-            Selection changes
+            If the selection changes
           </h4>
           <SelectionChangeVisual />
         </div>

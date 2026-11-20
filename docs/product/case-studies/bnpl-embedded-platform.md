@@ -16,6 +16,12 @@ panels, including the shared context example. The diagrams use HTML and SVG,
 remain server-rendered, and adapt to the article’s width. Checkout artwork is
 illustrative.
 
+Preload and launch is presented as four numbered stages: load code into a
+hidden iframe, start the application, report that the first screen is ready,
+and reveal the iframe when the buyer has also requested Continue. Selection
+changes form a return path to preparation rather than a fifth stage. App start
+is distinct from the earlier checkout-provider setup and from screen readiness.
+
 The concise product-flow section follows preload and launch, using the source
 draft’s description of shared application logic and product configuration. A
 responsive architecture diagram shows checkout supplying offer details, the
