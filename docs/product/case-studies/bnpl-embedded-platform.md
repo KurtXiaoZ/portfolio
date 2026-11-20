@@ -8,12 +8,12 @@ Implemented at `/work/bnpl-platform` and linked from the featured-work carousel.
 The page follows `knowledge-base/bnpl-platform/case-study.md` in the sibling
 `paypal` repository, covering context, integration challenges, the reusable
 iframe solution, shared React context, session recovery, and preload and launch
-orchestration. The preload and launch section uses responsive diagrams for
-background preparation, the initialization handshake, readiness milestones,
-both launch orderings, and offer changes. Short captions carry the main story;
-the source draft’s simplified code examples are available in native expandable
-panels, including the shared context example. The diagrams use HTML and SVG,
-remain server-rendered, and adapt to the article’s width. Checkout artwork is
+orchestration. Preload and launch uses a guided stepper with a connected stage
+rail, a short explanation, and an illustration of the buyer’s view alongside
+the embedded application’s state. Visitors can choose a stage directly or use
+Back and Next. The final Change offer action changes the illustrated offer and
+returns to Preload. The source draft’s simplified code examples remain in native
+expandable panels, including the shared context example. Checkout artwork is
 illustrative.
 
 Preload and launch is presented as four numbered stages: load code into a
@@ -21,6 +21,12 @@ hidden iframe, start the application, report that the first screen is ready,
 and reveal the iframe when the buyer has also requested Continue. Selection
 changes form a return path to preparation rather than a fifth stage. App start
 is distinct from the earlier checkout-provider setup and from screen readiness.
+The stepper is a focused Client Component. The article, product-flow diagram,
+and example content passed into the stepper remain server-rendered. The stage
+rail reflows into two rows in a narrow article pane; controls work with the
+keyboard and announce the selected stage and iframe visibility.
+Back and Next move reading focus to the selected stage’s heading so the new
+explanation is visible within the scrollable article pane.
 
 The concise product-flow section follows preload and launch, using the source
 draft’s description of shared application logic and product configuration. A
