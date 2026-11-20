@@ -2,14 +2,8 @@ import Image from 'next/image';
 import type { ReactNode } from 'react';
 
 import { BackToWorkLink } from '@/components/back-to-work-link/back-to-work-link';
-import {
-  AppStartVisual,
-  LaunchScenariosVisual,
-  PreloadVisual,
-  ProductFlowsVisual,
-  ReadinessVisual,
-  SelectionChangeVisual,
-} from '@/components/case-study/bnpl-launch-visuals';
+import { ProductFlowsVisual } from '@/components/case-study/bnpl-launch-visuals';
+import { BnplLifecycleStepper } from '@/components/case-study/bnpl-lifecycle-stepper';
 
 const sharedContextExample = `const BNPLContext = createContext(null);
 
@@ -230,78 +224,49 @@ export function BnplPlatformCaseStudy() {
             Preload and launch
           </h3>
           <p className="mt-4">
-            Preload → App start → Readiness → Launch. The application prepares
-            in the background; checkout reveals it once the first screen is
-            ready and the buyer has clicked Continue.
+            Four stages take the embedded application from hidden code to a
+            visible financing experience.
           </p>
         </div>
 
-        <div>
-          <h4 className="font-medium text-[#30312d] dark:text-[#dedfd8]">
-            1. Preload
-          </h4>
-          <PreloadVisual />
-          <ImplementationDetails label="View iframe implementation">
-            <p id="preload-iframe-description">
-              A simplified HTML shell loads the selected application’s bundle.
-              The asset path is illustrative.
-            </p>
-            <CodeExample
-              descriptionId="preload-iframe-description"
-              label="Simplified hidden iframe preload example"
-            >
-              {preloadIframeExample}
-            </CodeExample>
-          </ImplementationDetails>
-        </div>
-
-        <div className="pt-5">
-          <h4 className="font-medium text-[#30312d] dark:text-[#dedfd8]">
-            2. App start
-          </h4>
-          <AppStartVisual />
-          <ImplementationDetails label="View app start examples">
-            <p id="initialization-description">
-              Simplified names illustrate the contract. Business logic and error
-              handling are omitted.
-            </p>
-            <p className="mt-5 font-medium">Checkout side</p>
-            <CodeExample
-              descriptionId="initialization-description"
-              label="Simplified checkout initialization example"
-            >
-              {checkoutInitializationExample}
-            </CodeExample>
-            <p className="mt-5 font-medium">BNPL application side</p>
-            <CodeExample
-              descriptionId="initialization-description"
-              label="Simplified BNPL application initialization example"
-            >
-              {applicationInitializationExample}
-            </CodeExample>
-          </ImplementationDetails>
-        </div>
-
-        <div className="pt-5">
-          <h4 className="font-medium text-[#30312d] dark:text-[#dedfd8]">
-            3. Readiness
-          </h4>
-          <ReadinessVisual />
-        </div>
-
-        <div className="pt-5">
-          <h4 className="font-medium text-[#30312d] dark:text-[#dedfd8]">
-            4. Launch
-          </h4>
-          <LaunchScenariosVisual />
-        </div>
-
-        <div className="pt-5">
-          <h4 className="font-medium text-[#30312d] dark:text-[#dedfd8]">
-            If the selection changes
-          </h4>
-          <SelectionChangeVisual />
-        </div>
+        <BnplLifecycleStepper
+          preloadExample={
+            <ImplementationDetails label="View iframe implementation">
+              <p id="preload-iframe-description">
+                A simplified HTML shell loads the selected application’s bundle.
+                The asset path is illustrative.
+              </p>
+              <CodeExample
+                descriptionId="preload-iframe-description"
+                label="Simplified hidden iframe preload example"
+              >
+                {preloadIframeExample}
+              </CodeExample>
+            </ImplementationDetails>
+          }
+          appStartExamples={
+            <ImplementationDetails label="View app start examples">
+              <p id="initialization-description">
+                Simplified names illustrate the contract. Business logic and
+                error handling are omitted.
+              </p>
+              <p className="mt-5 font-medium">Checkout side</p>
+              <CodeExample
+                descriptionId="initialization-description"
+                label="Simplified checkout initialization example"
+              >
+                {checkoutInitializationExample}
+              </CodeExample>
+              <p className="mt-5 font-medium">BNPL application side</p>
+              <CodeExample
+                descriptionId="initialization-description"
+                label="Simplified BNPL application initialization example"
+              >
+                {applicationInitializationExample}
+              </CodeExample>
+            </ImplementationDetails>
+          }
+        />
 
         <hr className="border-0 border-t border-[#171814]/10 dark:border-[#f0f0e9]/15" />
 

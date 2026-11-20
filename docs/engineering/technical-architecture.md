@@ -26,7 +26,7 @@
 
 ## Portfolio Rendering Boundaries
 
-- Use React Server Components by default for route and case-study content. Use Client Components where landing-panel interaction requires them.
+- Use React Server Components by default for route and case-study content. Use focused Client Components for interactive landing panels and case-study walkthroughs; pass static article and example content from the server.
 - Pass the left route-content slot from the shared Server Component layout into the client shell so case-study content remains server-rendered.
 - Let the client shell derive landing-view selection from the pathname and conditionally render the Case Studies, Gallery, or About implementation in the right pane. These panel implementations may use client-side interaction as their content develops.
 - Keep the client shell focused on pane layout, route transitions, and landing-panel selection. Revisit code splitting for Gallery and About when their real implementations make deferred loading worthwhile.
