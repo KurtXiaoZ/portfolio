@@ -5,8 +5,8 @@ import styles from './bnpl-launch-visuals.module.css';
 export function PreloadVisual() {
   return (
     <Visual
-      caption="Prepare the application in a hidden, same-origin iframe while the buyer stays in checkout."
-      label="01 / Prepare in the background"
+      caption="Mount a hidden, same-origin iframe and load the embedded application’s code into it. Checkout stays visible."
+      label="01 / Load the code"
     >
       <div className={styles.preloadGrid}>
         <div>
@@ -49,11 +49,11 @@ export function PreloadVisual() {
   );
 }
 
-export function InitializationVisual() {
+export function AppStartVisual() {
   return (
     <Visual
-      caption="Checkout supplies the context. The application signals when its first screen is ready."
-      label="02 / Establish the handshake"
+      caption="Checkout supplies context and callbacks, then invokes the initialization function exposed by the loaded application. The application loads supporting resources, mounts its interface, and starts asynchronous work such as retrieving product data."
+      label="02 / Start the application"
     >
       <div className={styles.handshake}>
         <div className={styles.endpoints}>
@@ -62,27 +62,18 @@ export function InitializationVisual() {
         </div>
         <ol className={styles.messages}>
           <li>
-            <p className={styles.messageLabel}>Context + callbacks</p>
+            <p className={styles.messageLabel}>Checkout context + callbacks</p>
             <div aria-hidden="true" className={styles.messageArrow}>
               →
             </div>
-            <p className={styles.messageNote}>Request initialization</p>
+            <p className={styles.messageNote}>Invoke initialize()</p>
           </li>
           <li className={styles.applicationWork}>
             <span className={styles.workDots} aria-hidden="true">
               •••
             </span>
-            <p>Load resources · mount app · prepare screen</p>
-          </li>
-          <li>
-            <p className={styles.messageLabel}>Ready</p>
-            <div
-              aria-hidden="true"
-              className={`${styles.messageArrow} ${styles.reverseArrow}`}
-            >
-              ←
-            </div>
-            <p className={styles.messageNote}>First screen can be displayed</p>
+            <p>Load styles + localization</p>
+            <p>Mount app + start data requests</p>
           </li>
         </ol>
       </div>
@@ -92,15 +83,15 @@ export function InitializationVisual() {
 
 export function ReadinessVisual() {
   const stages = [
-    ['Code loaded', 'Initialization available', 'code'],
-    ['App mounted', 'Resources loaded', 'mount'],
-    ['Screen ready', 'Product data prepared', 'ready'],
+    ['Code loaded', 'Preload complete', 'code'],
+    ['App mounted', 'Startup work begun', 'mount'],
+    ['First screen ready', 'Ready for interaction', 'ready'],
   ] as const;
 
   return (
     <Visual
-      caption="The application can mount before its first screen is ready. Only the final signal means it can be shown."
-      label="03 / Three distinct milestones"
+      caption="The application reports readiness once its first screen is interactive. This signal alone does not make the iframe visible; checkout reveals it at launch."
+      label="03 / First screen ready"
     >
       <ol className={styles.milestones}>
         {stages.map(([title, description, variant], index) => (
@@ -132,8 +123,8 @@ export function ReadinessVisual() {
 export function LaunchScenariosVisual() {
   return (
     <Visual
-      caption="Open the application only when both conditions are met: the buyer wants to continue and the application is ready."
-      label="04 / Two paths to the same screen"
+      caption="Checkout makes the iframe visible once the first screen is ready and the buyer has clicked Continue. An earlier click is remembered while checkout shows a loading indicator."
+      label="04 / Make the iframe visible"
     >
       <div className={styles.scenarios}>
         <LaunchScenario
@@ -141,7 +132,7 @@ export function LaunchScenariosVisual() {
           steps={[
             ['ready', 'Application ready'],
             ['click', 'Buyer clicks Continue'],
-            ['open', 'Application opens'],
+            ['open', 'Iframe becomes visible'],
           ]}
         />
         <LaunchScenario
@@ -149,7 +140,7 @@ export function LaunchScenariosVisual() {
           steps={[
             ['click', 'Buyer clicks Continue'],
             ['loading', 'Loading until ready'],
-            ['open', 'Application opens'],
+            ['open', 'Iframe becomes visible'],
           ]}
         />
       </div>
@@ -158,7 +149,7 @@ export function LaunchScenariosVisual() {
         <span aria-label="and">+</span>
         <span>Application ready</span>
         <span aria-label="equals">=</span>
-        <strong>Open</strong>
+        <strong>Show iframe</strong>
       </div>
     </Visual>
   );
@@ -167,8 +158,8 @@ export function LaunchScenariosVisual() {
 export function SelectionChangeVisual() {
   return (
     <Visual
-      caption="Clear pending launch intent when the selection changes. Reuse preparation if product data is unchanged; reload when offer details change."
-      label="05 / Follow the latest selection"
+      caption="A selection change clears the pending launch request. Return to preparation when offer details change, or reuse existing preparation when product data is unchanged."
+      label="Return path / Follow the latest selection"
     >
       <ol className={styles.selectionSequence}>
         <li>
