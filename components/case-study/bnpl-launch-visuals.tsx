@@ -1,58 +1,31 @@
-import type { ReactNode } from 'react';
+import Image from 'next/image';
 
 import styles from './bnpl-launch-visuals.module.css';
 
 export function ProductFlowsVisual() {
   return (
-    <Visual
-      caption="The application handles the financing journey and returns its outcome to checkout."
-      label="One integration, different product flows"
-    >
-      <div className={styles.productFlow}>
-        <div className={styles.productNode}>Checkout</div>
-        <div className={styles.productConnection}>
-          <span>Checkout and offer details</span>
-          <span aria-hidden="true" className={styles.productArrow}>
-            →
-          </span>
-        </div>
-        <div className={`${styles.productNode} ${styles.financingNode}`}>
-          Embedded BNPL application
-        </div>
-        <div className={styles.productConnection}>
-          <span>Product data</span>
-          <span aria-hidden="true" className={styles.productArrow}>
-            ↔
-          </span>
-        </div>
-        <div className={styles.productNode}>BNPL downstream services</div>
-        <div className={styles.outcomeReturn}>
-          <span aria-hidden="true" className={styles.outcomeArrow}>
-            ←
-          </span>
-          <span>Application outcome returns to checkout</span>
-        </div>
-      </div>
-    </Visual>
+    <figure className={styles.figure}>
+      <Image
+        alt="Checkout supplies checkout and offer details to the embedded BNPL application, which exchanges product data with BNPL downstream services and returns the application outcome to checkout"
+        className={styles.diagram}
+        height={2200}
+        src="/images/case-studies/bnpl-product-flows.svg"
+        width={2880}
+      />
+    </figure>
   );
 }
 
-function Visual({
-  children,
-  caption,
-  label,
-}: {
-  children: ReactNode;
-  caption: string;
-  label: string;
-}) {
+export function CompletionVisual() {
   return (
     <figure className={styles.figure}>
-      <div className={styles.canvas}>
-        <p className={styles.visualLabel}>{label}</p>
-        {children}
-      </div>
-      <figcaption className={styles.caption}>{caption}</figcaption>
+      <Image
+        alt="Sequence diagram: the embedded BNPL application reports its outcome to the iframe integration, which closes the iframe by default and invokes checkout’s completion callback. Checkout applies the application outcome."
+        className={styles.diagram}
+        height={1920}
+        src="/images/case-studies/bnpl-completion.svg"
+        width={2880}
+      />
     </figure>
   );
 }

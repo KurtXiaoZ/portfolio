@@ -13,7 +13,9 @@ rail, a short explanation, and an illustration of the buyer’s view alongside
 the embedded application’s state. Visitors can choose a stage directly or use
 Back and Next. The final Change offer action changes the illustrated offer and
 returns to Preload. The source draft’s simplified code examples remain in native
-expandable panels, including the shared context example. Checkout artwork is
+expandable panels, including the shared context example. Context includes a
+product-stack image showing several BNPL applications, and Solution shows
+checkout beside an embedded Pay Monthly application. Checkout artwork is
 illustrative.
 
 Preload and launch is presented as four numbered stages: load code into a
@@ -30,19 +32,18 @@ explanation is visible within the scrollable article pane.
 
 The concise product-flow section follows preload and launch, using the source
 draft’s description of shared application logic and product configuration. A
-responsive architecture diagram shows checkout supplying offer details, the
+responsive Figma-exported architecture diagram shows checkout supplying offer details, the
 embedded BNPL application exchanging product data with BNPL downstream services, and the
 application outcome returning to checkout. Labels use terms that are meaningful
 without PayPal-specific knowledge.
 
 Completion follows the product-flow section with the source draft’s concise
-paragraph and its original Mermaid sequence diagram, rendered as a static SVG.
-The [copied Mermaid source](diagrams/bnpl-completion.mmd) preserves the three
-participants, message labels, and self-calls; regenerate the SVG when it changes.
-The application’s top and bottom participant boxes have 20px of extra space on
-each side of the label; preserve this padding when regenerating the SVG.
-The graph scrolls horizontally on smaller screens to keep its labels readable.
-Checkout retains responsibility for payment authorization.
+paragraph and a Figma-exported sequence diagram. The
+[copied Mermaid source](diagrams/bnpl-completion.mmd) remains the semantic
+reference for its three participants, message labels, and self-calls; the SVGs
+are maintained in Figma rather than regenerated from Mermaid. Product flows
+and Completion each use one diagram at every width, scaled to fit without
+horizontal scrolling. Checkout retains responsibility for payment authorization.
 
 The Impacts section follows the source draft’s two results: 18 BNPL products
 integrated through the reusable embedded platform and 840K applications

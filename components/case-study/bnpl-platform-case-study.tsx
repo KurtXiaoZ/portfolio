@@ -2,7 +2,10 @@ import Image from 'next/image';
 import type { ReactNode } from 'react';
 
 import { BackToWorkLink } from '@/components/back-to-work-link/back-to-work-link';
-import { ProductFlowsVisual } from '@/components/case-study/bnpl-launch-visuals';
+import {
+  CompletionVisual,
+  ProductFlowsVisual,
+} from '@/components/case-study/bnpl-launch-visuals';
 import { BnplLifecycleStepper } from '@/components/case-study/bnpl-lifecycle-stepper';
 
 const sharedContextExample = `const BNPLContext = createContext(null);
@@ -102,6 +105,14 @@ export function BnplPlatformCaseStudy() {
             PayPal offers a range of buy now, pay later (BNPL) products that
             form a major part of its business.
           </p>
+          <Image
+            alt="Illustrative checkout alongside embedded Pay in 4, Pay Monthly, and Pay in 30 Days applications sharing the BNPL platform"
+            className="h-auto w-full rounded-[18px] bg-white"
+            height={1824}
+            sizes="(max-width: 760px) 100vw, 42rem"
+            src="/images/case-studies/bnpl-platform-product-stack.webp"
+            width={3040}
+          />
         </div>
       </section>
 
@@ -137,17 +148,17 @@ export function BnplPlatformCaseStudy() {
           journey.
         </p>
         <figure>
-          <div className="relative aspect-[15/8] overflow-hidden rounded-[18px] bg-[#ffc857]">
+          <div className="relative aspect-[2048/1230] overflow-hidden rounded-[18px] bg-white">
             <Image
-              alt="Illustrative checkout containing an embedded BNPL application with payment plan options"
-              className="object-cover"
+              alt="Illustrative PayPal checkout alongside an embedded Pay Monthly application showing approved payment plans"
+              className="object-contain"
               fill
               sizes="(max-width: 760px) 100vw, 42rem"
-              src="/images/case-studies/bnpl-platform-placeholder.svg"
+              src="/images/case-studies/bnpl-platform-checkout-hires.webp"
             />
           </div>
           <figcaption className="mt-3 text-xs leading-5 text-[#777970] dark:text-[#989b91]">
-            Illustrative integration mockup.
+            Illustrative Pay Monthly checkout and application.
           </figcaption>
         </figure>
 
@@ -301,22 +312,7 @@ export function BnplPlatformCaseStudy() {
             and control to checkout. Checkout applied the outcome and retained
             responsibility for payment authorization.
           </p>
-          <figure className="mt-5">
-            <div
-              aria-label="Completion sequence diagram; scroll horizontally on smaller screens"
-              className="overflow-x-auto rounded-[18px] border border-[#171814]/10 bg-white p-4 focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[#657800] dark:border-[#f0f0e9]/15 dark:focus-visible:outline-[#c6ec39]"
-              role="region"
-              tabIndex={0}
-            >
-              <Image
-                alt="Sequence diagram: the embedded BNPL application reports its outcome to the iframe integration, which closes the iframe by default and invokes checkout’s completion callback. Checkout applies the application outcome."
-                className="h-auto w-full min-w-[640px]"
-                height={473}
-                src="/images/case-studies/bnpl-completion.svg"
-                width={788}
-              />
-            </div>
-          </figure>
+          <CompletionVisual />
         </section>
       </CaseStudySection>
 
