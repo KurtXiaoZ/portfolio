@@ -36,17 +36,18 @@ Nothing under `media/` is intended to be served by the website.
 
 ## Thumbnail Plan
 
-Atomic Events has an accepted thumbnail integrated into the portfolio. The other
-four rows remain initial directions to discuss, not approved captures or final
-artwork. An existing file does not imply that it has been reviewed for publication.
+Atomic Events, checkout performance, and the embedded BNPL platform have video
+thumbnails integrated into the homepage carousel. The other two rows remain
+initial directions to discuss, not approved captures or final artwork. An
+existing file does not imply that it has been reviewed for publication.
 
 | Case study             | Proposed focal point                                  | Initial format                      | Spec                                                            |
 | ---------------------- | ----------------------------------------------------- | ----------------------------------- | --------------------------------------------------------------- |
-| Checkout performance   | Checkout becoming usable as content loads             | Short clip + poster                 | [Checkout latency](projects/checkout-latency-reduction/spec.md) |
+| Checkout performance   | Checkout becoming usable as content loads             | Video + poster; integrated          | [Checkout latency](projects/checkout-latency-reduction/spec.md) |
 | Feature Flag Platform  | Typed flag definition and consumer call               | Still image                         | [Feature flags](projects/feature-flag-system/spec.md)           |
 | Developer toolbar      | A real toolbar panel beside checkout                  | Still first; optional clip          | [Developer toolbar](projects/developer-toolbar/spec.md)         |
 | Interaction telemetry  | Checkout alongside an abstract circular state machine | Accepted video + poster; integrated | [Atomic Events](projects/atomic-events/spec.md)                 |
-| Embedded BNPL platform | Checkout launching an embedded application            | Short clip + poster                 | [BNPL platform](projects/bnpl-platform/spec.md)                 |
+| Embedded BNPL platform | Checkout launching an embedded application            | Video + poster; integrated          | [BNPL platform](projects/bnpl-platform/spec.md)                 |
 
 ### Shared thumbnail direction
 
@@ -57,7 +58,8 @@ artwork. An existing file does not imply that it has been reviewed for publicati
   treatment, and visual density consistent. Avoid five nearly identical
   checkout screenshots.
 - The current cover viewport is **445:312**, approximately **1.43:1**, with
-  `object-cover` cropping and rounded corners. A useful proposed still export
+  rounded corners. Video covers contain the full frame to preserve checkout and
+  application content; the other covers use `object-cover` cropping. A useful proposed still export
   is **1335 × 936 px**; retain higher-resolution originals when available.
 - Check the crop at 445 px wide and around 320 px wide in the compact carousel.
   Keep essential content away from edges and corners. Titles and tags already

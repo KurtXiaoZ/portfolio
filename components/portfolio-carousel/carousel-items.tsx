@@ -17,16 +17,17 @@ export const carouselItems = [
     card: {
       href: '/work/checkout-latency-reduction',
       cover: (
-        <Image
-          alt=""
-          className="object-cover"
-          fill
+        <VideoCover
+          poster="/images/case-studies/checkout-latency-ryp-streaming.jpg"
           priority
-          sizes="445px"
-          src="/images/case-studies/checkout-performance.svg"
+          src="/videos/case-studies/checkout-latency-ryp-streaming.mp4"
         />
       ),
-      imageAlt: 'Abstract demo artwork representing reduced latency',
+      compactCover: (
+        <VideoThumbnail poster="/images/case-studies/checkout-latency-ryp-streaming.jpg" />
+      ),
+      imageAlt:
+        'PayPal checkout progressively loading payment options and details',
       tags: ['PayPal', 'Performance'],
       title: 'Reducing checkout latency across the stack',
     },
@@ -74,8 +75,15 @@ export const carouselItems = [
     label: 'Standardizing interaction telemetry at scale',
     card: {
       href: '/work/atomic-events',
-      cover: <AtomicEventsCover />,
-      compactCover: <AtomicEventsThumbnail />,
+      cover: (
+        <VideoCover
+          poster="/images/case-studies/atomic-events-circular-orbit-thumbnail-enhanced.jpg"
+          src="/videos/case-studies/atomic-events-circular-orbit-thumbnail-enhanced.mp4"
+        />
+      ),
+      compactCover: (
+        <VideoThumbnail poster="/images/case-studies/atomic-events-circular-orbit-thumbnail-enhanced.jpg" />
+      ),
       imageAlt:
         'PayPal checkout alongside a circular state machine tracking customer interactions',
       tags: ['TypeScript', 'Observability'],
@@ -88,52 +96,64 @@ export const carouselItems = [
     card: {
       href: '/work/bnpl-platform',
       cover: (
-        <Image
-          alt=""
-          className="object-cover"
-          fill
-          sizes="445px"
-          src="/images/case-studies/bnpl-platform-placeholder.svg"
+        <VideoCover
+          poster="/images/case-studies/bnpl-platform-us-pay-monthly.jpg"
+          src="/videos/case-studies/bnpl-platform-us-pay-monthly.mp4"
         />
       ),
-      imageAlt: 'Illustrative checkout with an embedded BNPL application',
+      compactCover: (
+        <VideoThumbnail poster="/images/case-studies/bnpl-platform-us-pay-monthly.jpg" />
+      ),
+      imageAlt: 'PayPal checkout launching an embedded Pay Monthly application',
       tags: ['Platform', 'Fintech'],
       title: 'Building an embedded platform for BNPL products',
     },
   },
 ] satisfies readonly ImageVerticalCarouselItem[];
 
-function AtomicEventsCover() {
+function VideoCover({
+  poster,
+  priority = false,
+  src,
+}: {
+  poster: string;
+  priority?: boolean;
+  src: string;
+}) {
   return (
-    <div className="relative overflow-hidden bg-[#f7f8f5]">
-      <AtomicEventsThumbnail />
+    <div className="relative overflow-hidden bg-white">
+      <VideoThumbnail poster={poster} priority={priority} />
       <video
         aria-hidden="true"
         autoPlay
-        className="absolute inset-0 h-full w-full object-cover motion-reduce:hidden"
+        className="absolute inset-0 h-full w-full object-contain motion-reduce:hidden"
         loop
         muted
         playsInline
-        poster="/images/case-studies/atomic-events-circular-orbit-thumbnail.jpg"
+        poster={poster}
         preload="metadata"
       >
-        <source
-          src="/videos/case-studies/atomic-events-circular-orbit-thumbnail.mp4"
-          type="video/mp4"
-        />
+        <source src={src} type="video/mp4" />
       </video>
     </div>
   );
 }
 
-function AtomicEventsThumbnail() {
+function VideoThumbnail({
+  poster,
+  priority = false,
+}: {
+  poster: string;
+  priority?: boolean;
+}) {
   return (
     <Image
       alt=""
-      className="object-cover"
+      className="bg-white object-contain"
       fill
+      priority={priority}
       sizes="445px"
-      src="/images/case-studies/atomic-events-circular-orbit-thumbnail.jpg"
+      src={poster}
     />
   );
 }
