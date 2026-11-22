@@ -3,10 +3,30 @@ import Image from 'next/image';
 import { BackToWorkLink } from '@/components/back-to-work-link/back-to-work-link';
 
 const observabilityChallenges = [
-  'Checkout experiences spanned teams and repositories with different telemetry standards.',
-  'Customer actions crossed multiple services, making end-to-end performance and outcomes difficult to measure.',
-  'Interactions crossing application domains were difficult to identify and instrument consistently.',
-  'A click’s meaning varied with customer intent and checkout context.',
+  {
+    description:
+      'Checkout experiences spanned teams and repositories with different telemetry standards.',
+    image: 'problem-01-platform-row-transparent.webp',
+    alt: 'Merchant checkout, PayPal sign-in, payment selection, and a Pay in 4 application spanning the checkout platform',
+  },
+  {
+    description:
+      'Customer actions crossed multiple services, making end-to-end performance and outcomes difficult to measure.',
+    image: 'problem-02-funding-options-waterfall.webp',
+    alt: 'Illustrative funding-options request waterfall showing nested service calls and their durations',
+  },
+  {
+    description:
+      'Interactions crossing application domains were difficult to identify and instrument consistently.',
+    image: 'problem-03-domains-modxo-transparent.webp',
+    alt: 'A merchant storefront and PayPal checkout on separate domains, connected by navigation and return arrows',
+  },
+  {
+    description:
+      'A click’s meaning varied with customer intent and checkout context.',
+    image: 'problem-04-ryp-cta-scenarios.webp',
+    alt: 'Two checkout contexts where the primary action is Review Order or Continue to Application',
+  },
 ] as const;
 
 export function AtomicEventsCaseStudy() {
@@ -50,23 +70,32 @@ export function AtomicEventsCaseStudy() {
             significant observability challenges:
           </p>
           <ol className="mt-9 space-y-12 max-[560px]:space-y-10">
-            {observabilityChallenges.map((challenge, index) => (
-              <li
-                className="grid items-center gap-7 min-[620px]:grid-cols-2 min-[620px]:gap-9"
-                key={challenge}
-              >
-                <ProblemVisual
-                  className={index % 2 === 1 ? 'min-[620px]:order-2' : ''}
-                  variant={index}
-                />
-                <div>
-                  <span className="mb-3 block text-xs font-medium tracking-[0.12em] text-[#168465] dark:text-[#71d9b7]">
-                    {String(index + 1).padStart(2, '0')}
-                  </span>
-                  <p>{challenge}</p>
-                </div>
-              </li>
-            ))}
+            {observabilityChallenges.map(
+              ({ description, image, alt }, index) => (
+                <li
+                  className="grid items-center gap-7 min-[620px]:grid-cols-2 min-[620px]:gap-9"
+                  key={description}
+                >
+                  <div
+                    className={`relative aspect-[4/3] ${index % 2 === 1 ? 'min-[620px]:order-2' : ''}`}
+                  >
+                    <Image
+                      alt={alt}
+                      className="object-contain"
+                      fill
+                      sizes="(max-width: 619px) 100vw, 21rem"
+                      src={`/images/case-studies/${image}`}
+                    />
+                  </div>
+                  <div>
+                    <span className="mb-3 block text-xs font-medium tracking-[0.12em] text-[#168465] dark:text-[#71d9b7]">
+                      {String(index + 1).padStart(2, '0')}
+                    </span>
+                    <p>{description}</p>
+                  </div>
+                </li>
+              ),
+            )}
           </ol>
         </div>
       </section>
@@ -94,13 +123,13 @@ export function AtomicEventsCaseStudy() {
             intent to the moment the resulting UI is ready for their next
             action.
           </p>
-          <div className="relative aspect-[15/8] overflow-hidden rounded-[18px] bg-[#f3f5ef] dark:bg-[#20221d]">
+          <div className="relative aspect-[1717/916] overflow-hidden rounded-[18px] bg-white">
             <Image
               alt="A customer interaction moving from intent, through waiting, to a ready interface"
-              className="object-cover"
+              className="object-contain"
               fill
               sizes="(max-width: 760px) 100vw, 42rem"
-              src="/images/case-studies/atomic-events-interaction-lifecycle.svg"
+              src="/images/case-studies/atomic-events-interaction-payment-method.webp"
             />
           </div>
           <div>
@@ -176,13 +205,13 @@ export function AtomicEventsCaseStudy() {
               behavior across applications.
             </p>
           </div>
-          <div className="relative aspect-[15/8] overflow-hidden rounded-[18px] bg-[#f3f5ef] dark:bg-[#20221d]">
+          <div className="relative aspect-[15/8] overflow-hidden rounded-[18px] bg-white">
             <Image
               alt="State machine showing the UI transitioning between ready and waiting"
-              className="object-cover"
+              className="object-contain"
               fill
               sizes="(max-width: 760px) 100vw, 42rem"
-              src="/images/case-studies/atomic-events-state-machine-placeholder.svg"
+              src="/images/case-studies/atomic-events-state-machine.svg"
             />
           </div>
           <hr className="border-0 border-t border-[#171814]/10 dark:border-[#f0f0e9]/15" />
@@ -332,6 +361,15 @@ export function AtomicEventsCaseStudy() {
                 one.
               </li>
             </ul>
+            <div className="relative mt-5 aspect-[8/5] overflow-hidden rounded-[18px] bg-white">
+              <Image
+                alt="A waiting interaction transferred from a source app through session storage, a URL parameter, or an iframe handoff API, then resumed and completed in the destination app"
+                className="object-contain"
+                fill
+                sizes="(max-width: 760px) 100vw, 42rem"
+                src="/images/case-studies/atomic-events-cross-application-handoff.svg"
+              />
+            </div>
           </div>
         </div>
       </section>
@@ -364,65 +402,5 @@ export function AtomicEventsCaseStudy() {
         </div>
       </section>
     </article>
-  );
-}
-
-function ProblemVisual({
-  className = '',
-  variant,
-}: {
-  className?: string;
-  variant: number;
-}) {
-  const sharedClassName = `relative aspect-[4/3] overflow-hidden rounded-[18px] ${className}`;
-
-  if (variant === 0) {
-    return (
-      <div
-        aria-hidden="true"
-        className={`${sharedClassName} bg-[#e8edf8] dark:bg-[#242a35]`}
-      >
-        <div className="absolute top-[18%] left-[13%] h-[58%] w-[28%] rotate-[-9deg] rounded-[22px] bg-[#859de5] dark:bg-[#7289cd]" />
-        <div className="absolute top-[30%] left-[38%] h-[52%] w-[25%] rotate-[7deg] rounded-full bg-[#f0c55b] dark:bg-[#c9a54d]" />
-        <div className="absolute top-[13%] right-[10%] h-[45%] w-[30%] rotate-[15deg] rounded-[26px] bg-[#d798c7] dark:bg-[#a8729a]" />
-      </div>
-    );
-  }
-
-  if (variant === 1) {
-    return (
-      <div
-        aria-hidden="true"
-        className={`${sharedClassName} bg-[#f5eadf] dark:bg-[#332a23]`}
-      >
-        <div className="absolute top-[17%] left-[12%] h-[66%] w-[66%] rounded-full border-[18px] border-[#e88868] dark:border-[#bd6c52]" />
-        <div className="absolute top-[8%] right-[12%] h-[36%] w-[36%] rounded-[18px] bg-[#805eb8] dark:bg-[#785ca3]" />
-        <div className="absolute right-[18%] bottom-[13%] h-[18%] w-[48%] rotate-[-8deg] rounded-full bg-[#e8b845] dark:bg-[#bd963b]" />
-      </div>
-    );
-  }
-
-  if (variant === 2) {
-    return (
-      <div
-        aria-hidden="true"
-        className={`${sharedClassName} bg-[#e3f0e7] dark:bg-[#223128]`}
-      >
-        <div className="absolute top-[14%] left-[12%] h-[72%] w-[22%] rounded-full bg-[#4e9b76] dark:bg-[#4c8b6d]" />
-        <div className="absolute top-[23%] left-[39%] h-[55%] w-[49%] rotate-[-7deg] rounded-[24px] bg-[#9bc95d] dark:bg-[#7da44d]" />
-        <div className="absolute top-[8%] right-[13%] h-[25%] w-[25%] rounded-full bg-[#f1cc63] dark:bg-[#c3a550]" />
-      </div>
-    );
-  }
-
-  return (
-    <div
-      aria-hidden="true"
-      className={`${sharedClassName} bg-[#efe8f5] dark:bg-[#302837]`}
-    >
-      <div className="absolute top-[16%] left-[11%] h-[24%] w-[62%] rotate-[8deg] rounded-full bg-[#aa7ed1] dark:bg-[#8865a8]" />
-      <div className="absolute top-[42%] right-[9%] h-[40%] w-[40%] rounded-[24px] bg-[#ef8b70] dark:bg-[#bd6d59]" />
-      <div className="absolute bottom-[12%] left-[17%] h-[32%] w-[32%] rotate-[-12deg] rounded-full bg-[#62a9bf] dark:bg-[#558da0]" />
-    </div>
   );
 }

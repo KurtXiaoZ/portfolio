@@ -42,3 +42,27 @@ preserved without re-encoding.
 The checkout footage is retimed for presentation. The diagram is illustrative;
 displayed latencies (16 ms, 1 ms, and 3,641 ms) come from the source recording's
 callouts and do not represent the edited waiting durations.
+
+## Case-Study Images
+
+Status: integrated into the case-study page on November 22, 2026.
+
+Source: [Atomic Events section in Figma](https://www.figma.com/design/QwHCDDOuBUWnHbsN3GDyeI/Untitled?node-id=9-2).
+The supplied checkout examples and request waterfall are illustrative. Keep
+their demo content and timings in that context.
+
+| Placement                           | Selected original                                             | Website asset                                                                             |
+| ----------------------------------- | ------------------------------------------------------------- | ----------------------------------------------------------------------------------------- |
+| Problem 01: platform scope          | [PNG](originals/problem-01-platform-row-transparent.png)      | [WebP](../../../public/images/case-studies/problem-01-platform-row-transparent.webp)      |
+| Problem 02: service calls           | [PNG](originals/problem-02-funding-options-waterfall.png)     | [WebP](../../../public/images/case-studies/problem-02-funding-options-waterfall.webp)     |
+| Problem 03: domains                 | [PNG](originals/problem-03-domains-modxo-transparent.png)     | [WebP](../../../public/images/case-studies/problem-03-domains-modxo-transparent.webp)     |
+| Problem 04: CTA context             | [PNG](originals/problem-04-ryp-cta-scenarios.png)             | [WebP](../../../public/images/case-studies/problem-04-ryp-cta-scenarios.webp)             |
+| Solution: interaction lifecycle     | [PNG](originals/atomic-events-interaction-payment-method.png) | [WebP](../../../public/images/case-studies/atomic-events-interaction-payment-method.webp) |
+| Solution: ready/waiting model       | Figma SVG export                                              | [SVG](../../../public/images/case-studies/atomic-events-state-machine.svg)                |
+| Solution: cross-application handoff | Figma SVG export                                              | [SVG](../../../public/images/case-studies/atomic-events-cross-application-handoff.svg)    |
+
+PNG originals retain their full resolution and transparency. Website WebP files
+use lossless compression, and SVG exports are served directly. Images retain
+their original proportions without cropping. The detailed
+[state-flow diagram](../../../public/images/case-studies/atomic-events-state-flow.png)
+already matched the Figma export pixel for pixel, so it is unchanged.
