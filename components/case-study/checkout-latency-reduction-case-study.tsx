@@ -1,3 +1,5 @@
+import Image from 'next/image';
+
 import { BackToWorkLink } from '@/components/back-to-work-link/back-to-work-link';
 
 export function CheckoutLatencyReductionCaseStudy() {
@@ -130,7 +132,7 @@ export function CheckoutLatencyReductionCaseStudy() {
                     client bundle size.
                   </li>
                 </ul>
-                <SolutionDemoImage className="mt-6" variant="rendering" />
+                <SolutionMedia className="mt-6" variant="rendering" />
               </section>
 
               <section aria-labelledby="stream-ready-sections">
@@ -161,7 +163,7 @@ export function CheckoutLatencyReductionCaseStudy() {
                     browser as they become available.
                   </li>
                 </ul>
-                <SolutionDemoImage className="mt-6" variant="streaming" />
+                <SolutionMedia className="mt-6" variant="streaming" />
               </section>
 
               <section aria-labelledby="hydrate-interactive-controls">
@@ -273,7 +275,7 @@ export function CheckoutLatencyReductionCaseStudy() {
                     request after a cached query fails.
                   </li>
                 </ul>
-                <SolutionDemoImage className="mt-6" variant="deduplication" />
+                <SolutionMedia className="mt-6" variant="deduplication" />
               </section>
 
               <section aria-labelledby="parallelize-and-aggregate">
@@ -301,7 +303,7 @@ export function CheckoutLatencyReductionCaseStudy() {
                     round trips.
                   </li>
                 </ul>
-                <SolutionDemoImage className="mt-6" variant="parallelization" />
+                <SolutionMedia className="mt-6" variant="parallelization" />
               </section>
 
               <section aria-labelledby="coordinate-retries-and-timeouts">
@@ -374,120 +376,70 @@ export function CheckoutLatencyReductionCaseStudy() {
   );
 }
 
-const demoImageLabels = {
-  deduplication:
-    'Demo image placeholder for request-scoped query deduplication',
-  parallelization:
-    'Demo image placeholder for parallel and aggregated data fetching',
-  rendering: 'Demo image placeholder for personalized server rendering',
-  streaming: 'Demo image placeholder for progressive streaming',
+const solutionImages = {
+  rendering: {
+    src: '/images/case-studies/checkout-latency-ryp-loading-carousel.webp',
+    alt: 'Illustrative PayPal checkout rendering a personalized shell with loading placeholders for payment options and customer details',
+    width: 1710,
+    height: 1962,
+  },
+  deduplication: {
+    src: '/images/case-studies/checkout-latency-query-deduplication.svg',
+    alt: 'Three wallet reads within one checkout request share the TanStack Query cache and tRPC promise cache, producing one downstream backend call',
+    width: 2000,
+    height: 1600,
+  },
+  parallelization: {
+    src: '/images/case-studies/checkout-latency-parallel-aggregate.svg',
+    alt: 'Sequential wallet, contact, and order requests compared with independent requests starting in parallel and becoming ready sooner',
+    width: 2000,
+    height: 860,
+  },
 } as const;
 
-type SolutionDemoImageVariant = keyof typeof demoImageLabels;
-
-function SolutionDemoImage({
+function SolutionMedia({
   className = '',
   variant,
 }: {
   className?: string;
-  variant: SolutionDemoImageVariant;
+  variant: keyof typeof solutionImages | 'streaming';
 }) {
+  if (variant === 'streaming') {
+    return (
+      <figure className={`mx-auto w-full max-w-lg ${className}`}>
+        <picture>
+          <source
+            media="(prefers-reduced-motion: reduce)"
+            srcSet="/images/case-studies/checkout-latency-ryp-streaming-poster.webp"
+            type="image/webp"
+          />
+          <Image
+            alt="Illustrative PayPal checkout progressively loading payment options and customer details"
+            className="h-auto w-full rounded-[18px] bg-white"
+            height={976}
+            src="/images/case-studies/checkout-latency-ryp-streaming.gif"
+            unoptimized
+            width={1026}
+          />
+        </picture>
+      </figure>
+    );
+  }
+
+  const image = solutionImages[variant];
+
   return (
-    <div
-      aria-label={demoImageLabels[variant]}
-      className={`mx-auto flex aspect-[4/3] w-full max-w-lg flex-col overflow-hidden rounded-[18px] bg-[#f3f5ef] p-4 dark:bg-[#20221d] ${className}`}
-      role="img"
+    <figure
+      className={`mx-auto w-full ${variant === 'rendering' ? 'max-w-lg' : 'max-w-2xl'} ${className}`}
     >
-      <p className="text-[0.625rem] font-medium tracking-[0.12em] text-[#168465] uppercase dark:text-[#71d9b7]">
-        Demo image
-      </p>
-      {variant === 'rendering' && (
-        <div className="mt-3 grid flex-1 grid-rows-[1.5rem_1fr] overflow-hidden rounded-xl bg-white dark:bg-[#161713]">
-          <div className="flex h-6 items-center gap-1.5 bg-[#e5e7df] px-3 dark:bg-[#30322b]">
-            <span className="size-1.5 rounded-full bg-[#777970]/45 dark:bg-[#989b91]/45" />
-            <span className="size-1.5 rounded-full bg-[#777970]/45 dark:bg-[#989b91]/45" />
-            <span className="size-1.5 rounded-full bg-[#777970]/45 dark:bg-[#989b91]/45" />
-          </div>
-          <div className="grid grid-cols-[1fr_0.75fr] gap-3 p-3">
-            <div className="rounded-lg bg-[#e6e8e0] dark:bg-[#292b25]" />
-            <div className="space-y-2 pt-1">
-              <div className="h-2 rounded-full bg-[#d7d9d1] dark:bg-[#34362f]" />
-              <div className="h-2 w-3/4 rounded-full bg-[#d7d9d1] dark:bg-[#34362f]" />
-              <div className="h-2 w-11/12 rounded-full bg-[#d7d9d1] dark:bg-[#34362f]" />
-            </div>
-          </div>
-        </div>
-      )}
-      {variant === 'streaming' && (
-        <div className="flex flex-1 flex-col justify-center gap-5 py-3">
-          <DemoStreamRow width="45%" />
-          <DemoStreamRow width="72%" />
-          <DemoStreamRow width="100%" />
-        </div>
-      )}
-      {variant === 'deduplication' && (
-        <div className="flex flex-1 flex-col justify-center py-3">
-          <div className="grid grid-cols-3 gap-3">
-            {['Query A', 'Query A', 'Query A'].map((query, index) => (
-              <div
-                className="rounded-lg bg-white px-2 py-3 text-center text-xs text-[#55574f] dark:bg-[#161713] dark:text-[#b7b9af]"
-                key={`${query}-${index}`}
-              >
-                {query}
-              </div>
-            ))}
-          </div>
-          <div className="mx-auto h-5 w-px bg-[#168465]/40 dark:bg-[#71d9b7]/40" />
-          <div className="mx-auto w-2/3 rounded-xl bg-[#168465] px-4 py-3 text-center text-xs font-medium text-white dark:bg-[#71d9b7] dark:text-[#171814]">
-            TanStack Query cache
-          </div>
-          <div className="mx-auto h-5 w-px bg-[#168465]/40 dark:bg-[#71d9b7]/40" />
-          <div className="mx-auto w-3/4 rounded-xl border border-[#168465]/25 bg-white px-4 py-3 text-center text-[0.6875rem] text-[#55574f] dark:border-[#71d9b7]/25 dark:bg-[#161713] dark:text-[#b7b9af]">
-            Request-scoped tRPC promise cache
-          </div>
-          <div className="mx-auto h-5 w-px bg-[#168465]/40 dark:bg-[#71d9b7]/40" />
-          <div className="mx-auto w-2/3 rounded-lg bg-white px-3 py-3 text-center text-xs text-[#55574f] dark:bg-[#161713] dark:text-[#b7b9af]">
-            One downstream request
-          </div>
-        </div>
-      )}
-      {variant === 'parallelization' && (
-        <div className="flex flex-1 flex-col justify-center gap-5 py-3">
-          <DemoRequestLane label="A" width="82%" />
-          <DemoRequestLane label="B" width="64%" />
-          <DemoRequestLane label="C" width="74%" />
-          <p className="text-center text-xs text-[#777970] dark:text-[#989b91]">
-            Independent requests share the same start time
-          </p>
-        </div>
-      )}
-    </div>
-  );
-}
-
-function DemoStreamRow({ width }: { width: string }) {
-  return (
-    <div className="h-3 overflow-hidden rounded-full bg-[#dfe1d9] dark:bg-[#30322b]">
-      <div
-        className="h-full rounded-full bg-[#168465] dark:bg-[#71d9b7]"
-        style={{ width }}
+      <Image
+        alt={image.alt}
+        className="h-auto w-full rounded-[18px] bg-white"
+        height={image.height}
+        sizes="(max-width: 760px) 100vw, 42rem"
+        src={image.src}
+        width={image.width}
       />
-    </div>
-  );
-}
-
-function DemoRequestLane({ label, width }: { label: string; width: string }) {
-  return (
-    <div className="grid grid-cols-[1.5rem_1fr] items-center gap-3">
-      <span className="text-center text-xs font-medium text-[#168465] dark:text-[#71d9b7]">
-        {label}
-      </span>
-      <div className="h-3 overflow-hidden rounded-full bg-[#dfe1d9] dark:bg-[#30322b]">
-        <div
-          className="h-full rounded-full bg-[#168465] dark:bg-[#71d9b7]"
-          style={{ width }}
-        />
-      </div>
-    </div>
+    </figure>
   );
 }

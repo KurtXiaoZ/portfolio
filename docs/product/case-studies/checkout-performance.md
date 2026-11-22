@@ -4,7 +4,16 @@ Media planning: [thumbnail and capture spec](../../../media/projects/checkout-la
 
 ## Status
 
-Selected for the initial portfolio. Narrative development and publication review are pending.
+Implemented at `/work/checkout-latency-reduction`. Narrative development and
+publication review remain pending.
+
+The Solution section uses the supplied Figma checkout loading still, a
+looping streaming GIF converted from the supplied video, and diagrams for query
+deduplication and parallel data fetching. These illustrative visuals replace the
+four coded demo placeholders. Each section shows one media element scaled to
+fit without cropping. The GIF plays automatically without video controls;
+reduced-motion visitors see the matching still instead. The media spec records
+the selected originals and website exports.
 
 ## Resume Statement
 
