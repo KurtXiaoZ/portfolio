@@ -20,7 +20,7 @@ through synchronized motion.
 - Show descriptive interaction names: “View rewards”, “Apply rewards”, and
   “Pay with PayPal”. Display “Ok” and the source latency when each completes.
 - Omit explicit state labels, redundant headings, and a traveling dot between
-  checkout and the state machine. 
+  checkout and the state machine.
 - Keep each Waiting phase approximately 1.3 seconds. The silent loop lasts
   12.76 seconds, exported as H.264 MP4 at 50 fps and 1780 × 1248 px (445:312).
 - Play the video on the active landing card. Use the matching poster for compact
