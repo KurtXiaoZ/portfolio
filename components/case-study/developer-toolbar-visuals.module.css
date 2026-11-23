@@ -1,6 +1,5 @@
 .figure {
   container-type: inline-size;
-  margin: 0;
   font-family: var(--font-ibm-plex-sans), system-ui, sans-serif;
 }
 
@@ -27,11 +26,27 @@
   text-transform: uppercase;
 }
 
-.mockLabel {
-  padding: 2px 6px;
-  border: 1px solid #c9bfd7;
-  border-radius: 4px;
-  font-size: 9px;
+.collapsedToolbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  margin-bottom: 18px;
+  padding: 12px;
+  border: 1px solid #dddce5;
+  border-radius: 9px;
+  background: #fff;
+  color: #665878;
+  font-size: 12px;
+}
+
+.toolbarHandle {
+  padding: 5px 10px;
+  border-radius: 6px;
+  background: #30283e;
+  color: #e8d6ff;
+  font-family: monospace;
+  font-size: 14px;
 }
 
 .workspace,
@@ -45,6 +60,10 @@
 .workspace > *,
 .comparison > * {
   min-width: 0;
+}
+
+.comparison {
+  align-items: start;
 }
 
 .checkout {
@@ -172,12 +191,6 @@
   font-size: 10px;
   font-weight: 500;
 }
-.checkoutFooter {
-  margin-top: 12px;
-  color: #817a8a;
-  text-align: center;
-  font-size: 8px;
-}
 
 .panel {
   padding: 18px 14px 12px;
@@ -212,6 +225,7 @@
   color: #d9b9ff;
   font-family: monospace;
   font-size: 16px;
+  white-space: nowrap;
 }
 .toolRow strong {
   display: block;
@@ -274,19 +288,6 @@
 .enabled {
   background: #d8f1e4;
   color: #256b50;
-}
-.annotation {
-  margin-top: 20px;
-  padding-top: 14px;
-  border-top: 1px solid #dcd2e6;
-  color: #665878;
-  font-size: 10px;
-}
-.caption {
-  margin-top: 12px;
-  color: #6a6c62;
-  font-size: 12px;
-  line-height: 1.75;
 }
 
 .preset {
@@ -435,47 +436,6 @@
   height: 9px;
   border: 1px solid #a04ed2;
 }
-.states {
-  display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: 22px 16px;
-}
-.stateCanvas {
-  display: flex;
-  min-height: 75px;
-  align-items: flex-end;
-  justify-content: center;
-  margin-bottom: 10px;
-  padding: 14px 8px;
-  border: 1px solid #e1d9e9;
-  border-radius: 9px;
-  background: #fffcff;
-}
-.stateBar,
-.touchHandle {
-  padding: 6px 12px;
-  border-radius: 6px;
-  background: #30283e;
-  color: #e8d6ff;
-  font-family: monospace;
-  font-size: 12px;
-  white-space: pre;
-}
-.touchHandle {
-  outline: 1px dashed #9a83ae;
-  outline-offset: 7px;
-}
-.states strong {
-  display: block;
-  font-size: 11px;
-  font-weight: 500;
-}
-.states small {
-  display: block;
-  margin-top: 3px;
-  color: #665878;
-  font-size: 10px;
-}
 
 @container (max-width: 440px) {
   .canvas {
@@ -506,12 +466,6 @@
   }
 }
 
-@container (max-width: 280px) {
-  .states {
-    grid-template-columns: minmax(0, 1fr);
-  }
-}
-
 @media (prefers-color-scheme: dark) {
   .canvas {
     border-color: #493e56;
@@ -519,26 +473,12 @@
   }
   .visualHeading,
   .stageLabel,
-  .annotation,
   .scanStatus,
-  .scanLegend,
-  .states small {
+  .scanLegend {
     color: #c8b9d7;
-  }
-  .states strong {
-    color: #efe5f6;
-  }
-  .mockLabel {
-    border-color: #6d5d7c;
   }
   .flag {
     background: #443650;
     color: #f2e4ff;
-  }
-  .annotation {
-    border-color: #493e56;
-  }
-  .caption {
-    color: #a8aaa2;
   }
 }

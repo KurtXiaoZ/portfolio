@@ -5,17 +5,19 @@ Media planning: [thumbnail and capture spec](../../../media/projects/developer-t
 ## Status
 
 Implemented at `/work/developer-toolbar` with a matching featured-work carousel
-entry. The page follows the feature-led narrative in
-`paypal/knowledge-base/developer-toolbar/case-study.md`: a short introduction,
-feature flags, checkout scenarios, accessibility checks, React Scan, and compact
-toolbar interactions.
+entry. The page follows the updated source in
+`paypal/knowledge-base/developer-toolbar/case-study.md`: Context, Problem,
+Solution, and Impact, with four tool walkthroughs inside Solution.
 
-The original outline below is retained as background; the supplied source takes
-precedence for the current presentation. All visuals are static, simplified
-mockups using illustrative data. Replace them with reviewed recordings or images
-when available. The source's contribution placeholder is omitted until Kurt's
-role and scope are confirmed. The page makes no quantified velocity claims.
-Publication review remains pending.
+The source now confirms Kurt designed and built the toolbar, its implementation
+details, usage by 200+ engineers, and adoption by 4 teams. The implementation
+replaces the earlier feature tour with this narrative and links to the Feature
+Flag Platform case study. It makes no quantified time-saving claims.
+
+All visuals remain static, simplified mockups using illustrative data, including
+collapsed and expanded toolbar states. Replace them with reviewed recordings or
+images when available. Mockup disclaimers, badges, and captions below the visuals
+are omitted from the public page. Publication review remains pending.
 
 ## Resume Statement
 
@@ -29,15 +31,22 @@ Show how Kurt consolidated recurring debugging and validation workflows into an 
 
 Kurt recognizes organizational friction, builds practical developer platforms, and creates leverage beyond the code he directly owns.
 
-## Initial Narrative
+## Current Narrative
 
-1. The fragmented or time-consuming developer workflows
-2. User research and prioritization across engineering teams
-3. The toolbar's architecture and extensibility model
-4. Feature-flag override workflow
-5. GraphQL response mocking
-6. Accessibility auditing and render profiling
-7. Rollout to 200+ engineers and the resulting velocity improvement
+1. Context: 200+ engineers contribute to PayPal Branded Checkout.
+2. Problem: context switching, missing app context, and tooling drift.
+3. Solution: Kurt designed and built an embedded, compact, collapsible toolbar
+   that evolves alongside checkout, loads separately when enabled, and is off
+   by default in production.
+4. Feature flags: generated catalog and server-evaluated values, cookie-backed
+   overrides applied before rendering on reload, and pins stored in local storage.
+5. Mock scenarios: shared GraphQL datasets, server-action persistence, a dataset
+   cookie, and MSW interception on the server after reload.
+6. Accessibility checks: lazy-loaded axe-core, debounced scans, severity grouping,
+   and affected DOM element inspection.
+7. React render diagnostics: React Scan enabled on demand, with page highlights
+   and console logging.
+8. Impact: used by 200+ engineers and adopted by 4 teams.
 
 ## Evidence to Gather
 
@@ -51,6 +60,5 @@ Kurt recognizes organizational friction, builds practical developer platforms, a
 
 - Which workflow originally motivated the toolbar?
 - How was developer velocity measured?
-- How did the toolbar prevent unsafe behavior in production?
 - Was the toolbar extensible, and who contributed capabilities?
 - Which internal UI and implementation details are safe to publish?

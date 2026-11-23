@@ -65,7 +65,7 @@ export const carouselItems = [
           src="/images/case-studies/developer-toolbar-placeholder.svg"
         />
       ),
-      imageAlt: 'Illustrative developer toolbar alongside a checkout screen',
+      imageAlt: 'Developer toolbar alongside a checkout screen',
       tags: ['Developer experience', 'Tooling'],
       title: 'A developer toolkit, built into checkout',
     },

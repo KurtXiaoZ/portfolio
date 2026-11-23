@@ -6,17 +6,21 @@ export function ToolbarOverviewVisual() {
   return (
     <Visual
       label="The toolkit, in context"
-      description="Mock checkout beside an expanded developer panel with feature flags, response mocks, accessibility checks, and React Scan."
+      description="Collapsed toolbar handle followed by checkout beside an expanded developer panel with feature flags, mock scenarios, accessibility checks, and React Scan."
     >
+      <div className={styles.collapsedToolbar}>
+        <span>Collapsed · keep checkout in view</span>
+        <span className={styles.toolbarHandle}>‹/›</span>
+      </div>
       <div className={styles.workspace}>
         <Checkout />
         <Panel title="Developer toolbar" eyebrow="Built into the experience">
-          <div className={styles.toolList}>
+          <div>
             {[
               ['⚑', 'Feature flags', 'Explore configurations'],
-              ['{ }', 'Response mocks', 'Reproduce a scenario'],
-              ['◎', 'Accessibility', 'Inspect the current screen'],
-              ['⌁', 'React Scan', 'See component renders'],
+              ['{ }', 'Mock scenarios', 'Reproduce a scenario'],
+              ['◎', 'Accessibility checks', 'Inspect the current screen'],
+              ['⌁', 'Render diagnostics', 'React Scan on demand'],
             ].map(([icon, title, detail]) => (
               <div className={styles.toolRow} key={title}>
                 <span className={styles.toolIcon}>{icon}</span>
@@ -39,8 +43,7 @@ export function FeatureFlagsVisual() {
   return (
     <Visual
       label="One flag, two checkout states"
-      description="Before and after mockups: enabling the illustrative showPayLater flag reveals a Pay later payment option."
-      caption="Change a flag, then reload to explore the resulting checkout state."
+      description="Before and after enabling the showPayLater flag, which reveals a Pay later payment option."
     >
       <div className={styles.comparison}>
         {[false, true].map((enabled) => (
@@ -58,9 +61,6 @@ export function FeatureFlagsVisual() {
           </div>
         ))}
       </div>
-      <div className={styles.annotation}>
-        Pinned flags stay close at hand. Reset overrides to return to defaults.
-      </div>
     </Visual>
   );
 }
@@ -69,11 +69,10 @@ export function ScenariosVisual() {
   return (
     <Visual
       label="From preset to checkout"
-      description="A mock preset for an unavailable payment method produces a checkout notice. A small GraphQL response editor shows the corresponding illustrative response."
-      caption="Start with a preset; edit the mock response when a scenario needs more detail."
+      description="A preset for an unavailable payment method produces a checkout notice. A GraphQL response editor shows the corresponding response."
     >
       <div className={styles.workspace}>
-        <Panel title="Response mocks" eyebrow="Scenario presets">
+        <Panel title="Mock scenarios" eyebrow="Scenario presets">
           <div className={styles.preset}>
             Standard checkout <span>○</span>
           </div>
@@ -89,7 +88,7 @@ export function ScenariosVisual() {
       </div>
       <div className={styles.editor}>
         <div className={styles.editorHeader}>
-          <span>GraphQL response · demo</span>
+          <span>GraphQL response</span>
           <span>Saved</span>
         </div>
         <pre>
@@ -108,8 +107,7 @@ export function AccessibilityVisual() {
   return (
     <Visual
       label="Find the issue where it happens"
-      description="Mock accessibility panel with a serious issue expanded: an icon button needs an accessible name. The matching icon in checkout is outlined."
-      caption="Read the issue guidance and locate the affected element in the current checkout screen."
+      description="Accessibility panel with a serious issue expanded: an icon button needs an accessible name. The matching icon in checkout is outlined."
     >
       <div className={styles.workspace}>
         <Checkout audit />
@@ -138,8 +136,7 @@ export function RenderScanVisual() {
   return (
     <Visual
       label="Render activity, made visible"
-      description="Mock React Scan view outlining the payment options and Continue area in purple to illustrate components rendering during a payment selection."
-      caption="The purple outlines illustrate components rendering when a payment option changes."
+      description="React Scan view outlining the payment options and Continue area in purple as components render during a payment selection."
     >
       <div className={styles.scanStage}>
         <div className={styles.scanStatus}>
@@ -156,61 +153,23 @@ export function RenderScanVisual() {
   );
 }
 
-export function ToolbarStatesVisual() {
-  return (
-    <Visual
-      label="Ready when you need it"
-      description="Four mock toolbar states: a collapsed handle, an expanded toolbar, a pinned toolbar, and a touch target."
-    >
-      <div className={styles.states}>
-        {[
-          ['Collapsed', '‹/›', 'Keep checkout in view'],
-          ['Expanded', '⚑  { }  ◎  ⌁', 'Tools within reach'],
-          ['Pinned', '⚑  { }  ◎  ⌁  ◆', 'Stay open while working'],
-          ['Touch', '‹/›', 'The same compact toolkit'],
-        ].map(([label, content, detail]) => (
-          <div key={label}>
-            <div className={styles.stateCanvas}>
-              <span
-                className={
-                  label === 'Touch' ? styles.touchHandle : styles.stateBar
-                }
-              >
-                {content}
-              </span>
-            </div>
-            <strong>{label}</strong>
-            <small>{detail}</small>
-          </div>
-        ))}
-      </div>
-    </Visual>
-  );
-}
-
 function Visual({
   children,
   label,
   description,
-  caption,
 }: {
   children: ReactNode;
   label: string;
   description: string;
-  caption?: string;
 }) {
   return (
     <figure className={styles.figure}>
       <div className={styles.canvas} role="img" aria-label={description}>
         <div aria-hidden="true">
-          <div className={styles.visualHeading}>
-            <span>{label}</span>
-            <span className={styles.mockLabel}>Mock</span>
-          </div>
+          <p className={styles.visualHeading}>{label}</p>
           {children}
         </div>
       </div>
-      {caption && <figcaption className={styles.caption}>{caption}</figcaption>}
     </figure>
   );
 }
@@ -250,7 +209,7 @@ function Checkout({
         <i />
         <i />
         <i />
-        <span>checkout / demo</span>
+        <span>checkout</span>
       </div>
       <div className={styles.checkoutBody}>
         <div className={styles.merchant}>
@@ -290,7 +249,6 @@ function Checkout({
         >
           Continue
         </div>
-        <p className={styles.checkoutFooter}>Illustrative checkout</p>
       </div>
     </div>
   );
@@ -304,7 +262,6 @@ function Toolbar() {
       <span>{'{ }'}</span>
       <span>◎</span>
       <span>⌁</span>
-      <span>◆</span>
     </div>
   );
 }
