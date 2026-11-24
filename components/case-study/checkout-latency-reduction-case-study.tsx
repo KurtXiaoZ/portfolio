@@ -371,6 +371,26 @@ export function CheckoutLatencyReductionCaseStudy() {
         >
           Impacts
         </h2>
+        <ul className="mt-5 max-w-2xl list-disc space-y-3 pl-5 text-sm leading-6 text-[#55574f] marker:text-[#168465] max-[560px]:text-[0.8125rem] max-[560px]:leading-5 dark:text-[#b7b9af] dark:marker:text-[#71d9b7]">
+          <li>
+            Reduced first-page load latency by{' '}
+            <strong className="font-bold">50% (2.9 seconds)</strong>.
+          </li>
+          <li>
+            Reduced downstream service load by{' '}
+            <strong className="font-bold">65%</strong>.
+          </li>
+          <li>
+            Cut user-facing API errors by{' '}
+            <strong className="font-bold">30%</strong>.
+          </li>
+          <li>
+            Contributed to the broader checkout redesign, which achieved a{' '}
+            <strong className="font-bold">4.8% conversion gain</strong> on an
+            experience serving{' '}
+            <strong className="font-bold">7 million transactions daily</strong>.
+          </li>
+        </ul>
       </section>
     </article>
   );

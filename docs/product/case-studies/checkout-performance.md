@@ -7,6 +7,13 @@ Media planning: [thumbnail and capture spec](../../../media/projects/checkout-la
 Implemented at `/work/checkout-latency-reduction`. Narrative development and
 publication review remain pending.
 
+The Impacts section reflects the supplied source case study: a 50% (2.9-second)
+reduction in first-page load latency, 65% less downstream service load, and 30%
+fewer user-facing API errors. It also describes a contribution to the broader
+checkout redesign, which achieved a 4.8% conversion gain on an experience serving
+7 million transactions daily. The conversion result is attributed to the broader
+redesign rather than to latency work alone.
+
 The Solution section uses the supplied Figma checkout loading still, a
 looping streaming GIF converted from the supplied video, and diagrams for query
 deduplication and parallel data fetching. These illustrative visuals replace the
@@ -47,8 +54,7 @@ Kurt can reason across frontend rendering and data boundaries, make performance 
 
 ## Open Questions
 
-- Does `2.9s` describe the original latency, final latency, or absolute reduction?
 - Which page and user journey were measured?
+- What measurement conditions and percentile apply to the supplied reductions?
 - What were the most important technical tradeoffs?
-- Did the improvement affect conversion, abandonment, or another product metric?
 - Which implementation details and visuals are safe to publish?
