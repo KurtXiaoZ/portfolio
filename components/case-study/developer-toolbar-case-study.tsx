@@ -3,11 +3,8 @@ import type { ReactNode } from 'react';
 
 import { BackToWorkLink } from '@/components/back-to-work-link/back-to-work-link';
 import {
-  AccessibilityVisual,
-  FeatureFlagsVisual,
-  RenderScanVisual,
-  ScenariosVisual,
-  ToolbarOverviewVisual,
+  ToolbarDemo,
+  ToolbarDiagram,
 } from '@/components/case-study/developer-toolbar-visuals';
 
 const headingClassName =
@@ -70,7 +67,7 @@ export function DeveloperToolbarCaseStudy() {
           I kept the toolbar compact and collapsible to give engineers seamless
           access to their tools while they work.
         </p>
-        <ToolbarOverviewVisual />
+        <ToolbarDemo name="overview" />
         <p>The toolbar features four core tools at the moment.</p>
 
         <div className="space-y-12 pt-3">
@@ -79,7 +76,7 @@ export function DeveloperToolbarCaseStudy() {
               Search, pin, and override feature flags to try different checkout
               configurations.
             </p>
-            <FeatureFlagsVisual />
+            <ToolbarDemo name="feature-flags" />
             <p>
               The panel combines a generated flag catalog with values evaluated
               on the server. It saves overrides in a{' '}
@@ -94,6 +91,7 @@ export function DeveloperToolbarCaseStudy() {
               </Link>
               .
             </p>
+            <ToolbarDiagram name="flag-persistence" />
           </ToolSection>
 
           <ToolSection id="mock-scenarios" title="Mock scenarios">
@@ -101,7 +99,7 @@ export function DeveloperToolbarCaseStudy() {
               Load a preset or edit a mock API response to reproduce a specific
               checkout state.
             </p>
-            <ScenariosVisual />
+            <ToolbarDemo name="mock-scenarios" />
             <p>
               Presets and the JSON editor use shared <strong>GraphQL</strong>{' '}
               mock data. A server action saves the selected responses and sets a{' '}
@@ -110,6 +108,7 @@ export function DeveloperToolbarCaseStudy() {
               GraphQL requests on the server and returns the selected mock
               responses.
             </p>
+            <ToolbarDiagram name="server-mocking" />
           </ToolSection>
 
           <ToolSection id="accessibility-checks" title="Accessibility checks">
@@ -117,7 +116,7 @@ export function DeveloperToolbarCaseStudy() {
               Scan the current checkout page and inspect accessibility issues by
               severity and affected element.
             </p>
-            <AccessibilityVisual />
+            <ToolbarDemo name="accessibility" />
             <p>
               The panel lazy-loads <strong>axe-core</strong> when first opened.
               It debounces scans as the interface updates, then groups
@@ -131,7 +130,7 @@ export function DeveloperToolbarCaseStudy() {
             title="React render diagnostics"
           >
             <p>See which components re-render as you interact with checkout.</p>
-            <RenderScanVisual />
+            <ToolbarDemo name="render-diagnostics" />
             <p>
               The toolbar enables <strong>React Scan</strong> on demand to
               highlight renders on the page and log them to the console.

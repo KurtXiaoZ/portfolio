@@ -14,10 +14,9 @@ details, usage by 200+ engineers, and adoption by 4 teams. The implementation
 replaces the earlier feature tour with this narrative and links to the Feature
 Flag Platform case study. It makes no quantified time-saving claims.
 
-All visuals remain static, simplified mockups using illustrative data, including
-collapsed and expanded toolbar states. Replace them with reviewed recordings or
-images when available. Mockup disclaimers, badges, and captions below the visuals
-are omitted from the public page. Publication review remains pending.
+The case study uses Figma demos for the toolbar overview and all four tools, plus
+diagrams for flag persistence and server-side mocking. The carousel uses a
+dedicated animation and still. Publication review remains pending.
 
 ## Resume Statement
 

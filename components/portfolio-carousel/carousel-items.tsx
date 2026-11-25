@@ -10,6 +10,10 @@ export const implementedCaseStudySlugs = [
   'feature-flag-system',
 ] as const;
 
+const developerToolbarThumbnail =
+  '/images/case-studies/developer-toolbar/thumbnail';
+const developerToolbarCrop = 'object-cover object-[center_20%]';
+
 export const carouselItems = [
   {
     id: 'checkout-latency-reduction',
@@ -57,15 +61,32 @@ export const carouselItems = [
     card: {
       href: '/work/developer-toolbar',
       cover: (
+        <picture className="relative block bg-white">
+          <source
+            media="(prefers-reduced-motion: reduce)"
+            srcSet={`${developerToolbarThumbnail}-poster.webp`}
+          />
+          <Image
+            alt=""
+            className={developerToolbarCrop}
+            fill
+            sizes="445px"
+            src={`${developerToolbarThumbnail}.gif`}
+            unoptimized
+          />
+        </picture>
+      ),
+      compactCover: (
         <Image
           alt=""
-          className="object-cover"
+          className={developerToolbarCrop}
           fill
-          sizes="445px"
-          src="/images/case-studies/developer-toolbar-placeholder.svg"
+          sizes="320px"
+          src={`${developerToolbarThumbnail}-poster.webp`}
+          unoptimized
         />
       ),
-      imageAlt: 'Developer toolbar alongside a checkout screen',
+      imageAlt: 'Feature flag controls in the checkout developer toolbar',
       tags: ['Developer experience', 'Tooling'],
       title: 'A developer toolkit, built into checkout',
     },
