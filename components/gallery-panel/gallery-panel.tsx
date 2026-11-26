@@ -2,7 +2,7 @@ import Image from 'next/image';
 
 const PLACEHOLDER_COLUMNS = {
   left: ['aspect-[3/4]', 'aspect-[16/10]', 'aspect-[4/3]'],
-  right: ['aspect-square', 'aspect-[16/10]', 'aspect-[3/4]', 'aspect-[4/3]'],
+  right: ['aspect-[16/10]', 'aspect-[3/4]', 'aspect-[4/3]'],
 } as const;
 
 export function GalleryPanel() {
@@ -15,7 +15,7 @@ export function GalleryPanel() {
       <div className="mx-auto grid w-full max-w-3xl grid-cols-2 items-start gap-4">
         {Object.entries(PLACEHOLDER_COLUMNS).map(([column, aspectRatios]) => (
           <div className="grid gap-4" key={column}>
-            {column === 'left' && (
+            {column === 'left' ? (
               <picture>
                 <source
                   media="(prefers-reduced-motion: reduce)"
@@ -30,6 +30,15 @@ export function GalleryPanel() {
                   width={860}
                 />
               </picture>
+            ) : (
+              <Image
+                alt="PayPal Everywhere launch visual showing debit card management, automatic reload, and contactless payment"
+                className="h-auto w-full rounded-2xl"
+                height={680}
+                sizes="(max-width: 760px) 50vw, (max-width: 1664px) 25vw, 376px"
+                src="/images/gallery/paypal-everywhere-launch.png"
+                width={1200}
+              />
             )}
             {aspectRatios.map((aspectRatio) => (
               <div
