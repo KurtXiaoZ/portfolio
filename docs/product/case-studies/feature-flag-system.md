@@ -9,7 +9,9 @@ entry. Context, Problem, Solution, and Impacts follow
 `paypal/knowledge-base/feature-flags/case-study.md` in the sibling repository.
 
 This source-based page replaces the previously removed illustrative narrative.
-The carousel cover is a simplified illustration, not an internal product image.
+The carousel cover uses Figma's animated checkout experiment illustration, with
+light and dark variants and static fallbacks for reduced motion and compact
+navigation. It is illustrative, not an internal production capture.
 
 ## Current Narrative
 

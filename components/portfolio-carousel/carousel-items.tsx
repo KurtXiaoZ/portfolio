@@ -12,6 +12,8 @@ export const implementedCaseStudySlugs = [
 
 const developerToolbarThumbnail =
   '/images/case-studies/developer-toolbar/thumbnail';
+const featureFlagThumbnail =
+  '/images/case-studies/feature-flag-system/thumbnail';
 
 export const carouselItems = [
   {
@@ -40,16 +42,10 @@ export const carouselItems = [
     label: 'Feature Flag Platform',
     card: {
       href: '/work/feature-flag-system',
-      cover: (
-        <Image
-          alt=""
-          className="object-cover"
-          fill
-          sizes="445px"
-          src="/images/case-studies/feature-flag-system-placeholder.svg"
-        />
-      ),
-      imageAlt: 'Illustrative feature flag controls for a checkout experience',
+      cover: <FeatureFlagCover />,
+      compactCover: <FeatureFlagCover still />,
+      imageAlt:
+        'Illustrative checkout experiment comparing payment button color treatments',
       tags: ['Platform', 'Experimentation'],
       title: 'Feature Flag Platform',
     },
@@ -130,6 +126,37 @@ export const carouselItems = [
     },
   },
 ] satisfies readonly ImageVerticalCarouselItem[];
+
+function FeatureFlagCover({ still = false }: { still?: boolean }) {
+  return (
+    <picture className="relative block">
+      {!still && (
+        <>
+          <source
+            media="(prefers-color-scheme: dark) and (prefers-reduced-motion: reduce)"
+            srcSet={`${featureFlagThumbnail}-dark-poster.png`}
+          />
+          <source
+            media="(prefers-reduced-motion: reduce)"
+            srcSet={`${featureFlagThumbnail}-poster.png`}
+          />
+        </>
+      )}
+      <source
+        media="(prefers-color-scheme: dark)"
+        srcSet={`${featureFlagThumbnail}-dark${still ? '-poster.png' : '.gif'}`}
+      />
+      <Image
+        alt=""
+        className="object-contain"
+        fill
+        sizes={still ? '320px' : '445px'}
+        src={`${featureFlagThumbnail}${still ? '-poster.png' : '.gif'}`}
+        unoptimized
+      />
+    </picture>
+  );
+}
 
 function VideoCover({
   poster,

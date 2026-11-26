@@ -36,15 +36,15 @@ Nothing under `media/` is intended to be served by the website.
 
 ## Thumbnail Plan
 
-Atomic Events, checkout performance, and the embedded BNPL platform have video
-thumbnails integrated into the homepage carousel. The other two rows remain
-initial directions to discuss, not approved captures or final artwork. An
-existing file does not imply that it has been reviewed for publication.
+All five case studies have thumbnails integrated into the homepage carousel.
+Atomic Events, checkout performance, and the embedded BNPL platform use video;
+the developer toolbar and feature flag platform use animated images with still
+fallbacks. An existing file does not imply that it has been reviewed for publication.
 
 | Case study             | Proposed focal point                                  | Initial format                      | Spec                                                            |
 | ---------------------- | ----------------------------------------------------- | ----------------------------------- | --------------------------------------------------------------- |
 | Checkout performance   | Checkout becoming usable as content loads             | Video + poster; integrated          | [Checkout latency](projects/checkout-latency-reduction/spec.md) |
-| Feature Flag Platform  | Typed flag definition and consumer call               | Still image                         | [Feature flags](projects/feature-flag-system/spec.md)           |
+| Feature Flag Platform  | Checkout payment-button experiment treatments         | Animated GIF + still; integrated    | [Feature flags](projects/feature-flag-system/spec.md)           |
 | Developer toolbar      | A real toolbar panel beside checkout                  | Still first; optional clip          | [Developer toolbar](projects/developer-toolbar/spec.md)         |
 | Interaction telemetry  | Checkout alongside an abstract circular state machine | Accepted video + poster; integrated | [Atomic Events](projects/atomic-events/spec.md)                 |
 | Embedded BNPL platform | Checkout launching an embedded application            | Video + poster; integrated          | [BNPL platform](projects/bnpl-platform/spec.md)                 |
