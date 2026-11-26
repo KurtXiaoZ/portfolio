@@ -1,5 +1,6 @@
 'use client';
 
+import Image from 'next/image';
 import { useEffect, useId, useRef, useState, type ReactNode } from 'react';
 
 import styles from './bnpl-lifecycle-stepper.module.css';
@@ -10,32 +11,36 @@ const stages = [
     title: 'Load the code, keep checkout visible',
     description:
       'Mount a hidden, same-origin iframe and load the embedded application’s code. The buyer stays in checkout.',
-    status: 'Application code loaded',
-    note: 'The application has not started yet.',
+    image: 'preload',
+    imageAlt:
+      'Checkout stays visible while a hidden iframe loads the embedded application’s code. The application has not started yet.',
   },
   {
     name: 'App start',
     title: 'Start the application in the background',
     description:
       'Supply checkout context and invoke the app’s initialize() function. It loads styles and localization, mounts, and starts data work.',
-    status: 'Application starting',
-    note: 'Mounted does not mean ready.',
+    image: 'app-start',
+    imageAlt:
+      'Checkout stays visible while it supplies context and starts the hidden application, which loads styles and localization, mounts, and begins data requests. Mounted does not mean ready.',
   },
   {
     name: 'Readiness',
     title: 'The first screen is ready',
     description:
       'The application reports that its first screen is interactive. That signal alone does not reveal the iframe.',
-    status: 'First screen ready',
-    note: 'Ready to show; not shown by this signal.',
+    image: 'readiness',
+    imageAlt:
+      'Checkout stays visible while the embedded Pay Monthly application has its contact-information screen ready. The iframe remains hidden until launch.',
   },
   {
     name: 'Launch',
     title: 'Make the iframe visible',
     description:
       'Checkout reveals the application when its first screen is ready and the buyer has clicked Continue. An earlier click is remembered while checkout shows a loading indicator.',
-    status: 'Visible in checkout',
-    note: 'The buyer can now use the application.',
+    image: 'launch',
+    imageAlt:
+      'The buyer now sees the embedded Pay Monthly contact-information screen because its first screen is ready and Continue has been requested. The iframe is visible.',
   },
 ] as const;
 
@@ -49,7 +54,6 @@ export function BnplLifecycleStepper({
   appStartExamples,
 }: BnplLifecycleStepperProps) {
   const [step, setStep] = useState(0);
-  const [offer, setOffer] = useState<'A' | 'B'>('A');
   const titleRef = useRef<HTMLHeadingElement>(null);
   const focusAfterNavigation = useRef(false);
   const id = useId();
@@ -62,12 +66,11 @@ export function BnplLifecycleStepper({
     focusAfterNavigation.current = false;
     titleRef.current?.focus({ preventScroll: true });
     titleRef.current?.scrollIntoView({ block: 'start' });
-  }, [offer, step]);
+  }, [step]);
 
   function advance() {
     focusAfterNavigation.current = true;
     if (isLastStep) {
-      setOffer((current) => (current === 'A' ? 'B' : 'A'));
       setStep(0);
     } else {
       setStep((current) => current + 1);
@@ -115,7 +118,14 @@ export function BnplLifecycleStepper({
               {stage.title}
             </h4>
             <p className={styles.description}>{stage.description}</p>
-            <LifecycleScene offer={offer} step={step} />
+            <Image
+              alt={stage.imageAlt}
+              className={styles.stageImage}
+              height={2778}
+              src={`/images/case-studies/bnpl-lifecycle-${stage.image}.webp`}
+              unoptimized
+              width={3222}
+            />
             {step === 0 && preloadExample}
             {step === 1 && appStartExamples}
           </div>
@@ -126,8 +136,7 @@ export function BnplLifecycleStepper({
         <p aria-live="polite" className={styles.counter} role="status">
           Step {step + 1} of {stages.length}
           <span className="sr-only">
-            : {stage.name}. Offer {offer}. Iframe{' '}
-            {isLastStep ? 'visible' : 'hidden'}.
+            : {stage.name}. Iframe {isLastStep ? 'visible' : 'hidden'}.
           </span>
         </p>
         <div className={styles.actions}>
@@ -152,118 +161,5 @@ export function BnplLifecycleStepper({
         preparation; unchanged product data can reuse it.
       </p>
     </div>
-  );
-}
-
-function LifecycleScene({ step, offer }: { step: number; offer: 'A' | 'B' }) {
-  const stage = stages[step];
-  const visible = step === 3;
-
-  return (
-    <div
-      aria-label={`${stage.name}: buyer view and embedded application state`}
-      className={styles.scene}
-      role="group"
-    >
-      <div className={styles.column}>
-        <p className={styles.sceneLabel}>Buyer sees</p>
-        <div className={styles.browser}>
-          <div aria-hidden="true" className={styles.browserBar}>
-            <i />
-            <i />
-            <i />
-            <span />
-          </div>
-          <div className={styles.browserBody}>
-            <p className={styles.browserTitle}>
-              {visible ? 'Choose your plan' : 'Checkout'}
-            </p>
-            {!visible && <div aria-hidden="true" className={styles.skeleton} />}
-            <div className={styles.offer}>
-              <span aria-hidden="true" className={styles.offerDot} />
-              <span>{visible ? 'Pay over time' : `BNPL offer ${offer}`}</span>
-            </div>
-            {visible && <div aria-hidden="true" className={styles.field} />}
-            <div className={styles.illustratedButton}>
-              {visible ? 'Continue application' : 'Continue'}
-            </div>
-          </div>
-        </div>
-        <p className={styles.sceneNote}>
-          {visible ? 'Embedded application shown' : 'Checkout stays visible'}
-        </p>
-      </div>
-
-      <div className={styles.column}>
-        <p className={styles.sceneLabel}>Embedded application</p>
-        <div className={styles.application} data-visible={visible}>
-          <span className={styles.visibility}>
-            Iframe {visible ? 'visible' : 'hidden'}
-          </span>
-          <div aria-hidden="true" className={styles.applicationIcon}>
-            {step === 0 ? '‹/›' : step === 1 ? '···' : <Check />}
-          </div>
-          <p className={styles.applicationTitle}>{stage.status}</p>
-          {step === 0 && (
-            <p className={styles.sceneNote}>
-              Bundle loaded into its own document
-            </p>
-          )}
-          {step === 1 && (
-            <div className={styles.checklist}>
-              <span>
-                <Check />
-                Checkout context
-              </span>
-              <span>
-                <Check />
-                Styles + localization
-              </span>
-              <span>
-                <span aria-hidden="true" className={styles.spinner} />
-                Mount + data requests
-              </span>
-            </div>
-          )}
-          {step === 2 && (
-            <div className={styles.readyScreen}>
-              <div aria-hidden="true" className={styles.field} />
-              <div aria-hidden="true" className={styles.field} />
-              <span className={styles.readyLabel}>
-                <Check />
-                Screen interactive
-              </span>
-            </div>
-          )}
-          {step === 3 && (
-            <div className={styles.checklist}>
-              <span>
-                <Check />
-                First screen ready
-              </span>
-              <span>
-                <Check />
-                Continue requested
-              </span>
-            </div>
-          )}
-        </div>
-        <p className={styles.sceneNote}>{stage.note}</p>
-      </div>
-    </div>
-  );
-}
-
-function Check() {
-  return (
-    <svg aria-hidden="true" fill="none" viewBox="0 0 20 20">
-      <path
-        d="m5 10 3.5 3.5L15 7"
-        stroke="currentColor"
-        strokeLinecap="round"
-        strokeLinejoin="round"
-        strokeWidth="1.8"
-      />
-    </svg>
   );
 }

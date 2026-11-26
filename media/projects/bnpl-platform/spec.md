@@ -35,4 +35,20 @@ PNG originals retain their full resolution and transparency. Website WebP files
 use lossless compression, and SVG exports are served directly. Images retain
 their original proportions without cropping or colored letterboxing. Product
 flows and Completion each use a single diagram at every width. The interactive
-preload/launch stepper is unchanged.
+preload/launch stepper uses the four stage images below.
+
+## Lifecycle Stepper Images
+
+Updated on November 26, 2026 from the
+[preload and launch artwork in Figma](https://www.figma.com/design/QwHCDDOuBUWnHbsN3GDyeI/Untitled?node-id=107-2).
+Each 3222 × 2778 image replaces the corresponding code-drawn illustration.
+The stage navigation and expandable implementation examples remain interactive.
+Serve lossless WebP copies at their original aspect ratio, without cropping,
+overlays, or extra framing. Preserve the source PNGs in `originals/`.
+
+| Stage     | Figma node | Original                                      | Website asset                                                             |
+| --------- | ---------- | --------------------------------------------- | ------------------------------------------------------------------------- |
+| Preload   | `106:4`    | [PNG](originals/bnpl-lifecycle-preload.png)   | [WebP](../../../public/images/case-studies/bnpl-lifecycle-preload.webp)   |
+| App start | `106:5`    | [PNG](originals/bnpl-lifecycle-app-start.png) | [WebP](../../../public/images/case-studies/bnpl-lifecycle-app-start.webp) |
+| Readiness | `106:3`    | [PNG](originals/bnpl-lifecycle-readiness.png) | [WebP](../../../public/images/case-studies/bnpl-lifecycle-readiness.webp) |
+| Launch    | `106:2`    | [PNG](originals/bnpl-lifecycle-launch.png)    | [WebP](../../../public/images/case-studies/bnpl-lifecycle-launch.webp)    |

@@ -9,10 +9,12 @@ The page follows `knowledge-base/bnpl-platform/case-study.md` in the sibling
 `paypal` repository, covering context, integration challenges, the reusable
 iframe solution, shared React context, session recovery, and preload and launch
 orchestration. Preload and launch uses a guided stepper with a connected stage
-rail, a short explanation, and an illustration of the buyer’s view alongside
-the embedded application’s state. Visitors can choose a stage directly or use
-Back and Next. The final Change offer action changes the illustrated offer and
-returns to Preload. The source draft’s simplified code examples remain in native
+rail, a short explanation, and a Figma-exported image for each stage showing
+the buyer’s view alongside the embedded application’s state. The images retain
+their full proportions at every width and use descriptive alternative text.
+Visitors can choose a stage directly or use Back and Next. The final Change
+offer action returns to Preload to demonstrate restarting preparation.
+The source draft’s simplified code examples remain in native
 expandable panels, including the shared context example. Context includes a
 product-stack image showing several BNPL applications, and Solution shows
 checkout beside an embedded Pay Monthly application. Checkout artwork is
