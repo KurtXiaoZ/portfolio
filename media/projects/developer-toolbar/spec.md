@@ -20,6 +20,5 @@ has a lossless WebP frame for reduced motion. The homepage carousel plays the
 [thumbnail GIF](../../../public/images/case-studies/developer-toolbar/thumbnail.gif)
 on the active card and uses its
 [still frame](../../../public/images/case-studies/developer-toolbar/thumbnail-poster.webp)
-in the compact layout and for reduced motion. Both use the same landscape crop,
-framed high enough to keep the Feature Flags heading and controls visible at
-card size.
+in the compact layout and for reduced motion. The original 1780 × 1248 GIF from
+Figma matches the card's aspect ratio, so the carousel displays the full frame.

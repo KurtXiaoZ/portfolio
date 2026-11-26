@@ -12,7 +12,6 @@ export const implementedCaseStudySlugs = [
 
 const developerToolbarThumbnail =
   '/images/case-studies/developer-toolbar/thumbnail';
-const developerToolbarCrop = 'object-cover object-[center_20%]';
 
 export const carouselItems = [
   {
@@ -68,7 +67,7 @@ export const carouselItems = [
           />
           <Image
             alt=""
-            className={developerToolbarCrop}
+            className="object-contain"
             fill
             sizes="445px"
             src={`${developerToolbarThumbnail}.gif`}
@@ -79,7 +78,7 @@ export const carouselItems = [
       compactCover: (
         <Image
           alt=""
-          className={developerToolbarCrop}
+          className="bg-white object-contain"
           fill
           sizes="320px"
           src={`${developerToolbarThumbnail}-poster.webp`}
