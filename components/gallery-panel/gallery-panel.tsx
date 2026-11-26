@@ -16,14 +16,20 @@ export function GalleryPanel() {
         {Object.entries(PLACEHOLDER_COLUMNS).map(([column, aspectRatios]) => (
           <div className="grid gap-4" key={column}>
             {column === 'left' && (
-              <Image
-                alt="PayPal checkout showing payment options and order details"
-                className="h-auto w-full rounded-2xl"
-                height={936}
-                sizes="(max-width: 760px) 50vw, (max-width: 1664px) 25vw, 376px"
-                src="/images/case-studies/checkout-latency-ryp-streaming.jpg"
-                width={984}
-              />
+              <picture>
+                <source
+                  media="(prefers-reduced-motion: reduce)"
+                  srcSet="/images/gallery/payment-method-carousel.png"
+                />
+                <Image
+                  alt="PayPal checkout payment options in a horizontal carousel"
+                  className="h-auto w-full rounded-2xl"
+                  height={276}
+                  src="/images/gallery/payment-method-carousel.gif"
+                  unoptimized
+                  width={860}
+                />
+              </picture>
             )}
             {aspectRatios.map((aspectRatio) => (
               <div
