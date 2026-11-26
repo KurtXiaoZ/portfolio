@@ -2,7 +2,7 @@
 
 ## Status
 
-Partially implemented. The shared shell, route-driven transition, and two mocked case-study routes are in place. The remaining case-study content, route focus transfer, and reduced-motion handling are not yet implemented. Motion details remain subject to visual tuning.
+Partially implemented. The shared shell, route-driven transition, and five source-based case-study routes are in place. Case studies share an icon-only return control that appears on upward scroll. Route focus transfer and reduced-motion handling for the pane transitions remain deferred. Motion details remain subject to visual tuning.
 
 ## Purpose
 
@@ -81,6 +81,22 @@ Animation is based on the source and destination states, not on the particular n
 
 The server-rendered initial layout and the route-derived client state must agree so hydration does not introduce a layout shift. Initial Motion presence animations should be disabled. Motion should run only when navigation has a meaningful visual origin within an already hydrated experience.
 
+### Return navigation
+
+The shared left pane owns one `CaseStudyNavigation` overlay for every case-study
+route. It listens to the reading pane's scroll events, rather than window or
+carousel scrolling. A 10px movement in one direction reveals the icon-only home
+link on upward scroll or hides it on downward scroll. Scroll positions are
+clamped to the pane's bounds so overscroll bounce does not reverse visibility.
+
+The control is keyed by pathname, starts hidden, and removes its listener when
+unmounted. The reading pane resets to the top during case-study route changes,
+including the return to Home. The overlay sits outside the animated scroll
+container so its position stays stable. Keyboard focus reveals the link and
+keeps it visible while focused; the opacity and translation transitions are
+disabled for reduced motion. The link targets `/` through `next/link`, retaining
+native navigation and modified-click behavior.
+
 ## Panel Choreography
 
 The panel animation components respond to the same route change and animate their own elements independently. Shared duration and easing constants keep the movements synchronized without publishing animation progress through React state.
@@ -118,12 +134,12 @@ Modified link interactions, including opening a case study in a new tab, should 
 
 The client shell statically imports the three right-pane implementations, so their modules are currently available in the initial client bundle even though only the selected panel mounts. This is acceptable while Gallery and About are small placeholders. Revisit dynamic imports when those panels become substantial enough for deferred loading to improve the initial experience.
 
-The homepage does not render case-study bodies. The current carousel explicitly prefetches the route payload for every implemented case study after hydration; with only two implemented routes this keeps opening them responsive. Revisit that policy as the number and size of case studies grow so the homepage does not eagerly transfer every complete case study.
+The homepage does not render case-study bodies. The current carousel explicitly prefetches the route payload for every implemented case study after hydration; with five implemented routes this keeps opening them responsive. Revisit that policy as the number and size of case studies grow so the homepage does not eagerly transfer every complete case study.
 
 Content is currently divided by loading need:
 
 - Load card titles, tags, and the initially required carousel imagery with the landing page.
-- Prefetch the two implemented case-study route payloads after hydration.
+- Prefetch the five implemented case-study route payloads after hydration.
 - Render the full body and long-form media only within the selected `/work/[slug]` route.
 
 Image loading is expected to have a larger effect on initial loading performance than the client shell. Only immediately visible imagery should load eagerly. Distant carousel covers and long-form case-study images should load lazily, image `sizes` should reflect their rendered pane, and hero assets may be prefetched based on active-card, hover, or navigation intent when measurement supports it.

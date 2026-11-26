@@ -12,6 +12,7 @@ import {
 import { AboutPanel } from '@/components/about-panel/about-panel';
 import { GalleryPanel } from '@/components/gallery-panel/gallery-panel';
 import { PortfolioCarousel } from '@/components/portfolio-carousel/portfolio-carousel';
+import { CaseStudyNavigation } from '@/components/portfolio-shell/case-study-navigation';
 import {
   getLandingView,
   type LandingView,
@@ -24,7 +25,7 @@ const PANE_TRANSITION = {
 
 function LeftPane({ children }: { children: ReactNode }) {
   const pathname = usePathname();
-  const [scope, animate] = useAnimate();
+  const [scope, animate] = useAnimate<HTMLDivElement>();
   const previousPathname = useRef(pathname);
   const isCaseStudyOpen = pathname.startsWith('/work/');
   const contentOffset = isCaseStudyOpen ? 24 : -24;
@@ -38,6 +39,8 @@ function LeftPane({ children }: { children: ReactNode }) {
     // Landing routes share the same introduction. Only their right-pane
     // content changes, so keep the left pane visually stable between them.
     if (!wasCaseStudyOpen && !isCaseStudyOpen) return;
+
+    scope.current.scrollTo({ top: 0, behavior: 'instant' });
 
     const controls = animate(
       scope.current,
@@ -53,9 +56,14 @@ function LeftPane({ children }: { children: ReactNode }) {
   }, [animate, contentOffset, isCaseStudyOpen, pathname, scope]);
 
   return (
-    <div className="absolute inset-0 overflow-y-auto" ref={scope}>
-      {children}
-    </div>
+    <>
+      <div className="absolute inset-0 overflow-y-auto" ref={scope}>
+        {children}
+      </div>
+      {isCaseStudyOpen && (
+        <CaseStudyNavigation key={pathname} scrollRef={scope} />
+      )}
+    </>
   );
 }
 

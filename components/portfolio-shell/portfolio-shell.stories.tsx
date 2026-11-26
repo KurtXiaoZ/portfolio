@@ -1,5 +1,6 @@
 import type { Meta, StoryObj } from '@storybook/nextjs-vite';
 
+import { AtomicEventsCaseStudy } from '@/components/case-study/atomic-events-case-study';
 import { HomeIntroduction } from '@/components/home-introduction/home-introduction';
 
 import { PortfolioShell } from './portfolio-shell';
@@ -45,6 +46,19 @@ export const AboutSelected: Story = {
     nextjs: {
       navigation: {
         pathname: '/about',
+      },
+    },
+  },
+};
+
+export const CaseStudyOpen: Story = {
+  args: {
+    left: <AtomicEventsCaseStudy />,
+  },
+  parameters: {
+    nextjs: {
+      navigation: {
+        pathname: '/work/atomic-events',
       },
     },
   },

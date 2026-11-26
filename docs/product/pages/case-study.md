@@ -40,6 +40,14 @@ As an initial target, the content pane should occupy roughly 65–70% of the vie
 
 Each case study has its own canonical URL and must support direct visits, refreshes, sharing, and browser history navigation.
 
+A minimal, icon-only back arrow appears at the top left of the reading pane
+after 10px of upward scrolling and hides after 10px of downward scrolling.
+It starts hidden on each case-study route and returns directly to `/`. A subtle
+background fade keeps the arrow legible over article content. There is no
+navigation title, visible text label, or duplicate return link in the article.
+The arrow has an accessible name, a generous touch target, and reveals itself
+when reached by keyboard focus. Its reveal respects reduced-motion preferences.
+
 The persistent carousel provides direct navigation to the other featured case studies. Returning to the landing page reverses the opening transition, restores the Case Studies tab and carousel to their primary state, and preserves the previously selected card.
 
 ## Open Questions

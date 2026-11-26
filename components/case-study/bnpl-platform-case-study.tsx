@@ -1,7 +1,6 @@
 import Image from 'next/image';
 import type { ReactNode } from 'react';
 
-import { BackToWorkLink } from '@/components/back-to-work-link/back-to-work-link';
 import {
   CompletionVisual,
   ProductFlowsVisual,
@@ -94,8 +93,6 @@ const bodyClassName =
 export function BnplPlatformCaseStudy() {
   return (
     <article className="mx-auto w-full max-w-3xl px-10 pt-9 pb-28 max-[960px]:px-7 max-[560px]:px-5">
-      <BackToWorkLink />
-
       <section aria-labelledby="context" className="pt-20 max-[760px]:pt-12">
         <h1 className={headingClassName} id="context" tabIndex={-1}>
           Context
