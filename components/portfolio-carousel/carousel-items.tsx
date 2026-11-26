@@ -1,3 +1,4 @@
+import clsx from 'clsx';
 import Image from 'next/image';
 
 import type { ImageVerticalCarouselItem } from '@/components/image-vertical-carousel/image-vertical-carousel';
@@ -56,20 +57,10 @@ export const carouselItems = [
     card: {
       href: '/work/developer-toolbar',
       cover: (
-        <picture className="relative block bg-white">
-          <source
-            media="(prefers-reduced-motion: reduce)"
-            srcSet={`${developerToolbarThumbnail}-poster.webp`}
-          />
-          <Image
-            alt=""
-            className="object-contain"
-            fill
-            sizes="445px"
-            src={`${developerToolbarThumbnail}.gif`}
-            unoptimized
-          />
-        </picture>
+        <VideoCover
+          poster={`${developerToolbarThumbnail}-poster.webp`}
+          src="/videos/case-studies/developer-toolbar-thumbnail.mp4"
+        />
       ),
       compactCover: (
         <Image
@@ -129,32 +120,36 @@ export const carouselItems = [
 
 function FeatureFlagCover({ still = false }: { still?: boolean }) {
   return (
-    <picture className="relative block">
+    <div className="relative overflow-hidden">
+      <picture className="relative block h-full w-full">
+        <source
+          media="(prefers-color-scheme: dark)"
+          srcSet={`${featureFlagThumbnail}-dark-poster.png`}
+        />
+        <Image
+          alt=""
+          className="object-contain"
+          fill
+          sizes={still ? '320px' : '445px'}
+          src={`${featureFlagThumbnail}-poster.png`}
+          unoptimized
+        />
+      </picture>
       {!still && (
         <>
-          <source
-            media="(prefers-color-scheme: dark) and (prefers-reduced-motion: reduce)"
-            srcSet={`${featureFlagThumbnail}-dark-poster.png`}
+          <CoverVideo
+            colorScheme="light"
+            poster={`${featureFlagThumbnail}-poster.png`}
+            src="/videos/case-studies/feature-flag-system-thumbnail.mp4"
           />
-          <source
-            media="(prefers-reduced-motion: reduce)"
-            srcSet={`${featureFlagThumbnail}-poster.png`}
+          <CoverVideo
+            colorScheme="dark"
+            poster={`${featureFlagThumbnail}-dark-poster.png`}
+            src="/videos/case-studies/feature-flag-system-thumbnail-dark.mp4"
           />
         </>
       )}
-      <source
-        media="(prefers-color-scheme: dark)"
-        srcSet={`${featureFlagThumbnail}-dark${still ? '-poster.png' : '.gif'}`}
-      />
-      <Image
-        alt=""
-        className="object-contain"
-        fill
-        sizes={still ? '320px' : '445px'}
-        src={`${featureFlagThumbnail}${still ? '-poster.png' : '.gif'}`}
-        unoptimized
-      />
-    </picture>
+    </div>
   );
 }
 
@@ -170,19 +165,37 @@ function VideoCover({
   return (
     <div className="relative overflow-hidden bg-white">
       <VideoThumbnail poster={poster} priority={priority} />
-      <video
-        aria-hidden="true"
-        autoPlay
-        className="absolute inset-0 h-full w-full object-contain motion-reduce:hidden"
-        loop
-        muted
-        playsInline
-        poster={poster}
-        preload="metadata"
-      >
-        <source src={src} type="video/mp4" />
-      </video>
+      <CoverVideo poster={poster} src={src} />
     </div>
+  );
+}
+
+function CoverVideo({
+  colorScheme,
+  poster,
+  src,
+}: {
+  colorScheme?: 'light' | 'dark';
+  poster: string;
+  src: string;
+}) {
+  return (
+    <video
+      aria-hidden="true"
+      className={clsx(
+        'absolute inset-0 h-full w-full object-contain motion-reduce:hidden dark:motion-reduce:hidden',
+        colorScheme === 'light' && 'dark:hidden',
+        colorScheme === 'dark' && 'hidden dark:block',
+      )}
+      data-color-scheme={colorScheme}
+      loop
+      muted
+      playsInline
+      poster={poster}
+      preload="metadata"
+    >
+      <source src={src} type="video/mp4" />
+    </video>
   );
 }
 

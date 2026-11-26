@@ -143,6 +143,40 @@ function CarouselCard({
   const isActive = delta === 0;
 
   useEffect(() => {
+    const videos = scope.current.querySelectorAll('video');
+    if (videos.length === 0) return;
+
+    const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
+    const darkMode = window.matchMedia('(prefers-color-scheme: dark)');
+
+    function updatePlayback() {
+      for (const video of videos) {
+        const colorScheme = video.dataset.colorScheme;
+        const matchesTheme =
+          !colorScheme || colorScheme === (darkMode.matches ? 'dark' : 'light');
+
+        if (isActive && !compact && !reducedMotion.matches && matchesTheme) {
+          // Reuse the mounted video and its currentTime when it returns to center.
+          // A rapid selection change may interrupt play(), which is harmless.
+          void video.play().catch(() => {});
+        } else {
+          video.pause();
+        }
+      }
+    }
+
+    updatePlayback();
+    reducedMotion.addEventListener('change', updatePlayback);
+    darkMode.addEventListener('change', updatePlayback);
+
+    return () => {
+      reducedMotion.removeEventListener('change', updatePlayback);
+      darkMode.removeEventListener('change', updatePlayback);
+      for (const video of videos) video.pause();
+    };
+  }, [compact, isActive, scope]);
+
+  useEffect(() => {
     const previousDelta = previousDeltaRef.current;
     previousDeltaRef.current = delta;
     const state = getVisualState(delta, compact);
@@ -253,6 +287,7 @@ function CarouselCard({
             {...item.card}
             className={clsx('max-w-none', item.card.className)}
             compact={compact || !isActive}
+            showCompactCover={compact}
           />
         </motion.div>
       </motion.div>

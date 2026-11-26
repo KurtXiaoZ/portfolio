@@ -52,6 +52,11 @@ The carousel uses a vertical perspective-fold transition. The active item presen
 
 Cards moving into the upper position fold around their bottom edge; cards moving into the lower position fold around their top edge. Adjacent cards retain most of their size and remain visible so the movement feels like placing a card into a stack. A card leaving either adjacent position holds its current pose and fades out without further movement. Incoming cards unfold from the same edge, and looping repositions recycled cards without sending them through the center.
 
+Only the centered card's animated thumbnail plays. When a card leaves the
+center, its thumbnail freezes on the current frame; centering it again resumes
+from that point. Unplayed cards show a still poster. Reduced motion and the
+compact case-study carousel use still thumbnails.
+
 See [Vertical Carousel Scroll Animation](../../engineering/vertical-carousel-scroll-animation.md) for the implemented interaction choreography, timing, and interruption behavior.
 
 ### Case-Study Presentation Animation

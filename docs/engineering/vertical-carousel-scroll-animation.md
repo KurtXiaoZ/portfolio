@@ -26,6 +26,23 @@ On the landing page, each card is centered and folded within a fixed `445px`-wid
 
 Compact mode collapses metadata for every card and changes the frame to `min(320px, 78%)`, preserving the landing frame's `445:384` aspect ratio. The image preserves its `445:312` aspect ratio, so the card fits the narrower reading pane without clipping or distorting. Animated covers use their static thumbnail in compact mode. The compact card column is centered in the space left of the pagination controls. For the upper card, the hinge origin remains aligned with the bottom of the proportionally sized image. The lower card continues to hinge from the top edge.
 
+### Thumbnail playback
+
+On Home, every animated cover remains mounted as its card moves through the
+carousel. Only the centered card's video plays. Moving away from the center
+pauses the video on its current frame; returning to the center resumes from
+that timestamp instead of recreating the video or resetting its playback.
+Cards that have not played yet display their poster. Recycling hidden cards
+preserves their playback position too.
+
+`CaseStudyCard` separates metadata compaction from `showCompactCover`. Adjacent
+Home cards collapse their metadata while keeping the same animated cover;
+the compact case-study layout continues to use static covers. Playback pauses
+for reduced motion and for the inactive color-scheme variant. The Feature Flag
+and Developer Toolbar carousel animations use MP4 derivatives of their original
+GIFs so every thumbnail supports pause and resume. Source GIFs remain available
+in the media assets.
+
 The upper card hinges around its bottom edge. The lower card hinges around its top edge. This makes the edge nearest the active card act as the physical connection between positions. The rotating card uses a perspective of `1100px` and hides its back face.
 
 The active card has the highest stacking level. Each additional step from the active card lowers the stacking level by one.
